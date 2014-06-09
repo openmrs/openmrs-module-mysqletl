@@ -50,10 +50,11 @@
 	<!-- /Internationalization -->
 	<dwr>
         <allow>
-        	
             <create creator="new" javascript="DWRMySQLLoginService">
                 <param name="class" value="${project.parent.groupId}.${project.parent.artifactId}.dwr.DWRMySQLLoginService"/>
                 <include method="loginMySQL"/>
+                <include method="getTables"/>
+                <include method="getColumns"/>
             </create>
             <convert converter="bean" match="${project.parent.groupId}.${project.parent.artifactId}.dwr.LoginParams"/>
         </allow>
@@ -61,7 +62,9 @@
         <signatures>
             <![CDATA[
             import  ${project.parent.groupId}.${project.parent.artifactId}.dwr.DWRMySQLLoginService;
-            DWRMySQLLoginService.loginMySQL(LoginParams params);
+            DWRMySQLLoginService.login_mysql(LoginParams params);
+            DWRMySQLLoginService.get_tables(LoginParams params,String db_name);
+            DWRMySQLLoginService.getColumns(LoginParams params,String db_name,String table_name);
             ]]>
         </signatures>
     </dwr>
