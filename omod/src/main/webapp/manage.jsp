@@ -1,8 +1,34 @@
 <%@ include file="/WEB-INF/template/include.jsp"%>
 <%@ include file="/WEB-INF/template/header.jsp"%>
-
 <%@ include file="template/localHeader.jsp"%>
 
+<!-- Tell 1.7+ versions of core to not include JQuery themselves. Also, on 1.7+ we may get different jquery and jquery-ui versions than 1.3.2 and 1.7.2 -->
+<c:set var="DO_NOT_INCLUDE_JQUERY" value="true"/>
+
+  <style type='text/css'>
+    ul li {
+    min-width: 200px;
+}
+.dragging li.ui-state-hover {
+    min-width: 240px;
+}
+.dragging .ui-state-hover a {
+    color:green !important;
+    font-weight: bold;
+}
+
+.connectedSortable tr, .ui-sortable-helper {
+    cursor: move;
+}
+.connectedSortable tr:first-child {
+    cursor: default;
+}
+.ui-sortable-placeholder {
+    background: yellow;
+}
+  </style>
+<openmrs:htmlInclude file="/moduleResources/mysqletl/jquery.min.js" />
+<openmrs:htmlInclude file="/moduleResources/mysqletl/jquery-ui.min.js" />
 <script type="text/javascript" src="<openmrs:contextPath/>/dwr/interface/DWRMySQLLoginService.js"> </script>
 
 <script>
@@ -118,7 +144,7 @@
 	 DWRMySQLLoginService.getColumns(loginParams,db_name,table_name,{ 
 		 callback:function(column_list){ 
 	     				show('column_list','table_list');				
-    	 				clearHTMLTable('column_table');				
+    	 				clearHTMLTable('available-column-table');				
 						if(column_list!=null){
 						  for(i=0; i<column_list.length;i++){
 								addColumnRow(column_list[i], table_name);
@@ -128,7 +154,7 @@
 					});			 
  }
  function addColumnRow(info,table_info){
-	  var TABLE = document.getElementById('column_table');
+	  var TABLE = document.getElementById('available-column-table');
 	  var BODY = TABLE.getElementsByTagName('tbody')[0];
 	  var TR = document.createElement('tr');
 	  var TD = document.createElement('td');
@@ -136,7 +162,7 @@
 	  checkbox.type = "checkbox";    // make the element a checkbox
 	  checkbox.name = "column_check";
 	  checkbox.value = table_info+"."+info;
-	  TR.appendChild(checkbox);   // add the box to the element
+	  //TR.appendChild(checkbox);   // add the box to the element
 	  TD.innerHTML = info;
 	  TR.appendChild (TD);
 	  BODY.appendChild(TR);
@@ -144,12 +170,39 @@
  function notImplemented(){
 	alert('Coming Soon');
  }
+ $(window).load(function(){
+	 $(document).ready(function() {
+
+	     var $tabs=$('#selected-column-table')
+	     $( "tbody.connectedSortable" )
+	         .sortable({
+	             connectWith: ".connectedSortable",
+	             items: "> tr:not(:first)",
+	             appendTo: $tabs,
+	             helper:"clone",
+	             zIndex: 999990
+	         })
+	         .disableSelection()
+	     ;
+	     
+	     var $tab_items = $( ".nav-tabs > li", $tabs ).droppable({
+	       accept: ".connectedSortable tr",
+	       hoverClass: "ui-state-hover",
+	       
+	       drop: function( event, ui ) {
+	         return false;
+	       }
+	     });
+	     
+	 });
+	 });
+
  </script>
  <div id="mysql_log">
 	<p>Hello ${user.systemId}!. Please input MySQL Login Details</p>
 	<p id='change'>Click Login</p>
-	 	<div style="background: #cf2255; width:'100%';" align="center">
-  			<font color="#ffffcc" size="12pt">
+	 	<div style="background: #009D8E; width:'100%';" align="center">
+  			<font color="#ffffff" size="4pt">
 				<b>MySQL Login</b>
 			</font>
 		</div>
@@ -193,8 +246,8 @@
   		</table>
 </div>
 <div id="db_list" style="display:none">  
-	<div style="background: #cf2255; width:'100%';" align="center">
-  		<font color="#ffffcc" size="12pt">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="4pt">
 			<b>Existing Database</b>
   		</font>
  	</div>
@@ -211,8 +264,8 @@
     <a href="#" onclick="show('mysql_log','db_list');">Back</a>
 </div>
 <div id="table_list" style="display:none">
-	<div style="background: #cf2255; width:'100%';" align="center">
-  		<font color="#ffffcc" size="12pt">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="4pt">
 			<b>Existing Tables</b>
  		</font>
 	</div>
@@ -229,8 +282,8 @@
     <a href="#" onclick="show('db_list','table_list');">Back</a>
 </div>
 <div id="column_list" style="display:none">    
-	<div style="background: #cf2255; width:'100%';" align="center">
-  		<font color="#ffffcc" size="12pt">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="4pt">
 			<b>Existing Columns</b>
   		</font>
  	</div>
@@ -241,14 +294,30 @@
          			<td width="50%">Select Columns</td>
       			</tr>
    			</table>
+   			 
+            <table id='available-column-table' align=center bgcolor="#f5f5f5">  
+                <tbody class="connectedSortable">  
+                    <tr>
+                        <th>Available columns</th>
+                    </tr> 
+                </tbody> 
+            </table>
+            <table id='selected-column-table' align=center bgcolor="#f5f5f5">  
+                <tbody class="connectedSortable">  
+                    <tr>
+                        <th>Selected Column</th>    
+                    </tr> 
+                </tbody> 
+            </table> 
+   			
   		<input type="button" onclick="show('dw_log','column_list');" value="Next" />
 		</div>
 	</center>
     <a href="#" onclick="show('table_list','column_list');">Back</a>
 </div>    
 <div id="dw_log" style="display:none">
-	<div style="background: #cf2255; width:'100%';" align="center">
-  		<font color="#ffffcc" size="12pt">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="4pt">
 			<b>Datawarehouse Login</b>
 		</font>
 	</div>
