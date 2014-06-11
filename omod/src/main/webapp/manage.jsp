@@ -148,8 +148,8 @@
  <div id="mysql_log">
 	<p>Hello ${user.systemId}!. Please input MySQL Login Details</p>
 	<p id='change'>Click Login</p>
-	 	<div style="background: #cf2255; width:'100%';" align="center">
-  			<font color="#ffffcc" size="12pt">
+	 	<div style="background: #009D8E; width:'100%';" align="center">
+  			<font color="#ffffff" size="8pt">
 				<b>MySQL Login</b>
 			</font>
 		</div>
@@ -193,8 +193,8 @@
   		</table>
 </div>
 <div id="db_list" style="display:none">  
-	<div style="background: #cf2255; width:'100%';" align="center">
-  		<font color="#ffffcc" size="12pt">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="8pt">
 			<b>Existing Database</b>
   		</font>
  	</div>
@@ -211,8 +211,8 @@
     <a href="#" onclick="show('mysql_log','db_list');">Back</a>
 </div>
 <div id="table_list" style="display:none">
-	<div style="background: #cf2255; width:'100%';" align="center">
-  		<font color="#ffffcc" size="12pt">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="8pt">
 			<b>Existing Tables</b>
  		</font>
 	</div>
@@ -229,8 +229,8 @@
     <a href="#" onclick="show('db_list','table_list');">Back</a>
 </div>
 <div id="column_list" style="display:none">    
-	<div style="background: #cf2255; width:'100%';" align="center">
-  		<font color="#ffffcc" size="12pt">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="8pt">
 			<b>Existing Columns</b>
   		</font>
  	</div>
@@ -247,8 +247,8 @@
     <a href="#" onclick="show('table_list','column_list');">Back</a>
 </div>    
 <div id="dw_log" style="display:none">
-	<div style="background: #cf2255; width:'100%';" align="center">
-  		<font color="#ffffcc" size="12pt">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="8pt">
 			<b>Datawarehouse Login</b>
 		</font>
 	</div>
