@@ -144,7 +144,8 @@
 	 DWRMySQLLoginService.getColumns(loginParams,db_name,table_name,{ 
 		 callback:function(column_list){ 
 	     				show('column_list','table_list');				
-    	 				clearHTMLTable('available-column-table');				
+    	 				clearHTMLTable('available-column-table');
+    	 				clearHTMLTable('selected-column-table');	
 						if(column_list!=null){
 						  for(i=0; i<column_list.length;i++){
 								addColumnRow(column_list[i], table_name);
@@ -294,22 +295,26 @@
          			<td width="50%">Select Columns</td>
       			</tr>
    			</table>
-   			 
-            <table id='available-column-table' align=center bgcolor="#f5f5f5">  
-                <tbody class="connectedSortable">  
-                    <tr>
-                        <th>Available columns</th>
-                    </tr> 
-                </tbody> 
-            </table>
-            <table id='selected-column-table' align=center bgcolor="#f5f5f5">  
-                <tbody class="connectedSortable">  
-                    <tr>
-                        <th>Selected Column</th>    
-                    </tr> 
-                </tbody> 
-            </table> 
-   			
+   			<table>
+   				<th>
+            		<table id='available-column-table' align=center bgcolor="#f5f5f5">  
+                		<tbody class="connectedSortable">  
+                    		<tr>
+                        		<th>Available columns</th>
+                    		</tr> 
+                		</tbody> 
+            		</table>
+            	</th>
+            	<th>
+            		<table id='selected-column-table' align=center bgcolor="#f5f5f5">  
+                		<tbody class="connectedSortable">  
+                    		<tr>
+                        		<th>Selected Column</th>    
+                    		</tr> 
+                		</tbody> 
+            		</table>
+            	<th> 
+   			</table>
   		<input type="button" onclick="show('dw_log','column_list');" value="Next" />
 		</div>
 	</center>
