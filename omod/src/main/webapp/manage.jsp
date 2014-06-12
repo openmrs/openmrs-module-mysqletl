@@ -126,6 +126,8 @@
 		var checkedBoxes = getCheckedBoxes("table_check");
 		if(checkedBoxes==null){ alert("None Table Selected"); }
 		else{
+			clearHTMLTable('available-column-table');
+ 			clearHTMLTable('selected-column-table');	
 			for(i=0;i<checkedBoxes.length;i++){
 				clickTable(checkedBoxes[i].value);
 			}
@@ -144,8 +146,6 @@
 	 DWRMySQLLoginService.getColumns(loginParams,db_name,table_name,{ 
 		 callback:function(column_list){ 
 	     				show('column_list','table_list');				
-    	 				clearHTMLTable('available-column-table');
-    	 				clearHTMLTable('selected-column-table');	
 						if(column_list!=null){
 						  for(i=0; i<column_list.length;i++){
 								addColumnRow(column_list[i], table_name);
@@ -313,7 +313,7 @@
                     		</tr> 
                 		</tbody> 
             		</table>
-            	<th> 
+            	</th> 
    			</table>
   		<input type="button" onclick="show('dw_log','column_list');" value="Next" />
 		</div>
@@ -325,6 +325,10 @@
   		<font color="#ffffff" size="4pt">
 			<b>Datawarehouse Login</b>
 		</font>
+	</div>
+	<div  align="center">
+		<input type="radio" name="type" value="hive2" checked="true">Hive Server 2
+		<input type="radio" name="type" value="hive1">Hive Server
 	</div>
   	<table align=center bgcolor="#f5f5f5" style="width: 316px; height: 100px">
             <tr>
@@ -356,7 +360,7 @@
 					Port
   				</td>
                 <td style="width: 5px; height: 3px">
-                	<input type="text" name="port" id="dwport" value="3306" style="width: 226px">
+                	<input type="text" name="port" id="dwport" value="10000" style="width: 226px">
                 </td> 
             </tr>
             <tr>
@@ -366,7 +370,7 @@
                 	</div>
                 </td>
                 <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="Login" name="login" onclick="notImplemented()" style="width: 86px">
+                    &nbsp;<input type="submit" value="Load" name="login" onclick="notImplemented()" style="width: 86px">
                 </td>
             </tr>
         </table>
