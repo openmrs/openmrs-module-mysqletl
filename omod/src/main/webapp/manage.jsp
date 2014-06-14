@@ -84,6 +84,11 @@
 	  var BODY = TABLE.getElementsByTagName('tbody')[0];
 	  var TR = document.createElement('tr');
 	  var TD = document.createElement('td');
+	  var checkbox = document.createElement("input");
+	  checkbox.type = "checkbox";    // make the element a checkbox
+	  checkbox.name = "db_check"; 
+	  checkbox.value = info;     // give it a name we can check on the server side
+	  TR.appendChild(checkbox);   // add the box to the element
 	  TD.innerHTML =      '<a href="#" onclick="clickDatabase(\''+info+'\');">'+info+'</a>';
 	  TR.appendChild (TD);
 	  BODY.appendChild(TR);
@@ -102,6 +107,17 @@
 	  TR.appendChild (TD);
 	  BODY.appendChild(TR);
  }
+ function selectDatabases(){
+		var checkedBoxes = getCheckedBoxes("db_check");
+		if(checkedBoxes==null){ alert("None Database Selected"); }
+		else{
+			clearHTMLTable('table_table');	
+			for(i=0;i<checkedBoxes.length;i++){
+				clickDatabase(checkedBoxes[i].value);
+			}
+		}
+	 
+}
  function clickDatabase(db_name){
 	 var loginParams = {
 			 user: document.getElementById('user').value,
@@ -111,8 +127,7 @@
 		 	};	 
 	 DWRMySQLLoginService.getTables(loginParams,db_name,{
 		 		callback:function(table_list){ 
-	     				show('table_list','db_list');				
-    	 				clearHTMLTable('table_table');				
+	     				show('table_list','db_list');							
 						if(table_list!=null){
 						  for(i=0; i<table_list.length;i++){
 								addTableRow(table_list[i],db_name);
@@ -197,7 +212,7 @@
 	 
 	 var table = document.getElementById('selected-column-table');
 	 var column_list = [];
-	 //Row 0 is for heading, start from Row 1
+	 //get column details from selected columns, Start from index 1, 0 reserved for Text
 	 for (var i = 1, row; row = table.rows[i]; i++) {
 	    //iterate through rows
 	    //rows would be accessed using the "row" variable assigned in the for loop
@@ -305,6 +320,7 @@
          		<td width="50%">Select Databases</td>
       		</tr>
    		</table>
+   		<input type="button" onclick="selectDatabases();" value="Next" />
  		</div>
 	</center>
     <a href="#" onclick="show('mysql_log','db_list');">Back</a>
@@ -339,22 +355,26 @@
       			<tr>
          			<td width="50%">Select Columns</td>
       			</tr>
+      			 <tr>
+                    <th width="25%">Available columns</th>
+                    <th width="25%">Selected columns</th>                    
+                 </tr> 
    			</table>
    			<table>
    				<th>
-            		<table id='available-column-table' align=center bgcolor="#f5f5f5">  
+            		<table id='available-column-table' align=right bgcolor="#f5f5f5">  
                 		<tbody class="connectedSortable">  
                     		<tr>
-                        		<th>Available columns</th>
+                    		     <th width="25%">Drag From Below</th>
                     		</tr> 
                 		</tbody> 
             		</table>
             	</th>
             	<th>
-            		<table id='selected-column-table' align=center bgcolor="#f5f5f5">  
+            		<table id='selected-column-table' align=right bgcolor="#f5f5f5">  
                 		<tbody class="connectedSortable">  
-                    		<tr>
-                        		<th>Selected Column</th>    
+                    		<tr>    
+                    			<th width="25%">Drop Below</th>
                     		</tr> 
                 		</tbody> 
             		</table>
