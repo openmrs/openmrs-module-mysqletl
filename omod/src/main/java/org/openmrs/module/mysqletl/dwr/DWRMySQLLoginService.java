@@ -8,6 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -69,6 +70,29 @@ public class DWRMySQLLoginService {
 		}
 		catch(Exception e){
 		    return null;
+	    }
+	}
+	public String goTransform(LoginParams params,String serverType,String db_name,String table_name,List<String> column_list) throws APIException  {
+		try{ 
+			Class.forName("com.mysql.jdbc.Driver");
+			String connectionURL = "jdbc:mysql://"+params.gethost()+":"+params.getport()+"/";
+			Connection con = DriverManager.getConnection (connectionURL , params.getuser(), params.getpass());
+
+			List<String> tableListWithDuplicates = new ArrayList<String>();
+			for(String column : column_list){
+				tableListWithDuplicates.add(column.substring(0,column.indexOf('.', column.indexOf('.')+1)));
+			}
+			List<String> tableList = new ArrayList<String>(new HashSet<String>(tableListWithDuplicates));
+			Statement stmt = null;
+			stmt = con.createStatement();
+			String create_query = "create database if not exists "+db_name;
+			stmt.execute(create_query);
+			String query = "CREATE TABLE "+db_name+"."+table_name+" AS SELECT "+column_list.toString().substring(1, column_list.toString().length()-1)+" FROM "+tableList.toString().substring(1, tableList.toString().length()-1);
+			stmt.execute(query);
+		    return "Success";
+		}
+		catch(Exception e){
+		    return "Failed";
 	    }
 	}
 }

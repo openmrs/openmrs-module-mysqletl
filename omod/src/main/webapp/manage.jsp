@@ -147,26 +147,68 @@
 		 callback:function(column_list){ 
 	     				show('column_list','table_list');				
 						if(column_list!=null){
+							//add columns in available column table
 						  for(i=0; i<column_list.length;i++){
-								addColumnRow(column_list[i], table_name);
+								addColumnRow(column_list[i], table_info);
+								//Passing table_info results [db_name].[table_name].[column_name] so from multiple database and tables column can be selected
 						  }
 						}
 					  }
 					});			 
  }
  function addColumnRow(info,table_info){
+	  var db_name = table_info.substring(0,table_info.indexOf('.'));
+	  var table_name = table_info.substring(table_info.indexOf('.')+1);
 	  var TABLE = document.getElementById('available-column-table');
 	  var BODY = TABLE.getElementsByTagName('tbody')[0];
 	  var TR = document.createElement('tr');
-	  var TD = document.createElement('td');
-	  var checkbox = document.createElement("input");
-	  checkbox.type = "checkbox";    // make the element a checkbox
-	  checkbox.name = "column_check";
-	  checkbox.value = table_info+"."+info;
-	  //TR.appendChild(checkbox);   // add the box to the element
-	  TD.innerHTML = info;
-	  TR.appendChild (TD);
+// 	  var checkbox = document.createElement("input");
+// 	  checkbox.type = "checkbox";    // make the element a checkbox
+// 	  checkbox.name = "column_check";
+// 	  checkbox.value = table_info+"."+info;
+// 	  TR.appendChild(checkbox);   // add the box to the element
+	  var TD_DB = document.createElement('td');
+	  TD_DB.innerHTML = db_name;//set only database name
+	  TR.appendChild (TD_DB);
+	  var TD_TABLE = document.createElement('td');
+	  TD_TABLE.innerHTML = table_name;//set only table name
+	  TR.appendChild (TD_TABLE);
+	  var TD_COLUMN = document.createElement('td');
+	  TD_COLUMN.innerHTML = info;//set only column name
+	  TR.appendChild (TD_COLUMN);
 	  BODY.appendChild(TR);
+ }
+ function transform(){
+	 var loginParams = {
+			 user: document.getElementById('dwuser').value,
+		     pass: document.getElementById('dwpass').value,
+		 	 host: document.getElementById('dwhost').value,
+		 	 port: document.getElementById('dwport').value 
+		 	};	 
+	 var servers = document.getElementsByName('type');
+	 var serverType;
+	 for(var i = 0; i < servers.length; i++){
+	     if(servers[i].checked){
+	    	 serverType = servers[i].value;
+	     }
+	 }
+	 var db_name = document.getElementById('dw_db').value;
+	 var table_name = document.getElementById('dw_table').value;
+	 
+	 var table = document.getElementById('selected-column-table');
+	 var column_list = [];
+	 //Row 0 is for heading, start from Row 1
+	 for (var i = 1, row; row = table.rows[i]; i++) {
+	    //iterate through rows
+	    //rows would be accessed using the "row" variable assigned in the for loop
+		 column_list.push(row.cells[0].innerHTML+'.'+row.cells[1].innerHTML+'.'+row.cells[2].innerHTML);
+	 }
+	 DWRMySQLLoginService.goTransform(loginParams,serverType,db_name,table_name,column_list,{ 
+		 callback:function(result){ 
+			 //if transformation takes place without any interruption, success message will return
+			 		document.getElementById('loginStatus').innerHTML = result;
+					  }
+					});	 
  }
  function notImplemented(){
 	alert('Coming Soon');
@@ -210,9 +252,11 @@
   		<table align=center bgcolor="#f5f5f5" style="width: 316px; height: 100px">
             <tr>
                 <td style="width: 184px;">
-                    Username</td>
+                    Username
+                </td>
                 <td style="width: 5px">
-                <input type="text" name="user" id="user" style="width: 226px"></td>
+                	<input type="text" name="user" id="user" style="width: 226px">
+                </td>
                 
             </tr>
             <tr>
@@ -220,29 +264,30 @@
  					 Password
   				</td>
                 <td style="width: 5px; height: 1px">
-                <input type="password" name="pass" id="pass" style="width: 226px"></td>
-                
+                	<input type="password" name="pass" id="pass" style="width: 226px">
+                </td>
             </tr>
             <tr>
                 <td style="width: 184px;">
   					Host 
                 </td>
                 <td style="width: 5px">
-                <input type="text" name="host" id="host" value="localhost" style="width: 227px"></td>
-               
+                	<input type="text" name="host" id="host" value="localhost" style="width: 227px">
+                </td>
             </tr>
             <tr>
                 <td style="width: 184px; height: 3px;">
  					 Port
   				</td>
                 <td style="width: 5px; height: 3px">
-                <input type="text" name="port" id="port" value="3306" style="width: 226px"></td>
-               
+                	<input type="text" name="port" id="port" value="3306" style="width: 226px">
+                </td>
             </tr>
             <tr>
                 <td style="width: 184px; height: 3px;"></td>
                 <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="Login" name="login" onclick="mysql_login()" style="width: 86px"></td>
+                    &nbsp;<input type="submit" value="Login" name="login" onclick="mysql_login()" style="width: 86px">
+                </td>
             </tr>
   		</table>
 </div>
@@ -327,8 +372,9 @@
 		</font>
 	</div>
 	<div  align="center">
-		<input type="radio" name="type" value="hive2" checked="true">Hive Server 2
-		<input type="radio" name="type" value="hive1">Hive Server
+		<input type="radio" name="type" value="mysql" checked="true">MySQL
+		<input type="radio" name="type" value="hive2">Hive Server 2
+		<input type="radio" name="type" value="hive">Hive Server
 	</div>
   	<table align=center bgcolor="#f5f5f5" style="width: 316px; height: 100px">
             <tr>
@@ -365,12 +411,28 @@
             </tr>
             <tr>
                 <td style="width: 184px; height: 3px;">
+					Database
+  				</td>
+                <td style="width: 5px; height: 3px">
+                	<input type="text" name="datawarehouse_db" id="dw_db" value="dw_db" style="width: 226px">
+                </td> 
+            </tr>
+            <tr>
+                <td style="width: 184px; height: 3px;">
+					Table
+  				</td>
+                <td style="width: 5px; height: 3px">
+                	<input type="text" name="datawarehouse_table" id="dw_table" value="dw_table" style="width: 226px">
+                </td> 
+            </tr>
+            <tr>
+                <td style="width: 184px; height: 3px;">
                 	<div id='loginStatus'>
                 		Status
                 	</div>
                 </td>
                 <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="Load" name="login" onclick="notImplemented()" style="width: 86px">
+                    &nbsp;<input type="submit" value="Load" name="login" onclick="transform()" style="width: 86px">
                 </td>
             </tr>
         </table>
