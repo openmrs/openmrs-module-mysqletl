@@ -5,8 +5,13 @@
 <!-- Tell 1.7+ versions of core to not include JQuery themselves. Also, on 1.7+ we may get different jquery and jquery-ui versions than 1.3.2 and 1.7.2 -->
 <c:set var="DO_NOT_INCLUDE_JQUERY" value="true"/>
 
-  <style type='text/css'>
-    ul li {
+<style type='text/css'>
+#dragRow {
+    text-align: right;
+    padding: 2px 4px;
+    border: 1px solid;
+}
+ul li {
     min-width: 200px;
 }
 .dragging li.ui-state-hover {
@@ -355,17 +360,15 @@
       			<tr>
          			<td width="50%">Select Columns</td>
       			</tr>
-      			 <tr>
-                    <th width="25%">Available columns</th>
-                    <th width="25%">Selected columns</th>                    
-                 </tr> 
    			</table>
    			<table>
    				<th>
             		<table id='available-column-table' align=right bgcolor="#f5f5f5">  
                 		<tbody class="connectedSortable">  
-                    		<tr>
-                    		     <th width="25%">Drag From Below</th>
+                    		<tr id='dragRow' align="center">    
+                  				  <th id='dragRow' align="right">Database</th> 
+                  				  <th id='dragRow' align="right">Table</th>   
+                  				  <th id='dragRow' align="right">Available Column</th>   
                     		</tr> 
                 		</tbody> 
             		</table>
@@ -373,8 +376,10 @@
             	<th>
             		<table id='selected-column-table' align=right bgcolor="#f5f5f5">  
                 		<tbody class="connectedSortable">  
-                    		<tr>    
-                    			<th width="25%">Drop Below</th>
+                    		<tr id='dragRow' align="center">    
+                  				  <th id='dragRow' align="right">Database</th> 
+                  				  <th id='dragRow' align="right">Table</th>   
+                  				  <th id='dragRow' align="right">Available Column</th>   
                     		</tr> 
                 		</tbody> 
             		</table>
