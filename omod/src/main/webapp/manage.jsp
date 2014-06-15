@@ -2,11 +2,18 @@
 <%@ include file="/WEB-INF/template/header.jsp"%>
 <%@ include file="template/localHeader.jsp"%>
 
-<!-- Tell 1.7+ versions of core to not include JQuery themselves. Also, on 1.7+ we may get different jquery and jquery-ui versions than 1.3.2 and 1.7.2 -->
+<!-- Tell 1.7+ versions of core to not include JQuery themselves. Also, on 1.7+ we may get 
+
+different jquery and jquery-ui versions than 1.3.2 and 1.7.2 -->
 <c:set var="DO_NOT_INCLUDE_JQUERY" value="true"/>
 
   <style type='text/css'>
-    ul li {
+#dragRow {
+    text-align: right;
+    padding: 2px 4px;
+    border: 1px solid;
+}
+ul li {
     min-width: 200px;
 }
 .dragging li.ui-state-hover {
@@ -16,7 +23,6 @@
     color:green !important;
     font-weight: bold;
 }
-
 .connectedSortable tr, .ui-sortable-helper {
     cursor: move;
 }
@@ -29,7 +35,9 @@
   </style>
 <openmrs:htmlInclude file="/moduleResources/mysqletl/jquery.min.js" />
 <openmrs:htmlInclude file="/moduleResources/mysqletl/jquery-ui.min.js" />
-<script type="text/javascript" src="<openmrs:contextPath/>/dwr/interface/DWRMySQLLoginService.js"> </script>
+<script type="text/javascript" 
+
+src="<openmrs:contextPath/>/dwr/interface/DWRMySQLLoginService.js"> </script>
 
 <script>
  function show(shown, hidden){
@@ -74,7 +82,9 @@
 		 		  }
 				  show('db_list','mysql_log');
 				}else{
-					document.getElementById('change').innerHTML = 'Login Failed';
+					document.getElementById('change').innerHTML = 'Login 
+
+Failed';
 				}
 			  }
 			});
@@ -89,7 +99,9 @@
 	  checkbox.name = "db_check"; 
 	  checkbox.value = info;     // give it a name we can check on the server side
 	  TR.appendChild(checkbox);   // add the box to the element
-	  TD.innerHTML =      '<a href="#" onclick="clickDatabase(\''+info+'\');">'+info+'</a>';
+	  TD.innerHTML =      '<a href="#" onclick="clickDatabase(\''+info+'\');">'+info
+
++'</a>';
 	  TR.appendChild (TD);
 	  BODY.appendChild(TR);
  }
@@ -101,9 +113,13 @@
 	  var checkbox = document.createElement("input");
 	  checkbox.type = "checkbox";    // make the element a checkbox
 	  checkbox.name = "table_check"; 
-	  checkbox.value = db_info+"."+info;     // give it a name we can check on the server side
+	  checkbox.value = db_info+"."+info;     // give it a name we can check on the server 
+
+side
 	  TR.appendChild(checkbox);   // add the box to the element
-	  TD.innerHTML =      '<a href="#" onclick="return clickTable(\''+info+'\');">'+info+'</a>';
+	  TD.innerHTML =      '<a href="#" onclick="return clickTable(\''+info+'\');">'+info
+
++'</a>';
 	  TR.appendChild (TD);
 	  BODY.appendChild(TR);
  }
@@ -127,10 +143,14 @@
 		 	};	 
 	 DWRMySQLLoginService.getTables(loginParams,db_name,{
 		 		callback:function(table_list){ 
-	     				show('table_list','db_list');							
+	     				show('table_list','db_list');				
+
+			
 						if(table_list!=null){
 						  for(i=0; i<table_list.length;i++){
-								addTableRow(table_list[i],db_name);
+								addTableRow(table_list
+
+[i],db_name);
 						  }
 						}
 					  }
@@ -160,12 +180,22 @@
 	 var table_name = table_info.substring(table_info.indexOf('.')+1);
 	 DWRMySQLLoginService.getColumns(loginParams,db_name,table_name,{ 
 		 callback:function(column_list){ 
-	     				show('column_list','table_list');				
+	     				show('column_list','table_list');			
+
+	
 						if(column_list!=null){
-							//add columns in available column table
+							//add columns in available column 
+
+table
 						  for(i=0; i<column_list.length;i++){
-								addColumnRow(column_list[i], table_info);
-								//Passing table_info results [db_name].[table_name].[column_name] so from multiple database and tables column can be selected
+								addColumnRow(column_list[i], 
+
+table_info);
+								//Passing table_info results 
+
+[db_name].[table_name].[column_name] so from multiple database and tables column can be 
+
+selected
 						  }
 						}
 					  }
@@ -183,12 +213,15 @@
 // 	  checkbox.value = table_info+"."+info;
 // 	  TR.appendChild(checkbox);   // add the box to the element
 	  var TD_DB = document.createElement('td');
+	  TD_DB.id = 'dragRow';
 	  TD_DB.innerHTML = db_name;//set only database name
 	  TR.appendChild (TD_DB);
 	  var TD_TABLE = document.createElement('td');
+	  TD_TABLE.id = 'dragRow';
 	  TD_TABLE.innerHTML = table_name;//set only table name
 	  TR.appendChild (TD_TABLE);
 	  var TD_COLUMN = document.createElement('td');
+	  TD_COLUMN.id = 'dragRow';
 	  TD_COLUMN.innerHTML = info;//set only column name
 	  TR.appendChild (TD_COLUMN);
 	  BODY.appendChild(TR);
@@ -212,16 +245,24 @@
 	 
 	 var table = document.getElementById('selected-column-table');
 	 var column_list = [];
-	 //get column details from selected columns, Start from index 1, 0 reserved for Text
-	 for (var i = 1, row; row = table.rows[i]; i++) {
+	 //get column details from selected columns, Start from index 1. 0 reserved for Text
+	 for (var i = 2, row; row = table.rows[i]; i++) {
 	    //iterate through rows
 	    //rows would be accessed using the "row" variable assigned in the for loop
-		 column_list.push(row.cells[0].innerHTML+'.'+row.cells[1].innerHTML+'.'+row.cells[2].innerHTML);
+		 column_list.push(row.cells[0].innerHTML+'.'+row.cells[1].innerHTML
+
++'.'+row.cells[2].innerHTML);
 	 }
-	 DWRMySQLLoginService.goTransform(loginParams,serverType,db_name,table_name,column_list,{ 
+	 DWRMySQLLoginService.goTransform
+
+(loginParams,serverType,db_name,table_name,column_list,{ 
 		 callback:function(result){ 
-			 //if transformation takes place without any interruption, success message will return
-			 		document.getElementById('loginStatus').innerHTML = result;
+			 //if transformation takes place without any interruption, success 
+
+message will return
+			 		document.getElementById('loginStatus').innerHTML = 
+
+result;
 					  }
 					});	 
  }
@@ -287,7 +328,9 @@
   					Host 
                 </td>
                 <td style="width: 5px">
-                	<input type="text" name="host" id="host" value="localhost" style="width: 227px">
+                	<input type="text" name="host" id="host" value="localhost" 
+
+style="width: 227px">
                 </td>
             </tr>
             <tr>
@@ -295,13 +338,17 @@
  					 Port
   				</td>
                 <td style="width: 5px; height: 3px">
-                	<input type="text" name="port" id="port" value="3306" style="width: 226px">
+                	<input type="text" name="port" id="port" value="3306" style="width: 
+
+226px">
                 </td>
             </tr>
             <tr>
                 <td style="width: 184px; height: 3px;"></td>
                 <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="Login" name="login" onclick="mysql_login()" style="width: 86px">
+                    &nbsp;<input type="submit" value="Login" name="login" 
+
+onclick="mysql_login()" style="width: 86px">
                 </td>
             </tr>
   		</table>
@@ -353,19 +400,21 @@
   		<div style="background: #ffffcc; width:'100%';" align="center">
    			<table id="column_table" align=center bgcolor="#f5f5f5">
       			<tr>
-         			<td width="50%">Select Columns</td>
+         			<td width="50%">Drag Drop Columns</td>
       			</tr>
-      			 <tr>
-                    <th width="25%">Available columns</th>
-                    <th width="25%">Selected columns</th>                    
-                 </tr> 
    			</table>
    			<table>
    				<th>
             		<table id='available-column-table' align=right bgcolor="#f5f5f5">  
                 		<tbody class="connectedSortable">  
-                    		<tr>
-                    		     <th width="25%">Drag From Below</th>
+                    		<tr id='dragRow' align="center">    
+                  				  <th id='dragRow' align="right">Database</th> 
+
+  
+                  				  <th id='dragRow' align="right">Table</th>   
+                  				  <th id='dragRow' align="right">Available 
+
+Column</th>   
                     		</tr> 
                 		</tbody> 
             		</table>
@@ -373,8 +422,14 @@
             	<th>
             		<table id='selected-column-table' align=right bgcolor="#f5f5f5">  
                 		<tbody class="connectedSortable">  
-                    		<tr>    
-                    			<th width="25%">Drop Below</th>
+                    		<tr id='dragRow' align="center">    
+                  				  <th id='dragRow' align="right">Database</th> 
+
+  
+                  				  <th id='dragRow' align="right">Table</th>   
+                  				  <th id='dragRow' align="right">Selected 
+
+Column</th>   
                     		</tr> 
                 		</tbody> 
             		</table>
@@ -418,7 +473,9 @@
 					Host 
                 </td>
                 <td style="width: 5px">
-                	<input type="text" name="host" id="dwhost" value="localhost" style="width: 227px">
+                	<input type="text" name="host" id="dwhost" value="localhost" 
+
+style="width: 227px">
                 </td>
             </tr>
             <tr>
@@ -426,7 +483,9 @@
 					Port
   				</td>
                 <td style="width: 5px; height: 3px">
-                	<input type="text" name="port" id="dwport" value="10000" style="width: 226px">
+                	<input type="text" name="port" id="dwport" value="10000" style="width: 
+
+226px">
                 </td> 
             </tr>
             <tr>
@@ -434,7 +493,9 @@
 					Database
   				</td>
                 <td style="width: 5px; height: 3px">
-                	<input type="text" name="datawarehouse_db" id="dw_db" value="dw_db" style="width: 226px">
+                	<input type="text" name="datawarehouse_db" id="dw_db" value="dw_db" 
+
+style="width: 226px">
                 </td> 
             </tr>
             <tr>
@@ -442,7 +503,9 @@
 					Table
   				</td>
                 <td style="width: 5px; height: 3px">
-                	<input type="text" name="datawarehouse_table" id="dw_table" value="dw_table" style="width: 226px">
+                	<input type="text" name="datawarehouse_table" id="dw_table" 
+
+value="dw_table" style="width: 226px">
                 </td> 
             </tr>
             <tr>
@@ -452,7 +515,9 @@
                 	</div>
                 </td>
                 <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="Load" name="login" onclick="transform()" style="width: 86px">
+                    &nbsp;<input type="submit" value="Load" name="login" onclick="transform()" 
+
+style="width: 86px">
                 </td>
             </tr>
         </table>
