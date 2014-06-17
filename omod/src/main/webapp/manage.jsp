@@ -11,7 +11,7 @@
     padding: 2px 4px;
     border: 1px solid;
 }
-ul li {
+ ul li {
     min-width: 200px;
 }
 .dragging li.ui-state-hover {
@@ -26,6 +26,12 @@ ul li {
     cursor: move;
 }
 .connectedSortable tr:first-child {
+    cursor: default;
+}
+.joinSortable tr, .ui-sortable-helper {
+    cursor: move;
+}
+.joinSortable tr:first-child {
     cursor: default;
 }
 .ui-sortable-placeholder {
@@ -48,6 +54,16 @@ ul li {
 	    	table.deleteRow(i);
 		}
  }
+ function randomString(length, chars) {
+	  var result = '';
+	  for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+	  return result;
+ }
+ function removeElement(parent,child){
+	  var pardiv = document.getElementById(parent);
+	  var childdiv = document.getElementById(child);
+	  pardiv.removeChild(childdiv);
+ }
  // Pass the checkbox name to the function 
  function getCheckedBoxes(chkboxName) {
 	  var checkboxes = document.getElementsByName(chkboxName);
@@ -61,6 +77,61 @@ ul li {
 	  }
 	  // Return the array if it is non-empty, or null
 	  return checkboxesChecked.length > 0 ? checkboxesChecked : null;
+ }
+ function hasValue(element, value) {
+	    var results = true;
+
+	    for (var i=element.options.length-1; i >= 0; i--) (function() {
+
+	        if (element.options[i].value == value) (function() { 
+	            results = false;
+	        }());
+	    }());
+
+	    return (results);
+ };
+ function addCombo(reportID,reportName,selectID) {
+	    var textb = document.getElementById(selectID);
+	    var option = document.createElement("option");
+
+	    if (hasValue(textb, reportID)) (function() {
+
+
+	        // selected attr remove
+	        for (var i=textb.options.length-1; i >= 0; i--) (function() {
+
+	            if (textb.options[i].selected == true) (function() {
+
+	                textb.options[i].removeAttribute("selected");
+	            }());
+	        }());
+
+	        option.text = reportName;
+	        option.value = reportID;
+
+	        // selected new option element 
+	        option.setAttribute("selected", "selected");
+
+
+	        try {
+	            textb.add(option, null); //Standard
+	        } catch(error) {
+	            textb.add(option); // IE only
+	        };
+
+	        /*
+	        *  I do not understand selected added option value "" ?? 
+	        */ 
+	        //textb.value = "";
+
+	       }());
+ };
+ function clearComboBox(boxID){
+	 var select = document.getElementById(boxID);
+	 var length = select.options.length;
+	 for (i = 0; i < length; i++) {
+	   select.options[i] = null;
+	 }
  }
  function mysql_login(){  
 	 var loginParams = {
@@ -108,7 +179,7 @@ ul li {
 	  checkbox.name = "table_check"; 
 	  checkbox.value = db_info+"."+info;     // give it a name we can check on the server side
 	  TR.appendChild(checkbox);   // add the box to the element
-	  TD.innerHTML =      '<a href="#" onclick="return clickTable(\''+info+'\');">'+info+'</a>';
+	  TD.innerHTML = '<a href="#" onclick="return clickTable(\''+info+'\');">'+info+'</a>';
 	  TR.appendChild (TD);
 	  BODY.appendChild(TR);
  }
@@ -147,7 +218,8 @@ ul li {
 		if(checkedBoxes==null){ alert("None Table Selected"); }
 		else{
 			clearHTMLTable('available-column-table');
- 			clearHTMLTable('selected-column-table');	
+ 			clearHTMLTable('selected-column-table');
+ 			clearComboBox('tableSelect');
 			for(i=0;i<checkedBoxes.length;i++){
 				clickTable(checkedBoxes[i].value);
 			}
@@ -189,14 +261,51 @@ ul li {
 // 	  TR.appendChild(checkbox);   // add the box to the element
 	  var TD_DB = document.createElement('td');
 	  TD_DB.innerHTML = db_name;//set only database name
+	  TD_DB.id='dragRow';
 	  TR.appendChild (TD_DB);
 	  var TD_TABLE = document.createElement('td');
 	  TD_TABLE.innerHTML = table_name;//set only table name
+	  TD_TABLE.id='dragRow';
 	  TR.appendChild (TD_TABLE);
 	  var TD_COLUMN = document.createElement('td');
 	  TD_COLUMN.innerHTML = info;//set only column name
+	  TD_COLUMN.id='dragRow';
 	  TR.appendChild (TD_COLUMN);
 	  BODY.appendChild(TR);
+	  addCombo(table_info,table_info,"tableSelect");
+ }
+ function addJoinCondition(){
+		  //document.getElementById('chk').innerHTML=document.getElementById('joinSelect').value+" "+document.getElementById('tableSelect').value+" "+document.getElementById('onCondition').value+" "+document.getElementById('clauseStmt').value;
+		if(document.getElementById('onCondition').value==null||document.getElementById('onCondition').value==''){
+			alert('No On Join Condition Provided');
+		}
+		else{
+		  var TABLE = document.getElementById('join-conditions');
+		  var BODY = TABLE.getElementsByTagName('tbody')[0];
+		  var TR = document.createElement('tr');
+		  TR.id=randomString(12, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');// For generating a probably unique id
+		  var TD = document.createElement('td');
+		  TD.name = document.getElementById('joinSelect').value+" "+document.getElementById('tableSelect').value+" ON "+document.getElementById('onCondition').value+" "+document.getElementById('clauseStmt').value;
+		  TD.innerHTML =  '<div id="dragRow"><div name="join-condition-statement" id="'+TD.name+'">'+TD.name+'<input type="button" value="x" onClick=\'removeElement("join-add","'+TR.id+'");\'/></div></div>';
+		  TR.appendChild (TD);
+		  BODY.appendChild(TR);
+		}
+}
+ function showJoinStatement() {
+	  var checkboxes = document.getElementsByName("join-condition-statement");
+	  var checkboxesChecked = "";
+	  // loop over them all
+	  for (var i=0; i<checkboxes.length; i++) {
+	     // And stick the checked ones onto an array...
+	        checkboxesChecked+=checkboxes[i].id+" ";
+	  }
+	  document.getElementById('show-statement').innerHTML=checkboxesChecked;
+	  // Return the array if it is non-empty, or null
+	  return checkboxesChecked.length > 0 ? checkboxesChecked : null;
+}
+ function joinConditionPage(){
+	 show('join_list','column_list');
+
  }
  function transform(){
 	 var loginParams = {
@@ -233,6 +342,32 @@ ul li {
  function notImplemented(){
 	alert('Coming Soon');
  }
+ $(window).load(function(){
+	 $(document).ready(function() {
+
+	     var $tabs=$('#join-conditions')
+	     $( "tbody.joinSortable" )
+	         .sortable({
+	             connectWith: ".joinSortable",
+	             items: "> tr:not(:first)",
+	             appendTo: $tabs,
+	             helper:"clone",
+	             zIndex: 999990
+	         })
+	         .disableSelection()
+	     ;
+	     
+	     var $tab_items = $( ".nav-tabs > li", $tabs ).droppable({
+	       accept: ".joinSortable tr",
+	       hoverClass: "ui-state-hover",
+	       
+	       drop: function( event, ui ) {
+	         return false;
+	       }
+	     });
+	     
+	 });
+	 });
  $(window).load(function(){
 	 $(document).ready(function() {
 
@@ -385,11 +520,71 @@ ul li {
             		</table>
             	</th> 
    			</table>
-  		<input type="button" onclick="show('dw_log','column_list');" value="Next" />
+  		<input type="button" onclick="joinConditionPage();" value="Next" />
 		</div>
 	</center>
     <a href="#" onclick="show('table_list','column_list');">Back</a>
 </div>    
+<div id="join_list" style="display:none">    
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="4pt">
+			<b>Existing Columns</b>
+  		</font>
+ 	</div>
+	<center>
+  		<div style="background: #ffffcc; width:'100%';" align="center">
+   			<table id="join_head" align=center bgcolor="#f5f5f5">
+      			<tr>
+         			<td width="100%">Join Condition</td>
+      			</tr>
+   			</table>
+   			<table>
+   				<th>
+            		<table id='join-conditions' align=right bgcolor="#f5f5f5">  
+                		<tbody  class="joinSortable" id='join-add'>  
+                    		<tr id='dragRow' align="center">    
+                  				  <th id='dragRow' align="right">Type of JOIN</th> 
+                  				  <th id='dragRow' align="right">Table</th> 
+                  				  <th id='dragRow' align="right">ON Condition</th> 
+                  				  <th id='dragRow' align="right">Clause</th>    
+                    		</tr>
+                     		<tr>
+                      			  <th>
+ 									<select id='joinSelect'>
+  										<option value="JOIN">JOIN</option>
+  										<option value="INNER JOIN">INNER JOIN</option>
+  										<option value="LEFT JOIN">LEFT JOIN</option>
+  										<option value="LEFT OUTER JOIN">LEFT OUTER JOIN</option>
+  										<option value="RIGHT JOIN">RIGHT JOIN</option>
+  										<option value="RIGHT OUTER JOIN">RIGHT OUTER JOIN</option>
+  										<option value="FULL OUTER JOIN">FULL OUTER JOIN</option>
+  									</select> 
+   				                  </th>
+                      			  <th>
+									<select id='tableSelect'>
+									</select> 
+								  </th>
+                    			  <th>
+                    				<input type="text" name="onCondition" id='onCondition'>
+                    			  </th>
+                    			  <th>
+                    				<input type="text" name="clause" id='clauseStmt'>
+                    			  </th>
+                    		</tr> 
+                		</tbody> 
+            		</table>
+            	</th>
+            	<th>
+					<input type="button" name="add-condition" value="Add Condition" id='addCondtn' onClick='addJoinCondition();'>
+					<input type="button" name="show-condition" value="Show Statement" id='showCondtn' onClick='showJoinStatement();'>
+            	</th> 
+   			</table>
+   		<div id='show-statement'></div>
+  		<input type="button" onclick="show('dw_log','join_list');" value="Next" />
+		</div>
+	</center>
+    <a href="#" onclick="show('column_list','join_list');">Back</a>
+</div> 
 <div id="dw_log" style="display:none">
 	<div style="background: #009D8E; width:'100%';" align="center">
   		<font color="#ffffff" size="4pt">
@@ -461,6 +656,6 @@ ul li {
                 </td>
             </tr>
         </table>
-    	<a href="#" onclick="show('column_list','dw_log');">Back</a>
+    	<a href="#" onclick="show('join_list','dw_log');">Back</a>
 </div>
 <%@ include file="/WEB-INF/template/footer.jsp"%>
