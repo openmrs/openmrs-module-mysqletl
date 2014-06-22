@@ -29,42 +29,42 @@ public class ETLModuleActivator implements ModuleActivator {
 	 * @see ModuleActivator#willRefreshContext()
 	 */
 	public void willRefreshContext() {
-		log.info("Refreshing ETL Module Module");
+		log.info("Refreshing ETL Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#contextRefreshed()
 	 */
 	public void contextRefreshed() {
-		log.info("ETL Module Module refreshed");
+		log.info("ETL Module refreshed");
 	}
 	
 	/**
 	 * @see ModuleActivator#willStart()
 	 */
 	public void willStart() {
-		log.info("Starting ETL Module Module");
+		log.info("Starting ETL Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#started()
 	 */
 	public void started() {
-		log.info("ETL Module Module started");
+		log.info("ETL Module started");
 	}
 	
 	/**
 	 * @see ModuleActivator#willStop()
 	 */
 	public void willStop() {
-		log.info("Stopping ETL Module Module");
+		log.info("Stopping ETL Module");
 	}
 	
 	/**
 	 * @see ModuleActivator#stopped()
 	 */
 	public void stopped() {
-		log.info("ETL Module Module stopped");
+		log.info("ETL Module stopped");
 	}
 		
 }

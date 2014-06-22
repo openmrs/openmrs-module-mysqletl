@@ -10,7 +10,7 @@
 
 	<artifactId>mysqletl-api</artifactId>
 	<packaging>jar</packaging>
-	<name>ETL Module Module API</name>
+	<name>ETL Module API</name>
 	<description>API project for ETLModule</description>
 
 	<dependencies>
