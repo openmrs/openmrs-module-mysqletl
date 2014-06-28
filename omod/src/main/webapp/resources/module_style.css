@@ -1,0 +1,78 @@
+#dragRow {
+    text-align: right;
+    padding: 2px 4px;
+    border: 1px solid;
+}
+ ul li {
+    min-width: 200px;
+}
+.dragging li.ui-state-hover {
+    min-width: 240px;
+}
+.dragging .ui-state-hover a {
+    color:green !important;
+    font-weight: bold;
+}
+
+.connectedSortable tr, .ui-sortable-helper {
+    cursor: move;
+}
+.connectedSortable tr:first-child {
+    cursor: default;
+}
+.joinSortable tr, .ui-sortable-helper {
+    cursor: move;
+}
+.joinSortable tr:first-child {
+    cursor: default;
+}
+.ui-sortable-placeholder {
+    background: yellow;
+}
+
+  #my-progressbar-container {
+      
+      position: relative;
+      width: 200px; /* my-progressbar width */
+      padding: 20px 5px 20px 5px; /* Space for progresbar-texts */
+      background-color: transparent;
+      
+  }
+  
+  .progressbar-text {
+      
+      position: absolute;
+      font-family: Arial;
+      font-size: 10px;
+      color: #333333;
+      
+  }
+  
+  .progressbar-text.top-right {
+      
+      top:5px;
+      right:7px;
+      
+  }
+  
+  .progressbar-text.top-left {
+      
+      top:5px;
+      left:7px;
+      
+  }
+  
+  .progressbar-text.bottom-right {
+      
+      bottom:5px;
+      right:7px;
+      
+  }
+  
+  .progressbar-text.bottom-left {
+      
+      bottom:5px;
+      left:7px;
+      
+  }
+  
