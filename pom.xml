@@ -131,6 +131,14 @@
 			<name>OpenMRS Nexus Repository</name>
 			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
 		</repository>
+		  <repository>
+    		<id>spring-milestones</id>
+    			<url>http://repo.springsource.org/libs-milestone/</url>
+  		</repository>
+  		<repository>
+    		<id>cloudera-repo-releases</id>
+    		<url>https://repository.cloudera.com/artifactory/repo/</url>
+  		</repository>
 	</repositories>
 
 	<pluginRepositories>
