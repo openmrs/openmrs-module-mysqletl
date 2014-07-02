@@ -110,6 +110,20 @@
 			  }
 			});
  }
+ function hive_login(){  
+	 var loginParams = {
+	 user: document.getElementById('hiveuser').value,
+     pass: document.getElementById('hivepass').value,
+ 	 host: document.getElementById('hivehost').value,
+ 	 port: document.getElementById('hiveport').value
+	 
+ 	};
+	  	DWRMySQLLoginService.loginHive(loginParams,{
+			  callback:function(reslt) { 
+				   alert(reslt);
+				  }
+				});
+ }
  function addDatabaseRow(info){
 	  var TABLE = document.getElementById('db_table');
 	  var BODY = TABLE.getElementsByTagName('tbody')[0];
@@ -292,6 +306,12 @@
 		 callback:function(result){ 
 			 //if transformation takes place without any interruption, success message will return
 			 		document.getElementById('my-progressbar-text1').innerHTML = result;
+			 		var nextButton = document.createElement("input");
+		            nextButton.setAttribute("type","button");
+		            nextButton.value = "Execute Query on Hive ?";
+		            nextButton.onclick = "show('hive_query_page','process_status');";
+		            var getDiv = document.getElementById('showProgressBar');
+		            getDiv.appendChild(nextButton);
 					  }
 					});	 
  }

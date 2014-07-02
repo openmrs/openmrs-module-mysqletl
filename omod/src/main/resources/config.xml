@@ -56,6 +56,7 @@
                 <include method="getTables"/>
                 <include method="getColumns"/>
                 <include method="goTransform"/>
+                <include method="loginHive"/>
             </create>
             <convert converter="bean" match="${project.parent.groupId}.${project.parent.artifactId}.dwr.LoginParams"/>
         </allow>
@@ -66,7 +67,8 @@
             DWRMySQLLoginService.login_mysql(LoginParams params);
             DWRMySQLLoginService.get_tables(LoginParams params,String db_name);
             DWRMySQLLoginService.getColumns(LoginParams params,String db_name,String table_name);
-            DWRMySQLLoginService.goTransform(LoginParams params,String serverType,String db_name,String table_name,List<String> column_list) 
+            DWRMySQLLoginService.goTransform(LoginParams params,String serverType,String db_name,String table_name,List<String> column_list);
+            DWRMySQLLoginService.login_hive(LoginParams params);
             ]]>
         </signatures>
     </dwr>
