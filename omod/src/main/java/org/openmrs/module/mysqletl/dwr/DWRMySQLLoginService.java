@@ -70,5 +70,5 @@ public class DWRMySQLLoginService {
 		catch(Exception e){
 		    return "Failed";
 	    }
-	}
+	}	
 }

@@ -1,6 +1,13 @@
 package org.openmrs.module.mysqletl.tools;
 
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
 import net.neoremind.sshxcute.core.ConnBean;
+import net.neoremind.sshxcute.core.Result;
 import net.neoremind.sshxcute.core.SSHExec;
 import net.neoremind.sshxcute.exception.TaskExecFailException;
 import net.neoremind.sshxcute.task.CustomTask;
@@ -32,5 +39,44 @@ public class SSHClient {
 		CustomTask sampleTask = new ExecCommand("sqoop import --connect "+ConnectionURL+" --username="+MySQLUser+" --password="+MySQLPwd+" --table "+TableName+" --hive-import -m 1 -- --schema "+DatawarehouseDB);
 		ssh.exec(sampleTask);
 		ssh.disconnect();	
+	}
+	//This will recieve the results in a 2-D array for the HiveQueries made in the module
+	public static String[][] getQueryResult(String Query) throws Exception{
+		ConnBean cb = new ConnBean(host, username,password);
+		SSHExec ssh = SSHExec.getInstance(cb);          
+		ssh.connect();
+		//Resultant 2-D array will include column name with row data
+		//Query trimming for executing batch statement
+		CustomTask sampleTask = new ExecCommand("hive -e 'set hive.cli.print.header=true; "+Query.trim().replace('\n', ' ')+"' -S");
+		Result res = ssh.exec(sampleTask);
+		if(res.isSuccess){
+	        System.out.println("Return code: " + res.rc);
+	        //System.out.println("sysout: " + res.sysout);
+	        //simply outputting text
+	        PrintWriter out = new PrintWriter("hivedata.tsv");
+	        //write String to it, just like you would to any output stream:
+	        out.println(res.sysout);
+	        out.close();
+	        // Create Array From the tsv data
+	        String[][] resultArray;
+	        List<String> lines = Files.readAllLines(Paths.get("hivedata.tsv"), StandardCharsets.UTF_8);
+	        //lines.removeAll(Arrays.asList("", null)); // <- remove empty lines
+
+	        resultArray = new String[lines.size()][]; 
+
+	        for(int i =0; i<lines.size(); i++){
+	          resultArray[i] = lines.get(i).split("\t"); //tab-separated
+	        }
+			ssh.disconnect();
+			return resultArray;
+		}
+	    else
+	    {
+	        System.out.println("Return code: " + res.rc);
+	        System.out.println("error message: " + res.error_msg);
+			ssh.disconnect();	
+	        return null;
+	    }
+
 	}
 }
