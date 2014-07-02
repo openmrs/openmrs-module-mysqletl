@@ -17,6 +17,7 @@
  <div id="mysql_log">
 	<p>Hello ${user.systemId}!. Please input MySQL Login Details</p>
 	<p id='change'>Click Login</p>
+	<a href="#" onclick="show('hive_query_page','mysql_log');">Jump to Hive Query Page</a>
 	 	<div style="background: #009D8E; width:'100%';" align="center">
   			<font color="#ffffff" size="4pt">
 				<b>MySQL Login</b>
@@ -282,7 +283,7 @@
 			<b>Status</b>
 		</font>
 	</div>
-	<div align="center">
+	<div id="showProgressBar" align="center">
 	    <div id="my-progressbar-container"  align="center">
             
             <div id="my-progressbar-text1" class="progressbar-text top-left">Initializing...</div>
@@ -296,5 +297,58 @@
         </div>
     </div>
      	<a href="#" onclick="show('dw_log','process_status');">Back</a>
+</div>
+<div id="hive_query_page" style="display:none">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="4pt">
+			<b>Hive Login</b>
+		</font>
+	</div>
+	<div align="center">
+
+  	<table align=center bgcolor="#f5f5f5" style="width: 316px; height: 100px">
+            <tr>
+                <td style="width: 184px;">
+                    Username
+                </td>
+                <td style="width: 5px">
+                	<input type="text" name="user" id="hiveuser" value="root" style="width: 226px">
+                </td> 
+            </tr>
+            <tr>
+                <td style="width: 184px; height: 1px;">
+  					Password
+  				</td>
+                <td style="width: 5px; height: 1px">
+                	<input type="password" name="pass" id="hivepass" value="hadoop" style="width: 226px">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 184px;">
+					Host 
+                </td>
+                <td style="width: 5px">
+                	<input type="text" name="host" id="hivehost" value="localhost" style="width: 227px">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 184px; height: 3px;">
+					Port
+  				</td>
+                <td style="width: 5px; height: 3px">
+                	<input type="text" name="port" id="hiveport" value="22" style="width: 226px">
+                </td> 
+            </tr>
+
+            <tr>
+                <td style="width: 184px; height: 3px;">
+                </td>
+                <td style="width: 5px; height: 3px">
+                    &nbsp;<input type="submit" value="Load" name="login" onclick="hive_login();" style="width: 86px">
+                </td>
+            </tr>
+        </table>
+    </div>
+     	<a href="#" onclick="show('mysql_log','hive_query_page');">Back</a>
 </div>
 <%@ include file="/WEB-INF/template/footer.jsp"%>

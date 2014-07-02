@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import org.openmrs.module.mysqletl.dwr.LoginParams;
+
 import net.neoremind.sshxcute.core.ConnBean;
 import net.neoremind.sshxcute.core.Result;
 import net.neoremind.sshxcute.core.SSHExec;
@@ -14,12 +16,13 @@ import net.neoremind.sshxcute.task.CustomTask;
 import net.neoremind.sshxcute.task.impl.ExecCommand;
 
 public class SSHClient {
-	private static String host, username, password;
+	private static String host, username, password, port;
 	
 	public static void SetSSHParameters(String Host, String Username, String Password){
 		host = Host;
 		username = Username;
 		password = Password;
+		port = "22"; // Should change to dynamic later, it is default in many case
 	}
 	public static String getIpAddress() throws TaskExecFailException{
 		ConnBean cb = new ConnBean(host, username, password);
@@ -78,5 +81,28 @@ public class SSHClient {
 	        return null;
 	    }
 
+	}
+	public static String login(LoginParams params) {
+		try{
+			SetSSHParameters(params.gethost(),params.getuser(),params.getpass());
+			ConnBean cb = new ConnBean(params.gethost(),params.getuser(),params.getpass());
+			SSHExec ssh = SSHExec.getInstance(cb);
+			ssh.connect();
+			CustomTask sampleTask = new ExecCommand("echo test");
+			Result res = ssh.exec(sampleTask);
+			if(res.isSuccess){
+				ssh.disconnect();
+				return String.valueOf(res.rc);
+			}
+			else {
+					try{ssh.disconnect();}
+					catch(Exception e){	return e.getMessage();};
+					return res.error_msg;
+				}
+		}
+		catch(Exception e){
+			return e.getMessage();
+		}
+		// TODO Auto-generated method stub
 	}
 }
