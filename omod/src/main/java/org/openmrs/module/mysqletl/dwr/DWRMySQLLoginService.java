@@ -35,7 +35,7 @@ public class DWRMySQLLoginService {
 	public List<String> getColumns(LoginParams params,String db_name,String table_name) throws APIException, ClassNotFoundException, SQLException  {
 		return MySQLClient.getColumns(params, db_name, table_name);
 	}
-	public String goTransform(LoginParams params,String serverType,String db_name,String table_name,List<String> column_list) throws APIException  {
+	public String sqoopTransform(LoginParams params,String serverType,String db_name,String table_name,List<String> column_list, String join_cndtn) throws APIException  {
 		try{ 
 			HiveClient.HiveParameters(params); //Set Hive Parameters
 			//Setting Connection to MySQL
@@ -56,10 +56,13 @@ public class DWRMySQLLoginService {
 			String create_query = "create database if not exists "+db_name;
 			stmt.execute(create_query);
 			//Create extracted data in form of table
-			String query = "CREATE TABLE "+db_name+"."+table_name+" AS SELECT "+column_list.toString().substring(1, column_list.toString().length()-1)+" FROM "+tableList.toString().substring(1, tableList.toString().length()-1);
+			String query = "CREATE TABLE "+db_name+"."+table_name
+							+" AS SELECT "+column_list.toString().substring(1, column_list.toString().length()-1)
+							+" FROM "+tableList.toString().substring(1, tableList.toString().length()-1)
+							+" "+join_cndtn.trim().replace('\n', ' ');
 			stmt.execute(query);
 			//Set SSH Connection Parameters
-			SSHClient.SetSSHParameters(params.gethost(),params.getuser(),params.getpass());
+			SSHClient.SetSSHParameters(params.gethost(),params.getuser(),params.getpass(),params.getport());
 			//Get Own IP Address which where we are client to machine running Hive and SSH
 			String Host = SSHClient.getIpAddress();
 			//grant Privileges to client IP to connect to MYSQL DB on remote machine

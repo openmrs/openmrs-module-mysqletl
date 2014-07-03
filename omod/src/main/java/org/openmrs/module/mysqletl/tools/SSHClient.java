@@ -9,6 +9,7 @@ import java.util.List;
 import org.openmrs.module.mysqletl.dwr.LoginParams;
 
 import net.neoremind.sshxcute.core.ConnBean;
+import net.neoremind.sshxcute.core.IOptionName;
 import net.neoremind.sshxcute.core.Result;
 import net.neoremind.sshxcute.core.SSHExec;
 import net.neoremind.sshxcute.exception.TaskExecFailException;
@@ -18,11 +19,12 @@ import net.neoremind.sshxcute.task.impl.ExecCommand;
 public class SSHClient {
 	private static String host, username, password, port;
 	
-	public static void SetSSHParameters(String Host, String Username, String Password){
+	public static void SetSSHParameters(String Host, String Username, String Password, String Port){
 		host = Host;
 		username = Username;
 		password = Password;
-		port = "22"; // Should change to dynamic later, it is default in many case
+		port = Port; // Should change to dynamic later, it is default in many case
+		SSHExec.setOption(IOptionName.SSH_PORT_NUMBER, port);
 	}
 	public static String getIpAddress() throws TaskExecFailException{
 		ConnBean cb = new ConnBean(host, username, password);
@@ -36,7 +38,7 @@ public class SSHClient {
 	public static void sqoopImport(String Host, String Port, String MySQLUser, String MySQLPwd, String DatabaseName, String TableName, String DatawarehouseDB) throws Exception{
 		String ConnectionURL = "jdbc:mysql://"+Host+":"+Port+"/"+DatabaseName;
 		// Initialize a ConnBean object, parameter list is ip, username, password
-		ConnBean cb = new ConnBean(host, username,password);
+		ConnBean cb = new ConnBean(host,username,password);
 		SSHExec ssh = SSHExec.getInstance(cb);          
 		ssh.connect();
 		CustomTask sampleTask = new ExecCommand("sqoop import --connect "+ConnectionURL+" --username="+MySQLUser+" --password="+MySQLPwd+" --table "+TableName+" --hive-import -m 1 -- --schema "+DatawarehouseDB);
@@ -84,8 +86,8 @@ public class SSHClient {
 	}
 	public static String login(LoginParams params) {
 		try{
-			SetSSHParameters(params.gethost(),params.getuser(),params.getpass());
-			ConnBean cb = new ConnBean(params.gethost(),params.getuser(),params.getpass());
+			SetSSHParameters(params.gethost(),params.getuser(),params.getpass(),params.getport());
+			ConnBean cb = new ConnBean(host,username,password);
 			SSHExec ssh = SSHExec.getInstance(cb);
 			ssh.connect();
 			CustomTask sampleTask = new ExecCommand("echo test");

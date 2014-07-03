@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.openmrs.module</groupId>
 		<artifactId>mysqletl</artifactId>
-		<version>1.8.3</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>mysqletl-api</artifactId>

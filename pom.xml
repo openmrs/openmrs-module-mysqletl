@@ -4,7 +4,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>mysqletl</artifactId>
-	<version>1.8.3</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>ETL Module</name>
 	<description>This module performs an ETL from MySQL OpenMRS database to datawarehouse.</description>
