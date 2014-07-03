@@ -90,9 +90,10 @@
  }
 function createTable(tableData,div_id) {
 	  var populated = document.getElementById(div_id);
+	  populated.innerHTML="";
 	  var table = document.createElement('table')
 	    , tableBody = document.createElement('tbody');
-
+	  table.className = "CSSTableGenerator";
 	  tableData.forEach(function(rowData) {
 	    var row = document.createElement('tr');
 
@@ -332,7 +333,8 @@ function createTable(tableData,div_id) {
 	    //rows would be accessed using the "row" variable assigned in the for loop
 		 column_list.push(row.cells[0].innerHTML+'.'+row.cells[1].innerHTML+'.'+row.cells[2].innerHTML);
 	 }
-	 DWRMySQLLoginService.goTransform(loginParams,serverType,db_name,table_name,column_list,{ 
+	 var join_cndtn = showJoinStatement();
+	 DWRMySQLLoginService.sqoopTransform(loginParams,serverType,db_name,table_name,column_list,join_cndtn,{ 
 		 callback:function(result){ 
 			 //if transformation takes place without any interruption, success message will return
 			 		document.getElementById('my-progressbar-text1').innerHTML = result;

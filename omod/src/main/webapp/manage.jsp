@@ -218,23 +218,23 @@
   	<table align=center bgcolor="#f5f5f5" style="width: 316px; height: 100px">
             <tr>
                 <td style="width: 184px;">
-                    Username
+                    SSH Username
                 </td>
                 <td style="width: 5px">
-                	<input type="text" name="user" id="dwuser" style="width: 226px">
+                	<input type="text" name="user" id="dwuser" value="root" style="width: 226px">
                 </td> 
             </tr>
             <tr>
                 <td style="width: 184px; height: 1px;">
-  					Password
+  					SSH Password
   				</td>
                 <td style="width: 5px; height: 1px">
-                	<input type="password" name="pass" id="dwpass" style="width: 226px">
+                	<input type="password" name="pass" id="dwpass" value="hadoop" style="width: 226px">
                 </td>
             </tr>
             <tr>
                 <td style="width: 184px;">
-					Host 
+					SSH Host 
                 </td>
                 <td style="width: 5px">
                 	<input type="text" name="host" id="dwhost" value="localhost" style="width: 227px">
@@ -242,10 +242,10 @@
             </tr>
             <tr>
                 <td style="width: 184px; height: 3px;">
-					Port
+					SSH Port
   				</td>
                 <td style="width: 5px; height: 3px">
-                	<input type="text" name="port" id="dwport" value="10000" style="width: 226px">
+                	<input type="text" name="port" id="dwport" value="22" style="width: 226px">
                 </td> 
             </tr>
             <tr>
