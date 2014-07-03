@@ -26,6 +26,9 @@ public class DWRMySQLLoginService {
 	public String loginHive(LoginParams params) throws APIException  {
 		return SSHClient.login(params);
 	}
+	public String[][] queryHive(String Query) throws Exception  {
+		return SSHClient.getQueryResult(Query);
+	}
 	public List<String> getTables(LoginParams params,String db_name) throws APIException, ClassNotFoundException, SQLException  {
 		return MySQLClient.getTables(params, db_name);
 	}

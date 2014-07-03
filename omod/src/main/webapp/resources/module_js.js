@@ -88,6 +88,26 @@
 	   select.options[i] = null;
 	 }
  }
+function createTable(tableData,div_id) {
+	  var populated = document.getElementById(div_id);
+	  var table = document.createElement('table')
+	    , tableBody = document.createElement('tbody');
+
+	  tableData.forEach(function(rowData) {
+	    var row = document.createElement('tr');
+
+	    rowData.forEach(function(cellData) {
+	      var cell = document.createElement('td');
+	      cell.appendChild(document.createTextNode(cellData));
+	      row.appendChild(cell);
+	    });
+
+	    tableBody.appendChild(row);
+	  });
+
+	  table.appendChild(tableBody);
+	  populated.appendChild(table);
+}  
  function mysql_login(){  
 	 var loginParams = {
 	 user: document.getElementById('user').value,
@@ -120,7 +140,17 @@
  	};
 	  	DWRMySQLLoginService.loginHive(loginParams,{
 			  callback:function(reslt) { 
-				   alert(reslt);
+				  if(parseInt(reslt)==0){show('hive_query_editor','hive_query_page');}
+				  else alert('Invalid SSH Credentials');
+				  }
+				});
+ }
+ function hive_query(){  
+	 var query = document.getElementById('queryholder').value;
+	  	DWRMySQLLoginService.queryHive(query,{
+			  callback:function(reslt) { 
+				  	show('hive_data','hive_query_editor');
+				  	createTable(reslt,'populated_data');
 				  }
 				});
  }

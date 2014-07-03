@@ -351,4 +351,36 @@
     </div>
      	<a href="#" onclick="show('mysql_log','hive_query_page');">Back</a>
 </div>
+<div id="hive_query_editor" style="display:none">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="4pt">
+			<b>Query Editor</b>
+		</font>
+	</div>
+	<div align="center">
+		<textarea name="queryholder" id="queryholder" cols="100" rows="20"></textarea>
+		<div align="center">
+			<input type='button' onclick='hive_query();' value='Execute Query'/>
+			<input type='button' onclick='notImplemented();' value='Save Query'/>
+			<input type='button' onclick='notImplemented();' value='Load Query'/>
+		</div>
+		<h2 align="center">Logs</h2>
+		<textarea align="center" name="querylogs" id="querylogs" cols="100" rows="5" disabled="true"></textarea>
+	</div>
+     	<a href="#" onclick="show('hive_query_page','hive_query_editor');">Back</a>
+</div>
+<div id="hive_data" style="display:none">
+	<div style="background: #009D8E; width:'100%';" align="center">
+  		<font color="#ffffff" size="4pt">
+			<b>Populated Hive Data</b>
+		</font>
+	</div>
+	<div align="center">
+		<div id='populated_data'></div>
+		<input type='button' id='savexls' onclick='notImplemented();' value='Save as XLS'/>
+		<input type='button' id='savecsv' onclick='notImplemented();' value='Save as CSV'/>
+		<input type='button' id='savetsv' onclick='notImplemented();' value='Save as TSV'/>
+	</div>
+     	<a href="#" onclick="show('hive_query_editor','hive_data');">Back</a>
+</div>
 <%@ include file="/WEB-INF/template/footer.jsp"%>
