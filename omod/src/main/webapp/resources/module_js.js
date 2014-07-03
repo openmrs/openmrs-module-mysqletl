@@ -126,7 +126,7 @@ function createTable(tableData,div_id) {
 		 		  }
 				  show('db_list','mysql_log');
 				}else{
-					document.getElementById('change').innerHTML = 'Login Failed';
+					alert('Login Failed');
 				}
 			  }
 			});
@@ -164,8 +164,8 @@ function createTable(tableData,div_id) {
 	  checkbox.type = "checkbox";    // make the element a checkbox
 	  checkbox.name = "db_check"; 
 	  checkbox.value = info;     // give it a name we can check on the server side
-	  TR.appendChild(checkbox);   // add the box to the element
-	  TD.innerHTML =      '<a href="#" onclick="clickDatabase(\''+info+'\');">'+info+'</a>';
+	  TD.appendChild(checkbox);   // add the box to the element
+	  TD.innerHTML = TD.innerHTML + '  <a href="#" style="color : black;text-decoration: none;" onclick="clickDatabase(\''+info+'\');">'+info+'</a>';
 	  TR.appendChild (TD);
 	  BODY.appendChild(TR);
  }
@@ -178,8 +178,8 @@ function createTable(tableData,div_id) {
 	  checkbox.type = "checkbox";    // make the element a checkbox
 	  checkbox.name = "table_check"; 
 	  checkbox.value = db_info+"."+info;     // give it a name we can check on the server side
-	  TR.appendChild(checkbox);   // add the box to the element
-	  TD.innerHTML = '<a href="#" onclick="return clickTable(\''+info+'\');">'+info+'</a>';
+	  TD.appendChild(checkbox);   // add the box to the element
+	  TD.innerHTML = TD.innerHTML+ '  <a href="#" style="color : black;text-decoration: none;" onclick="return clickTable(\''+info+'\');">'+info+'</a>';
 	  TR.appendChild (TD);
 	  BODY.appendChild(TR);
  }
