@@ -10,7 +10,7 @@ The amount of data generated is getting increased day by day and so as the appet
 2. Select the data one wants to load in datawarehouse as historical data.
 3. Login to DW and load it with timestamps.
 
-###Predictive Analysis**
+###Predictive Analysis
 1. Login to datawarehouse and load the selected data with timestamps.
 2. Run the analytics query on the datawarehouse.
 3. Fetch Back the Results and show it.
