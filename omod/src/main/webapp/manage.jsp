@@ -15,9 +15,6 @@
 <script type="text/javascript" src="<openmrs:contextPath/>/dwr/interface/DWRMySQLLoginService.js"> </script>
 
  <div id="mysql_log">
-	<p>Hello ${user.systemId}!. Please input MySQL Login Details</p>
-	<p id='change'>Click Login</p>
-	<a href="#" onclick="show('hive_query_page','mysql_log');">Jump to Hive Query Page</a>
 	 	<div style="background: #009D8E; width:'100%';" align="center">
   			<font color="#ffffff" size="4pt">
 				<b>MySQL Login</b>
@@ -29,7 +26,7 @@
                     Username
                 </td>
                 <td style="width: 5px">
-                	<input type="text" name="user" id="user" style="width: 226px">
+                	<input type="text" name="user" id="user" value="openmrs" style="width: 226px">
                 </td>
                 
             </tr>
@@ -64,6 +61,7 @@
                 </td>
             </tr>
   		</table>
+  		<a href="#" onclick="show('hive_query_page','mysql_log');">Skip to Hive Query</a>
 </div>
 <div id="db_list" style="display:none">  
 	<div style="background: #009D8E; width:'100%';" align="center">
@@ -71,12 +69,12 @@
 			<b>Existing Database</b>
   		</font>
  	</div>
- 
+ 	<br>
  	<center>
-  		<div style="background: #ffffcc; width:'100%';" align="center">
-   		<table id="db_table" align=center bgcolor="#f5f5f5">
+  		<div align="center">
+   		<table id="db_table" align=center class="CSSTableGenerator">
       		<tr>
-         		<td width="50%">Select Databases</td>
+      			<td>Check Databases</td>
       		</tr>
    		</table>
    		<input type="button" onclick="selectDatabases();" value="Next" />
@@ -91,10 +89,10 @@
  		</font>
 	</div>
  	<center>
-  		<div style="background: #ffffcc; width:'100%';" align="center">
-   			<table id="table_table" align=center bgcolor="#f5f5f5">
+  		<div align="center"><br>
+   			<table id="table_table" align=center class="CSSTableGenerator">
       			<tr>
-         			<td width="50%">Select Tables</td>
+      				<td>Check Tables</td>
       			</tr>
    			</table>
  		<input type="button" onclick="selectTables();" value="Next" />
@@ -110,7 +108,7 @@
  	</div>
 	<center>
   		<div style="background: #ffffcc; width:'100%';" align="center">
-   			<table id="column_table" align=center bgcolor="#f5f5f5">
+   			<table id="column_table" align=center bgcolor="#f5f5f5"  class="CSSTableGenerator">
       			<tr>
          			<td width="50%">Select Columns</td>
       			</tr>
@@ -266,9 +264,6 @@
             </tr>
             <tr>
                 <td style="width: 184px; height: 3px;">
-                	<div id='loginStatus'>
-                		Status
-                	</div>
                 </td>
                 <td style="width: 5px; height: 3px">
                     &nbsp;<input type="submit" value="Load" name="login" onclick="transform()" style="width: 86px">
@@ -375,6 +370,7 @@
 			<b>Populated Hive Data</b>
 		</font>
 	</div>
+	<br>
 	<div align="center">
 		<div id='populated_data'></div>
 		<input type='button' id='savexls' onclick='notImplemented();' value='Save as XLS'/>
