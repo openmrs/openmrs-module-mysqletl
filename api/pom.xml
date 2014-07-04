@@ -81,4 +81,8 @@
 		</testResources>
 	</build>
 
+	<organization>
+		<url>http://openmrs.org</url>
+		<name>OpenMRS</name>
+	</organization>
 </project>

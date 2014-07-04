@@ -7,7 +7,6 @@
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>ETL Module</name>
-	<description>This module performs an ETL from MySQL OpenMRS database to datawarehouse.</description>
 	<url>https://wiki.openmrs.org/display/docs/ETL+Module+Module+Module</url>
 	
 	<developers>
@@ -33,7 +32,7 @@
 	</modules>
 	
 	<properties>
-		<openMRSVersion>1.8.2</openMRSVersion>
+		<openMRSVersion>1.8.0</openMRSVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -152,4 +151,5 @@
 		</pluginRepository>
 	</pluginRepositories>
 
+	<description>The amount of data generated is getting increased day by day and so as the appetite for finding the information from data as well. Growing appetite for data analysis can't be achieved by transactional databases. With organization thriving towards separating their data warehouse compliance from transactional databases so, that they can track the historical data better, the need for ETL tool is getting increased everyday. The intention of this project is to have a ETL module to interact with multiple DW compliance over which predictive modeling code could run. So, that healthcare provider can check upon the predictive modeling result based on historical data they are having/loading.</description>
 </project>

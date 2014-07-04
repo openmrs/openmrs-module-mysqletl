@@ -206,4 +206,8 @@
 		</plugins>
 	</build>
 
+	<organization>
+		<name>OpenMRS</name>
+		<url>http://openmrs.org</url>
+	</organization>
 </project>
