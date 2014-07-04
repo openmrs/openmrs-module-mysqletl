@@ -167,6 +167,14 @@ var tableToExcel = (function() {
 				  }
 				});
  }
+ function saveQuery(textAreaId){//Sava Query data to local Storage
+	 var value = document.getElementById(textAreaId).value;
+	 	 $.jStorage.set(textAreaId,value); 			 
+ }
+ function loadQuery(textAreaId){//Load Query data from local Storage
+	 var element = document.getElementById(textAreaId);
+	 element.value =  $.jStorage.get(textAreaId); 			 
+ } 
  function addDatabaseRow(info){
 	  var TABLE = document.getElementById('db_table');
 	  var BODY = TABLE.getElementsByTagName('tbody')[0];

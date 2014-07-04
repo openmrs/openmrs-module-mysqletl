@@ -8,6 +8,7 @@
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/control/progressbar.min.js"/>
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/jquery.min.js" />
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/jquery-ui.min.js" />
+<openmrs:htmlInclude file="/moduleResources/mysqletl/lib/jstorage.js" />
 <openmrs:htmlInclude file="/moduleResources/mysqletl/css/lib/control/progressbar.css" />
 
 <openmrs:htmlInclude file="/moduleResources/mysqletl/module_style.css"/>
@@ -353,8 +354,8 @@
 		<textarea name="queryholder" id="queryholder" cols="100" rows="20"></textarea>
 		<div align="center">
 			<input type='button' onclick='hive_query();' value='Execute Query'/>
-			<input type='button' onclick='notImplemented();' value='Save Query'/>
-			<input type='button' onclick='notImplemented();' value='Load Query'/>
+			<input type='button' onclick='saveQuery("queryholder");' value='Save Query'/>
+			<input type='button' onclick='loadQuery("queryholder");' value='Load Query'/>
 		</div>
 		<h2 align="center">Logs</h2>
 		<textarea align="center" name="querylogs" id="querylogs" cols="100" rows="5" disabled="true"></textarea>
