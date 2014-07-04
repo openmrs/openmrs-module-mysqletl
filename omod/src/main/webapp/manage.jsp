@@ -14,8 +14,8 @@
 <openmrs:htmlInclude file="/moduleResources/mysqletl/module_js.js"/>
 <script type="text/javascript" src="<openmrs:contextPath/>/dwr/interface/DWRMySQLLoginService.js"> </script>
 
- <div id="mysql_log">
-	 	<div style="background: #009D8E; width:'100%';" align="center">
+ <div id="mysql_log" style="border:1px solid  #009D8E;">
+	 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   			<font color="#ffffff" size="4pt">
 				<b>MySQL Login</b>
 			</font>
@@ -63,45 +63,43 @@
   		</table>
   		<a href="#" onclick="show('hive_query_page','mysql_log');">Skip to Hive Query</a>
 </div>
-<div id="db_list" style="display:none">  
-	<div style="background: #009D8E; width:'100%';" align="center">
+<div id="db_list" style="display:none;border:1px solid  #009D8E;">  
+	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
 			<b>Existing Database</b>
   		</font>
  	</div>
  	<br>
  	<center>
-  		<div align="center">
+  		<div align="center" style="height:300px;overflow:auto;margin-top:20px;">
    		<table id="db_table" align=center class="CSSTableGenerator">
       		<tr>
-      			<td>Check Databases</td>
       		</tr>
    		</table>
-   		<input type="button" onclick="selectDatabases();" value="Next" />
  		</div>
+ 		 <br><input type="button" onclick="selectDatabases();" value="Next" />
 	</center>
     <a href="#" onclick="show('mysql_log','db_list');">Back</a>
 </div>
-<div id="table_list" style="display:none">
-	<div style="background: #009D8E; width:'100%';" align="center">
+<div id="table_list" style="display:none;border:1px solid  #009D8E;">
+	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
 			<b>Existing Tables</b>
  		</font>
 	</div>
  	<center>
-  		<div align="center"><br>
+  		<div align="center" style="height:300px;overflow:auto;margin-top:20px;"><br>
    			<table id="table_table" align=center class="CSSTableGenerator">
       			<tr>
-      				<td>Check Tables</td>
       			</tr>
    			</table>
- 		<input type="button" onclick="selectTables();" value="Next" />
  		</div>
+ 		<br><input type="button" onclick="selectTables();" value="Next" />
 	</center>
     <a href="#" onclick="show('db_list','table_list');">Back</a>
 </div>
-<div id="column_list" style="display:none">    
-	<div style="background: #009D8E; width:'100%';" align="center">
+<div id="column_list" style="display:none;border:1px solid  #009D8E;">    
+	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
 			<b>Existing Columns</b>
   		</font>
@@ -110,7 +108,6 @@
   		<div style="background: #ffffcc; width:'100%';" align="center">
    			<table id="column_table" align=center bgcolor="#f5f5f5"  class="CSSTableGenerator">
       			<tr>
-         			<td width="50%">Select Columns</td>
       			</tr>
    			</table>
    			<table>
@@ -142,8 +139,8 @@
 	</center>
     <a href="#" onclick="show('table_list','column_list');">Back</a>
 </div>    
-<div id="join_list" style="display:none">    
-	<div style="background: #009D8E; width:'100%';" align="center">
+<div id="join_list" style="display:none;border:1px solid  #009D8E;">    
+	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
 			<b>Existing Columns</b>
   		</font>
@@ -202,8 +199,8 @@
 	</center>
     <a href="#" onclick="show('column_list','join_list');">Back</a>
 </div> 
-<div id="dw_log" style="display:none">
-	<div style="background: #009D8E; width:'100%';" align="center">
+<div id="dw_log" style="display:none;border:1px solid  #009D8E;">
+	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
 			<b>Datawarehouse Login</b>
 		</font>
@@ -216,7 +213,7 @@
   	<table align=center bgcolor="#f5f5f5" style="width: 316px; height: 100px">
             <tr>
                 <td style="width: 184px;">
-                    SSH Username
+                    Username
                 </td>
                 <td style="width: 5px">
                 	<input type="text" name="user" id="dwuser" value="root" style="width: 226px">
@@ -224,7 +221,7 @@
             </tr>
             <tr>
                 <td style="width: 184px; height: 1px;">
-  					SSH Password
+  					Password
   				</td>
                 <td style="width: 5px; height: 1px">
                 	<input type="password" name="pass" id="dwpass" value="hadoop" style="width: 226px">
@@ -272,8 +269,8 @@
         </table>
     	<a href="#" onclick="show('join_list','dw_log');">Back</a>
 </div>
-<div id="process_status" style="display:none">
-	<div style="background: #009D8E; width:'100%';" align="center">
+<div id="process_status" style="display:noneborder:1px solid  #009D8E;">
+	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
 			<b>Status</b>
 		</font>
@@ -293,8 +290,8 @@
     </div>
      	<a href="#" onclick="show('dw_log','process_status');">Back</a>
 </div>
-<div id="hive_query_page" style="display:none">
-	<div style="background: #009D8E; width:'100%';" align="center">
+<div id="hive_query_page" style="display:none;border:1px solid  #009D8E;">
+	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
 			<b>Hive Login</b>
 		</font>
@@ -320,7 +317,7 @@
             </tr>
             <tr>
                 <td style="width: 184px;">
-					Host 
+					SSH Host 
                 </td>
                 <td style="width: 5px">
                 	<input type="text" name="host" id="hivehost" value="localhost" style="width: 227px">
@@ -328,7 +325,7 @@
             </tr>
             <tr>
                 <td style="width: 184px; height: 3px;">
-					Port
+					SSH Port
   				</td>
                 <td style="width: 5px; height: 3px">
                 	<input type="text" name="port" id="hiveport" value="22" style="width: 226px">
@@ -339,15 +336,15 @@
                 <td style="width: 184px; height: 3px;">
                 </td>
                 <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="Load" name="login" onclick="hive_login();" style="width: 86px">
+                    &nbsp;<input type="submit" value="Login" name="login" onclick="hive_login();" style="width: 86px">
                 </td>
             </tr>
         </table>
     </div>
      	<a href="#" onclick="show('mysql_log','hive_query_page');">Back</a>
 </div>
-<div id="hive_query_editor" style="display:none">
-	<div style="background: #009D8E; width:'100%';" align="center">
+<div id="hive_query_editor" style="display:none;border:1px solid  #009D8E;">
+	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
 			<b>Query Editor</b>
 		</font>
@@ -364,15 +361,15 @@
 	</div>
      	<a href="#" onclick="show('hive_query_page','hive_query_editor');">Back</a>
 </div>
-<div id="hive_data" style="display:none">
-	<div style="background: #009D8E; width:'100%';" align="center">
+<div id="hive_data" style="display:none;border:1px solid  #009D8E;">
+	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
 			<b>Populated Hive Data</b>
 		</font>
 	</div>
 	<br>
 	<div align="center">
-		<div id='populated_data'></div>
+		<div id='populated_data' ></div>
 		<input type='button' id='savexls' onclick='notImplemented();' value='Save as XLS'/>
 		<input type='button' id='savecsv' onclick='notImplemented();' value='Save as CSV'/>
 		<input type='button' id='savetsv' onclick='notImplemented();' value='Save as TSV'/>
