@@ -61,19 +61,20 @@ public class DWRMySQLLoginService {
 							+" FROM "+tableList.toString().substring(1, tableList.toString().length()-1)
 							+" "+join_cndtn.trim().replace('\n', ' ');
 			stmt.execute(query);
-			//Set SSH Connection Parameters
-			SSHClient.SetSSHParameters(params.gethost(),params.getuser(),params.getpass(),params.getport());
-			//Get Own IP Address which where we are client to machine running Hive and SSH
-			String Host = SSHClient.getIpAddress();
-			//grant Privileges to client IP to connect to MYSQL DB on remote machine
-			MySQLClient.grantPrivileges(Host);
-			//create database in hive
-			//HiveClient.createDatabase(params.gethost(), params.getport(), "", "", db_name);
-			//Sqoop Import Data
-			SSHClient.sqoopImport(Host,MySQLClient.getport(),MySQLClient.getuser(),MySQLClient.getpass(),db_name,table_name,db_name);
-			//Drop Temporary created database
-			String dropQuery = "drop database "+db_name;
-			stmt.execute(dropQuery);
+			//if MYSQL Selected it will not drop the temporary table
+			if(serverType==ServerType.HIVE.name()){
+				//Set SSH Connection Parameters
+				SSHClient.SetSSHParameters(params.gethost(),params.getuser(),params.getpass(),params.getport());
+				//Get Own IP Address which where we are client to machine running Hive and SSH
+				String Host = SSHClient.getIpAddress();
+				//grant Privileges to client IP to connect to MYSQL DB on remote machine
+				MySQLClient.grantPrivileges(Host);
+				//Sqoop Import Data
+				SSHClient.sqoopImport(Host,MySQLClient.getport(),MySQLClient.getuser(),MySQLClient.getpass(),db_name,table_name,db_name);
+				//Drop Temporary created database
+				String dropQuery = "drop database "+db_name;
+				stmt.execute(dropQuery);
+			}
 		    return "Success";
 		}
 		catch(Exception e){

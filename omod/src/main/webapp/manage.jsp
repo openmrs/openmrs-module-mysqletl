@@ -207,9 +207,8 @@
 		</font>
 	</div>
 	<div  align="center">
-		<input type="radio" name="type" value="mysql" checked="true">MySQL
-		<input type="radio" name="type" value="hive2">Hive Server 2
-		<input type="radio" name="type" value="hive">Hive Server
+		<input type="radio" name="type" value="HIVE" checked="true">Hive Server
+		<input type="radio" name="type" value="MYSQL">MySQL
 	</div>
   	<table align=center bgcolor="#f5f5f5" style="width: 316px; height: 100px">
             <tr>
@@ -370,10 +369,10 @@
 	</div>
 	<br>
 	<div align="center">
-		<div id='populated_data' ></div>
-		<input type='button' id='savexls' onclick="tableToExcel('autoCreateTable', 'Hive Result')" value='Save as XLS'/>
-		<input type='button' id='savecsv' onclick='notImplemented();' value='Save as CSV'/>
-		<input type='button' id='savetsv' onclick='notImplemented();' value='Save as TSV'/>
+		<div id='populated_data'></div>
+		<input type='button' id='savexls' onclick="tableToExcel('autoCreateTable', 'Hive Result')" value='Download XLS'/>
+		<input type='button' id='savecsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.csv");' value='Export to CSV'/>
+		<input type='button' id='savetsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.tsv");' value='Export to TSV'/>
 	</div>
      	<a href="#" onclick="show('hive_query_editor','hive_data');">Back</a>
 </div>
