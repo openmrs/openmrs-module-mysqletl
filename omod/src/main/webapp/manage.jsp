@@ -269,7 +269,7 @@
         </table>
     	<a href="#" onclick="show('join_list','dw_log');">Back</a>
 </div>
-<div id="process_status" style="display:noneborder:1px solid  #009D8E;">
+<div id="process_status" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
 			<b>Status</b>
@@ -370,7 +370,7 @@
 	<br>
 	<div align="center">
 		<div id='populated_data' ></div>
-		<input type='button' id='savexls' onclick='notImplemented();' value='Save as XLS'/>
+		<input type='button' id='savexls' onclick="tableToExcel('autoCreateTable', 'Hive Result')" value='Save as XLS'/>
 		<input type='button' id='savecsv' onclick='notImplemented();' value='Save as CSV'/>
 		<input type='button' id='savetsv' onclick='notImplemented();' value='Save as TSV'/>
 	</div>
