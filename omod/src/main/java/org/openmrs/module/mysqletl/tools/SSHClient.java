@@ -55,16 +55,18 @@ public class SSHClient {
 		CustomTask sampleTask = new ExecCommand("hive -e 'set hive.cli.print.header=true; "+Query.trim().replace('\n', ' ')+"' -S");
 		Result res = ssh.exec(sampleTask);
 		if(res.isSuccess){
-	        System.out.println("Return code: " + res.rc);
-	        //System.out.println("sysout: " + res.sysout);
-	        //simply outputting text
-	        PrintWriter out = new PrintWriter("hivedata.tsv");
+			String ModulePath = "tomcat/webapps/openmrs-standalone/WEB-INF/view/module/mysqletl/resources/"; 
+	        //saving data as tsv & csv
+	        PrintWriter out = new PrintWriter(ModulePath+"download.tsv");
 	        //write String to it, just like you would to any output stream:
 	        out.println(res.sysout);
 	        out.close();
+	        out = new PrintWriter(ModulePath+"download.csv");
+	        out.println(res.sysout.replace('\t', ','));
+	        out.close();
 	        // Create Array From the tsv data
 	        String[][] resultArray;
-	        List<String> lines = Files.readAllLines(Paths.get("hivedata.tsv"), StandardCharsets.UTF_8);
+	        List<String> lines = Files.readAllLines(Paths.get(ModulePath+"download.tsv"), StandardCharsets.UTF_8);
 	        //lines.removeAll(Arrays.asList("", null)); // <- remove empty lines
 
 	        resultArray = new String[lines.size()][]; 

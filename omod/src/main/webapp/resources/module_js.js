@@ -427,7 +427,7 @@ var tableToExcel = (function() {
 
  window.onload = function(){
 
-     progressBar = new ProgressBar("my-progressbar", {'width':'200px', 'height':'6px'});
+     progressBar = new ProgressBar("my-progressbar", {'width':'500px', 'height':'6px'});
      
      // Start initial Mode
      progressBar.initialMode(true);
