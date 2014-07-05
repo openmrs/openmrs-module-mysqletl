@@ -65,12 +65,12 @@
         <signatures>
             <![CDATA[
             import  ${project.parent.groupId}.${project.parent.artifactId}.dwr.DWRMySQLLoginService;
-            DWRMySQLLoginService.login_mysql(LoginParams params);
-            DWRMySQLLoginService.get_tables(LoginParams params,String db_name);
+            DWRMySQLLoginService.loginMySQL(LoginParams params);
+            DWRMySQLLoginService.getTables(LoginParams params,String db_name);
             DWRMySQLLoginService.getColumns(LoginParams params,String db_name,String table_name);
             DWRMySQLLoginService.sqoopTransform(LoginParams params,String serverType,String db_name,String table_name,List<String> column_list,String join_cndtn);
-            DWRMySQLLoginService.login_hive(LoginParams params);
-            DWRMySQLLoginService.query_hive(String Query);
+            DWRMySQLLoginService.loginHive(LoginParams params);
+            DWRMySQLLoginService.queryHive(String Query);
             ]]>
         </signatures>
     </dwr>

@@ -37,7 +37,6 @@ public class DWRMySQLLoginService {
 	}
 	public String sqoopTransform(LoginParams params,String serverType,String db_name,String table_name,List<String> column_list, String join_cndtn) throws APIException  {
 		try{ 
-			HiveClient.HiveParameters(params); //Set Hive Parameters
 			//Setting Connection to MySQL
 			Class.forName("com.mysql.jdbc.Driver");
 			String connectionURL = "jdbc:mysql://"+MySQLClient.gethost()+":"+MySQLClient.getport()+"/";
@@ -59,7 +58,7 @@ public class DWRMySQLLoginService {
 			String query = "CREATE TABLE "+db_name+"."+table_name
 							+" AS SELECT "+column_list.toString().substring(1, column_list.toString().length()-1)
 							+" FROM "+tableList.toString().substring(1, tableList.toString().length()-1)
-							+" "+(join_cndtn.isEmpty()?" ":join_cndtn.trim().replace('\n', ' '));
+							+" "+join_cndtn.replace('\n', ' ');
 			stmt.execute(query);
 			//if MYSQL Selected it will not drop the temporary table
 			if(serverType.equalsIgnoreCase(ServerType.HIVE.name().toString().trim())){
@@ -70,7 +69,7 @@ public class DWRMySQLLoginService {
 				//grant Privileges to client IP to connect to MYSQL DB on remote machine
 				stmt.execute(MySQLClient.grantPrivileges(Host));
 				//Sqoop Import Data
-				SSHClient.sqoopImport(Host,MySQLClient.getport(),MySQLClient.getuser(),MySQLClient.getpass(),db_name,table_name,db_name);
+				SSHClient.sqoopImport(Host,MySQLClient.getport(),MySQLClient.getuser(),"\""+MySQLClient.getpass()+"\"",db_name,table_name,db_name);
 				//Drop Temporary created database
 				String dropQuery = "drop database "+db_name;
 				stmt.execute(dropQuery);

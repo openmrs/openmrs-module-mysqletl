@@ -275,8 +275,8 @@
 			<b>Status</b>
 		</font>
 	</div>
-	<div id="showProgressBar" align="center">
-	    <div id="my-progressbar-container"  align="center">
+	<div id="showProgressBar">
+	    <div id="my-progressbar-container">
             
             <div id="my-progressbar-text1" class="progressbar-text top-left">Loading...</div>
             <div id="my-progressbar-text2" class="progressbar-text top-right"></div>
