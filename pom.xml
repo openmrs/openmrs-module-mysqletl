@@ -151,5 +151,5 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<description>The amount of data generated is getting increased day by day and so as the appetite for finding the information from data as well. Growing appetite for data analysis can't be achieved by transactional databases. With organization thriving towards separating their data warehouse compliance from transactional databases so, that they can track the historical data better, the need for ETL tool is getting increased everyday. The intention of this project is to have a ETL module to interact with multiple DW compliance over which predictive modeling code could run. So, that healthcare provider can check upon the predictive modeling result based on historical data they are having/loading.</description>
+	<description>ETL module to interact with multiple DW compliance over which predictive modeling code could run. </description>
 </project>

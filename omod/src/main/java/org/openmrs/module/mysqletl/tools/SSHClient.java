@@ -23,8 +23,8 @@ public class SSHClient {
 		host = Host;
 		username = Username;
 		password = Password;
-		port = Port; // Should change to dynamic later, it is default in many case
-		SSHExec.setOption(IOptionName.SSH_PORT_NUMBER, port);
+		port = Port;
+		SSHExec.setOption(IOptionName.SSH_PORT_NUMBER, Integer.parseInt(port));
 	}
 	public static String getIpAddress() throws TaskExecFailException{
 		ConnBean cb = new ConnBean(host, username, password);
