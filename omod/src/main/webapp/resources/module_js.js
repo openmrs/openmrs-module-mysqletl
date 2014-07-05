@@ -309,16 +309,16 @@ var tableToExcel = (function() {
 		}
 }
  function showJoinStatement() {
-	  var checkboxes = document.getElementsByName("join-condition-statement");
-	  var checkboxesChecked = " ";
+	  var joinStatements = document.getElementsByName("join-condition-statement");
+	  var completeJoinStatement = "  ";
 	  // loop over them all
-	  for (var i=0; i<checkboxes.length; i++) {
+	  for (var i=0; i<joinStatements.length; i++) {
 	     // And stick the checked ones onto an array...
-	        checkboxesChecked+=checkboxes[i].id+" ";
+		  completeJoinStatement+=joinStatements[i].id+" ";
 	  }
-	  document.getElementById('show-statement').innerHTML=checkboxesChecked;
-	  // Return the array if it is non-empty, or null
-	  return checkboxesChecked.length > 0 ? checkboxesChecked : null;
+	  document.getElementById('show-statement').innerHTML=completeJoinStatement;
+	  // 
+	  return completeJoinStatement;
 }
  function joinConditionPage(){
 	 show('join_list','column_list');
@@ -354,16 +354,19 @@ var tableToExcel = (function() {
 	 DWRMySQLLoginService.sqoopTransform(loginParams,serverType,db_name,table_name,column_list,join_cndtn,{ 
 		 callback:function(result){ 
 			 //if transformation takes place without any interruption, success message will return
-			 		document.getElementById('my-progressbar-text1').innerHTML = result;
-			 		if(result=='Success')
-			 			var nextButton = document.createElement("input");
-			 			nextButton.setAttribute("type","button");
-			 			nextButton.id='nextToQuery';
-			 			nextButton.value = "Execute Query on Hive ?";
-			 			nextButton.onclick = "show('hive_query_page','process_status');";
-			 			var getDiv = document.getElementById('showProgressBar');
-			 			removeElement('showProgressBar','nextToQuery');
-			 			getDiv.appendChild(nextButton);
+			 			document.getElementById('my-progressbar-text1').innerHTML = result;
+			 			if(result=='Success'){
+			 				removeElement('showProgressBar','nextToQuery');
+			 				var nextButton = document.createElement("input");
+			 				nextButton.setAttribute("type","button");
+			 				nextButton.id='nextToQuery';
+			 				nextButton.value = "Execute Query on Hive ?";
+			 				nextButton.onclick = function(){
+			 					show('hive_query_page','process_status');
+			 				};
+			 				var getDiv = document.getElementById('showProgressBar');
+			 				getDiv.appendChild(nextButton);
+			 			}
 					  }
 					});	 
  }
@@ -427,7 +430,7 @@ var tableToExcel = (function() {
 
  window.onload = function(){
 
-     progressBar = new ProgressBar("my-progressbar", {'width':'200px', 'height':'6px'});
+     progressBar = new ProgressBar("my-progressbar", {'width':'720px', 'height':'6px'});
      
      // Start initial Mode
      progressBar.initialMode(true);
