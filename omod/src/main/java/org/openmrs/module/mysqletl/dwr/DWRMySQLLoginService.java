@@ -59,16 +59,16 @@ public class DWRMySQLLoginService {
 			String query = "CREATE TABLE "+db_name+"."+table_name
 							+" AS SELECT "+column_list.toString().substring(1, column_list.toString().length()-1)
 							+" FROM "+tableList.toString().substring(1, tableList.toString().length()-1)
-							+" "+join_cndtn.trim().replace('\n', ' ');
+							+" "+(join_cndtn.isEmpty()?" ":join_cndtn.trim().replace('\n', ' '));
 			stmt.execute(query);
 			//if MYSQL Selected it will not drop the temporary table
-			if(serverType==ServerType.HIVE.name()){
+			if(serverType.equalsIgnoreCase(ServerType.HIVE.name().toString().trim())){
 				//Set SSH Connection Parameters
 				SSHClient.SetSSHParameters(params.gethost(),params.getuser(),params.getpass(),params.getport());
 				//Get Own IP Address which where we are client to machine running Hive and SSH
 				String Host = SSHClient.getIpAddress();
 				//grant Privileges to client IP to connect to MYSQL DB on remote machine
-				MySQLClient.grantPrivileges(Host);
+				stmt.execute(MySQLClient.grantPrivileges(Host));
 				//Sqoop Import Data
 				SSHClient.sqoopImport(Host,MySQLClient.getport(),MySQLClient.getuser(),MySQLClient.getpass(),db_name,table_name,db_name);
 				//Drop Temporary created database

@@ -107,7 +107,7 @@
  	</div>
 	<center>
   		<div style="background: #ffffcc; width:'100%';" align="center">
-   			<table id="column_table" align=center bgcolor="#f5f5f5"  class="CSSTableGenerator">
+   			<table id="column_table" align=center bgcolor="#f5f5f5">
       			<tr>
       			</tr>
    			</table>
@@ -278,10 +278,10 @@
 	<div id="showProgressBar" align="center">
 	    <div id="my-progressbar-container"  align="center">
             
-            <div id="my-progressbar-text1" class="progressbar-text top-left">Initializing...</div>
+            <div id="my-progressbar-text1" class="progressbar-text top-left">Loading...</div>
             <div id="my-progressbar-text2" class="progressbar-text top-right"></div>
             
-            <div id="my-progressbar"></div>
+            <div id="my-progressbar" align="center"></div>
             
             <div id="my-progressbar-text3" class="progressbar-text bottom-left"></div>
             <div id="my-progressbar-text4" class="progressbar-text bottom-right"></div>

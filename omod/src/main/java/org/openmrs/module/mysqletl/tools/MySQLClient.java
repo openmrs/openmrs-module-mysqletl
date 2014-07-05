@@ -41,9 +41,9 @@ public class MySQLClient {
 	public static void setport(String Port) { port = Port; }
 	public static String getport() { return port; }
 
-	public static void grantPrivileges(String Host) throws APIException  {
+	public static String grantPrivileges(String Host) throws APIException  {
 		String Query = "grant all privileges on *.* to "+username+"@'%' identified by '"+password+"'";
-		executeMySQLQuery(Query);
+		return Query;
 	}
 	
 	public static void executeMySQLQuery(String Query) throws APIException  {
