@@ -35,7 +35,7 @@
   #my-progressbar-container {
       
       position: relative;
-      width: 20px; /* my-progressbar width */
+      width: 200px; /* my-progressbar width */
       padding: 20px 5px 20px 5px; /* Space for progresbar-texts */
       background-color: transparent;
       

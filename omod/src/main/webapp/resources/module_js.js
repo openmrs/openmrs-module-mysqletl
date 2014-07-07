@@ -350,7 +350,8 @@ var tableToExcel = (function() {
 	    //rows would be accessed using the "row" variable assigned in the for loop
 		 column_list.push(row.cells[0].innerHTML+'.'+row.cells[1].innerHTML+'.'+row.cells[2].innerHTML);
 	 }
-	 var join_cndtn = showJoinStatement();
+	 //Adding Raw Condition statement and Join Condition Table Statement
+	 var join_cndtn = document.getElementById('rawCondition').value+" "+showJoinStatement();
 	 DWRMySQLLoginService.sqoopTransform(loginParams,serverType,db_name,table_name,column_list,join_cndtn,{ 
 		 callback:function(result){ 
 			 //if transformation takes place without any interruption, success message will return
@@ -430,7 +431,7 @@ var tableToExcel = (function() {
 
  window.onload = function(){
 
-     progressBar = new ProgressBar("my-progressbar", {'width':'720px', 'height':'6px'});
+     progressBar = new ProgressBar("my-progressbar", {'width':'200px', 'height':'6px'});
      
      // Start initial Mode
      progressBar.initialMode(true);

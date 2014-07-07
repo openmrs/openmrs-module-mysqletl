@@ -63,6 +63,7 @@
             </tr>
   		</table>
   		<a href="#" onclick="show('hive_query_page','mysql_log');">Skip to Hive Query</a>
+  		<a href="#" onclick="show('process_status','mysql_log');">Skip to Hive Query</a>
 </div>
 <div id="db_list" style="display:none;border:1px solid  #009D8E;">  
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -156,13 +157,13 @@
    			<table>
    				<th>
             		<table id='join-conditions' align=right bgcolor="#f5f5f5">  
-                		<tbody  class="joinSortable" id='join-add'>  
-                    		<tr id='dragRow' align="center">    
+                		<thead id='dragRow' align="center">    
                   				  <th id='dragRow' align="right">Type of JOIN</th> 
                   				  <th id='dragRow' align="right">Table</th> 
                   				  <th id='dragRow' align="right">ON Condition</th> 
                   				  <th id='dragRow' align="right">Clause</th>    
-                    		</tr>
+                    	</thead>
+                		<tbody  class="joinSortable" id='join-add'>  
                      		<tr>
                       			  <th>
  									<select id='joinSelect'>
@@ -194,6 +195,9 @@
 					<input type="button" name="show-condition" value="Show Statement" id='showCondtn' onClick='showJoinStatement();'>
             	</th> 
    			</table>
+   		<div align="center">
+   				Raw SQL Join Condition<br> <input type="text" name="rawCondition" id='rawCondition' value=" " style="width=80%;">
+   		</div>
    		<div id='show-statement'></div>
   		<input type="button" onclick="show('dw_log','join_list');" value="Next" />
 		</div>
@@ -275,13 +279,13 @@
 			<b>Status</b>
 		</font>
 	</div>
-	<div id="showProgressBar">
-	    <div id="my-progressbar-container">
+	<div id="showProgressBar" align="center">
+	    <div id="my-progressbar-container" align="center">
             
             <div id="my-progressbar-text1" class="progressbar-text top-left">Loading...</div>
             <div id="my-progressbar-text2" class="progressbar-text top-right"></div>
             
-            <div id="my-progressbar" align="center"></div>
+            <div id="my-progressbar"></div>
             
             <div id="my-progressbar-text3" class="progressbar-text bottom-left"></div>
             <div id="my-progressbar-text4" class="progressbar-text bottom-right"></div>
