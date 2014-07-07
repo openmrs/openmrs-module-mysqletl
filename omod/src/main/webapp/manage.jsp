@@ -63,7 +63,6 @@
             </tr>
   		</table>
   		<a href="#" onclick="show('hive_query_page','mysql_log');">Skip to Hive Query</a>
-  		<a href="#" onclick="show('process_status','mysql_log');">Skip to Hive Query</a>
 </div>
 <div id="db_list" style="display:none;border:1px solid  #009D8E;">  
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -155,15 +154,14 @@
       			</tr>
    			</table>
    			<table>
-   				<th>
-            		<table id='join-conditions' align=right bgcolor="#f5f5f5">  
+   				<th><table>
                 		<thead id='dragRow' align="center">    
                   				  <th id='dragRow' align="right">Type of JOIN</th> 
                   				  <th id='dragRow' align="right">Table</th> 
                   				  <th id='dragRow' align="right">ON Condition</th> 
                   				  <th id='dragRow' align="right">Clause</th>    
                     	</thead>
-                		<tbody  class="joinSortable" id='join-add'>  
+                    	<tbody>  
                      		<tr>
                       			  <th>
  									<select id='joinSelect'>
@@ -187,6 +185,10 @@
                     				<input type="text" name="clause" id='clauseStmt'>
                     			  </th>
                     		</tr> 
+                		</tbody>    				
+   					</table>
+            		<table id='join-conditions' align=right bgcolor="#f5f5f5">  
+                		<tbody  class="joinSortable" id='join-add'>  
                 		</tbody> 
             		</table>
             	</th>
