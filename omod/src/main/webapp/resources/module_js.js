@@ -198,11 +198,13 @@ var tableToExcel = (function() {
 	  	
  }
  function hive_query(){  
-	 var query = document.getElementById('queryholder').value;
+	 var Query = document.getElementById('queryholder').value;
 		$.ajax({  
 		    type : "Post",   
 		    url : "query_hive.form",   
-		    data : query,  
+		    data : {
+		    		query: Query
+		    },
 		    success : function(reslt) {  
 			  	show('hive_data','hive_query_editor');
 			  	createTable(reslt,'populated_data');
@@ -558,18 +560,20 @@ var tableToExcel = (function() {
  var progressBar;
 
  window.onload = function(){
+	 try{
 
-     progressBar = new ProgressBar("my-progressbar", {'width':'200px', 'height':'6px'});
+		 progressBar = new ProgressBar("my-progressbar", {'width':'200px', 'height':'6px'});
      
-     // Start initial Mode
-     progressBar.initialMode(true);
+		 // Start initial Mode
+		 progressBar.initialMode(true);
      
-     // CHANGE OPTIONS
-     //progressBar.setOptionValue(ProgressBar.OPTION_NAME.COLOR_ID, ProgressBar.OPTION_VALUE.COLOR_ID.BLACK);
-     //progressBar.setOptionValue(ProgressBar.OPTION_NAME.OPACITY, 0.2);
-     //progressBar.setPercent(60);
+		 // CHANGE OPTIONS
+		 //progressBar.setOptionValue(ProgressBar.OPTION_NAME.COLOR_ID, ProgressBar.OPTION_VALUE.COLOR_ID.BLACK);
+		 //progressBar.setOptionValue(ProgressBar.OPTION_NAME.OPACITY, 0.2);
+		 //progressBar.setPercent(60);
      
-     // Stop Initial Mode
-     //progressBar.initialMode(false);
-     
+		 // Stop Initial Mode
+		 //progressBar.initialMode(false);
+	 }
+	 catch(err){} //In case of no need of load of progress bar
  }
