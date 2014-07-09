@@ -29,6 +29,15 @@ public class MySQLClient {
 		password = params.getpass();
 	}
 	
+	public static LoginParams toLoginParams(){
+		LoginParams params = new LoginParams(); 
+		params.setuser(username);
+		params.setpass(password);
+		params.sethost(host);
+		params.setport(port);
+		return params;
+	}
+	
 	public static void setuser(String User) { username = User; }
 	public static String getuser() { return username; }
 	
