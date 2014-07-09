@@ -58,7 +58,7 @@
             <tr>
                 <td style="width: 184px; height: 3px;"></td>
                 <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="Login" name="login" onclick="mysql_login()" style="width: 86px">
+                    &nbsp;<input type="button" value="Login" name="login" onclick="mysql_login()" style="width: 86px">
                 </td>
             </tr>
   		</table>

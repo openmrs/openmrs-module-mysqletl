@@ -131,6 +131,26 @@ var tableToExcel = (function() {
  	 port: document.getElementById('port').value
 	 
  	};
+	$.ajax({  
+	    type : "Post",   
+	    url : "login_mysql.form",   
+	    data : loginParams,  
+	    success : function(db_list) {  
+			if(db_list!=null){
+				clearHTMLTable('db_table');
+				for(i=0; i<db_list.length;i++){
+					addDatabaseRow(db_list[i]);
+			 	}
+				show('db_list','mysql_log');
+			}else{
+				alert('Login Failed');
+			}
+	    },  
+	    error : function(e) {  
+	    alert('Error: ' + e);   
+	   }  
+	}); 
+	/*
   	DWRMySQLLoginService.loginMySQL(loginParams,{
 		  callback:function(db_list) { 
 				if(db_list!=null){
@@ -144,7 +164,9 @@ var tableToExcel = (function() {
 				}
 			  }
 			});
+	*/
  }
+
  function hive_login(){  
 	 var loginParams = {
 	 user: document.getElementById('hiveuser').value,
@@ -153,21 +175,50 @@ var tableToExcel = (function() {
  	 port: document.getElementById('hiveport').value
 	 
  	};
+		$.ajax({  
+		    type : "Post",   
+		    url : "login_hive.form",   
+		    data : loginParams,  
+		    success : function(reslt) {  
+				  if(parseInt(reslt)==0){show('hive_query_editor','hive_query_page');}
+				  else alert('Invalid SSH Credentials');
+		    },  
+		    error : function(e) {  
+		    alert('Error: ' + e);   
+		   }  
+		}); 
+/*
 	  	DWRMySQLLoginService.loginHive(loginParams,{
 			  callback:function(reslt) { 
 				  if(parseInt(reslt)==0){show('hive_query_editor','hive_query_page');}
 				  else alert('Invalid SSH Credentials');
 				  }
 				});
+*/  	
+	  	
  }
  function hive_query(){  
 	 var query = document.getElementById('queryholder').value;
+		$.ajax({  
+		    type : "Post",   
+		    url : "query_hive.form",   
+		    data : query,  
+		    success : function(reslt) {  
+			  	show('hive_data','hive_query_editor');
+			  	createTable(reslt,'populated_data');
+		    },  
+		    error : function(e) {  
+		    alert('Error: ' + e);   
+		   }  
+		}); 
+		/*
 	  	DWRMySQLLoginService.queryHive(query,{
 			  callback:function(reslt) { 
 				  	show('hive_data','hive_query_editor');
 				  	createTable(reslt,'populated_data');
 				  }
 				});
+		*/
  }
  function saveQuery(textAreaId){//Sava Query data to local Storage
 	 var value = document.getElementById(textAreaId).value;
@@ -217,12 +268,33 @@ var tableToExcel = (function() {
 	 
 }
  function clickDatabase(db_name){
+	 /*
 	 var loginParams = {
 			 user: document.getElementById('user').value,
 		     pass: document.getElementById('pass').value,
 		 	 host: document.getElementById('host').value,
 		 	 port: document.getElementById('port').value 
-		 	};	 
+		 	};
+	*/
+	 $.ajax({  
+		    type : "Post",   
+		    url : "get_tables.form",   
+		    data : {
+		    		dbname:db_name
+		    	},  
+		    success : function(table_list) {  
+ 					show('table_list','db_list');							
+ 					if(table_list!=null){
+						for(i=0; i<table_list.length;i++){
+							addTableRow(table_list[i],db_name);
+				  		}
+					}
+		    },  
+		    error : function(e) {  
+		    alert('Error: ' + e);   
+		   }  
+	 });
+	 /*
 	 DWRMySQLLoginService.getTables(loginParams,db_name,{
 		 		callback:function(table_list){ 
 	     				show('table_list','db_list');							
@@ -233,7 +305,7 @@ var tableToExcel = (function() {
 						}
 					  }
 					});
-			 
+	*/	 
  }
  function selectTables(){
 		var checkedBoxes = getCheckedBoxes("table_check");
@@ -249,14 +321,17 @@ var tableToExcel = (function() {
 	 
  }
  function clickTable(table_info){
+	 /*
 	 var loginParams = {
 			 user: document.getElementById('user').value,
 		     pass: document.getElementById('pass').value,
 		 	 host: document.getElementById('host').value,
 		 	 port: document.getElementById('port').value 
 		 	};	 
+	*/
 	 var db_name = table_info.substring(0,table_info.indexOf('.'));
 	 var table_name = table_info.substring(table_info.indexOf('.')+1);
+	 /*
 	 DWRMySQLLoginService.getColumns(loginParams,db_name,table_name,{ 
 		 callback:function(column_list){ 
 	     				show('column_list','table_list');				
@@ -268,7 +343,29 @@ var tableToExcel = (function() {
 						  }
 						}
 					  }
-					});			 
+					});
+	*/
+	 $.ajax({  
+		    type : "Post",   
+		    url : "get_columns.form",   
+		    data : {
+		    		dbname: db_name,
+		    		tablename: table_name
+		    	},  
+		    success : function(column_list) {  
+ 				show('column_list','table_list');				
+				if(column_list!=null){
+					//add columns in available column table
+				  for(i=0; i<column_list.length;i++){
+						addColumnRow(column_list[i], table_info);
+						//Passing table_info results [db_name].[table_name].[column_name] so from multiple database and tables column can be selected
+				  }
+				}
+		    },  
+		    error : function(e) {  
+		    alert('Error: ' + e);   
+		   }  
+	 });
  }
  function addColumnRow(info,table_info){
 	  var db_name = table_info.substring(0,table_info.indexOf('.'));
@@ -326,12 +423,7 @@ var tableToExcel = (function() {
  }
  function transform(){
 	 show('process_status','dw_log');
-	 var loginParams = {
-			 user: document.getElementById('dwuser').value,
-		     pass: document.getElementById('dwpass').value,
-		 	 host: document.getElementById('dwhost').value,
-		 	 port: document.getElementById('dwport').value 
-		 	};	 
+
 	 var servers = document.getElementsByName('type');
 	 var serverType;
 	 for(var i = 0; i < servers.length; i++){
@@ -352,6 +444,7 @@ var tableToExcel = (function() {
 	 }
 	 //Adding Raw Condition statement and Join Condition Table Statement
 	 var join_cndtn = document.getElementById('rawCondition').value+" "+showJoinStatement();
+/*
 	 DWRMySQLLoginService.sqoopTransform(loginParams,serverType,db_name,table_name,column_list,join_cndtn,{ 
 		 callback:function(result){ 
 			 //if transformation takes place without any interruption, success message will return
@@ -369,7 +462,42 @@ var tableToExcel = (function() {
 			 				getDiv.appendChild(nextButton);
 			 			}
 					  }
-					});	 
+					});
+*/
+	 $.ajax({  
+		    type : "Post",   
+		    url : "sqoop_transform.form",   
+		    data : {
+				 	user: document.getElementById('dwuser').value,
+				 	pass: document.getElementById('dwpass').value,
+				 	host: document.getElementById('dwhost').value,
+				 	port: document.getElementById('dwport').value,
+		    		servertype: serverType,
+		    		dbname: db_name,
+		    		tablename: table_name,
+		    		columnlist: column_list,
+		    		joincndtn: join_cndtn
+		    	},  
+		    success : function(result) {  
+				 //if transformation takes place without any interruption, success message will return
+	 			document.getElementById('my-progressbar-text1').innerHTML = result;
+	 			if(result=='Success'){
+	 				removeElement('showProgressBar','nextToQuery');
+	 				var nextButton = document.createElement("input");
+	 				nextButton.setAttribute("type","button");
+	 				nextButton.id='nextToQuery';
+	 				nextButton.value = "Execute Query on Hive ?";
+	 				nextButton.onclick = function(){
+	 					show('hive_query_page','process_status');
+	 				};
+	 				var getDiv = document.getElementById('showProgressBar');
+	 				getDiv.appendChild(nextButton);
+	 			}
+		    },  
+		    error : function(e) {  
+		    alert('Error: ' + e);   
+		   }  
+	 });
  }
  function notImplemented(){
 	alert('Coming Soon');
