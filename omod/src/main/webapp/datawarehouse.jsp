@@ -16,7 +16,7 @@
 <div id="hive_query_page" style="border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
-			<b>Hive Login</b>
+			<b><spring:message code="mysqletl.page.title.hivelogin"/></b>
 		</font>
 	</div>
 	<div align="center">
@@ -24,7 +24,7 @@
   	<table align=center bgcolor="#f5f5f5" style="width: 316px; height: 100px">
             <tr>
                 <td style="width: 184px;">
-                    Username
+                    <spring:message code="mysqletl.credentials.username"/>
                 </td>
                 <td style="width: 5px">
                 	<input type="text" name="user" id="hiveuser" value="root" style="width: 226px">
@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <td style="width: 184px; height: 1px;">
-  					Password
+                    <spring:message code="mysqletl.credentials.password"/>
   				</td>
                 <td style="width: 5px; height: 1px">
                 	<input type="password" name="pass" id="hivepass" value="hadoop" style="width: 226px">
@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <td style="width: 184px;">
-					SSH Host 
+                    <spring:message code="mysqletl.credentials.ssh.host"/>
                 </td>
                 <td style="width: 5px">
                 	<input type="text" name="host" id="hivehost" value="localhost" style="width: 227px">
@@ -48,7 +48,7 @@
             </tr>
             <tr>
                 <td style="width: 184px; height: 3px;">
-					SSH Port
+					<spring:message code="mysqletl.credentials.ssh.port"/>
   				</td>
                 <td style="width: 5px; height: 3px">
                 	<input type="text" name="port" id="hiveport" value="22" style="width: 226px">
@@ -59,43 +59,44 @@
                 <td style="width: 184px; height: 3px;">
                 </td>
                 <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="Login" name="login" onclick="hive_login();" style="width: 86px">
+                    &nbsp;<input type="submit" value="<spring:message code="mysqletl.label.login"/>" name="login" onclick="hive_login();" style="width: 86px">
                 </td>
             </tr>
         </table>
     </div>
+     	<a href="#" onclick="show('mysql_log','hive_query_page');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="hive_query_editor" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
-			<b>Query Editor</b>
+			<b><spring:message code="mysqletl.page.title.hive.query"/></b>
 		</font>
 	</div>
 	<div align="center">
 		<textarea name="queryholder" id="queryholder" cols="100" rows="20"></textarea>
 		<div align="center">
-			<input type='button' onclick='hive_query();' value='Execute Query'/>
-			<input type='button' onclick='saveQuery("queryholder");' value='Save Query'/>
-			<input type='button' onclick='loadQuery("queryholder");' value='Load Query'/>
+			<input type='button' onclick='hive_query();' value='<spring:message code="mysqletl.label.query.execute"/>'/>
+			<input type='button' onclick='saveQuery("queryholder");' value='<spring:message code="mysqletl.label.query.save"/>'/>
+			<input type='button' onclick='loadQuery("queryholder");' value='<spring:message code="mysqletl.label.query.load"/>'/>
 		</div>
-		<h2 align="center">Logs</h2>
+		<h2 align="center"><spring:message code="mysqletl.label.logs"/></h2>
 		<textarea align="center" name="querylogs" id="querylogs" cols="100" rows="5" disabled="true"></textarea>
 	</div>
-     	<a href="#" onclick="show('hive_query_page','hive_query_editor');">Back</a>
+     	<a href="#" onclick="show('hive_query_page','hive_query_editor');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="hive_data" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">
-			<b>Populated Hive Data</b>
+			<b><spring:message code="mysqletl.page.title.hive.query.result"/></b>
 		</font>
 	</div>
 	<br>
 	<div align="center">
 		<div id='populated_data'></div>
-		<input type='button' id='savexls' onclick="tableToExcel('autoCreateTable', 'Hive Result')" value='Download XLS'/>
-		<input type='button' id='savecsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.csv");' value='Export to CSV'/>
-		<input type='button' id='savetsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.tsv");' value='Export to TSV'/>
+		<input type='button' id='savexls' onclick="tableToExcel('autoCreateTable', 'Hive Result')" value='<spring:message code="mysqletl.label.save.xls"/>'/>
+		<input type='button' id='savecsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.csv");' value='<spring:message code="mysqletl.label.save.csv"/>'/>
+		<input type='button' id='savetsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.tsv");' value='<spring:message code="mysqletl.label.save.tsv"/>'/>
 	</div>
-     	<a href="#" onclick="show('hive_query_editor','hive_data');">Back</a>
+     	<a href="#" onclick="show('hive_query_editor','hive_data');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <%@ include file="/WEB-INF/template/footer.jsp"%>
