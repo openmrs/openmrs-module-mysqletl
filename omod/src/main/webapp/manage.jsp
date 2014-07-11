@@ -361,6 +361,7 @@
 			<input type='button' onclick='hive_query();' value='<spring:message code="mysqletl.label.query.execute"/>'/>
 			<input type='button' onclick='saveQuery("queryholder");' value='<spring:message code="mysqletl.label.query.save"/>'/>
 			<input type='button' onclick='loadQuery("queryholder");' value='<spring:message code="mysqletl.label.query.load"/>'/>
+			<input type='button' onclick='hive_query_download();' value='<spring:message code="mysqletl.label.query.execute.download"/>'/>
 		</div>
 		<h2 align="center"><spring:message code="mysqletl.label.logs"/></h2>
 		<textarea align="center" name="querylogs" id="querylogs" cols="100" rows="5" disabled="true"></textarea>
