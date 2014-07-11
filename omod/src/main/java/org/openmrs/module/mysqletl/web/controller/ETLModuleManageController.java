@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import net.neoremind.sshxcute.exception.TaskExecFailException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.APIException;
@@ -124,7 +126,7 @@ public class  ETLModuleManageController {
 	}
 	
 	@RequestMapping(value = "/module/mysqletl/login_hive", method = RequestMethod.POST)
-	public @ResponseBody String loginHive(@RequestParam(value="user",required=false)String UserName,@RequestParam(value="pass",required=false)String Password,@RequestParam(value="host",required=false)String Host,@RequestParam(value="port",required=false)String Port,ModelMap model) throws APIException  {
+	public @ResponseBody String loginHive(@RequestParam(value="user",required=false)String UserName,@RequestParam(value="pass",required=false)String Password,@RequestParam(value="host",required=false)String Host,@RequestParam(value="port",required=false)String Port,ModelMap model) throws APIException, TaskExecFailException  {
 		LoginParams params = new LoginParams(); 
 		params.setuser(UserName);
 		params.setpass(Password);
@@ -139,4 +141,8 @@ public class  ETLModuleManageController {
 		return SSHClient.getQueryResult(Query);
 	}
 	
+	@RequestMapping(value = "/module/mysqletl/query_download", method = RequestMethod.POST)
+	public @ResponseBody String queryHiveDownload(@RequestParam(value="dquery",required=false)String Query,ModelMap model) throws Exception  {
+		return SSHClient.getQueryResultDownload(Query);
+	}
 }

@@ -222,6 +222,26 @@ var tableToExcel = (function() {
 				});
 		*/
  }
+
+ function hive_query_download(){  
+	 var downloadQuery = document.getElementById('queryholder').value;
+		$.ajax({  
+		    type : "Post",   
+		    url : "query_download.form",   
+		    data : {
+		    		dquery: downloadQuery
+		    },
+		    success : function(reslt) {  
+		    	if(reslt!=null)
+		    		window.open(reslt);
+		    	else 
+		    		alert('Download Error');
+		    },  
+		    error : function(e) {  
+		    	alert('Error: ' + e);   
+		   }  
+		}); 
+ }
  function saveQuery(textAreaId){//Sava Query data to local Storage
 	 var value = document.getElementById(textAreaId).value;
 	 	 $.jStorage.set(textAreaId,value); 			 

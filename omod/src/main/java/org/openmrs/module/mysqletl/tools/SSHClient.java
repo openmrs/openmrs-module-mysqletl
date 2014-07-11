@@ -1,12 +1,11 @@
 package org.openmrs.module.mysqletl.tools;
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-
-import org.openmrs.module.mysqletl.dwr.LoginParams;
 
 import net.neoremind.sshxcute.core.ConnBean;
 import net.neoremind.sshxcute.core.IOptionName;
@@ -15,6 +14,8 @@ import net.neoremind.sshxcute.core.SSHExec;
 import net.neoremind.sshxcute.exception.TaskExecFailException;
 import net.neoremind.sshxcute.task.CustomTask;
 import net.neoremind.sshxcute.task.impl.ExecCommand;
+
+import org.openmrs.module.mysqletl.dwr.LoginParams;
 
 public class SSHClient {
 	private static String host, username, password, port;
@@ -26,6 +27,7 @@ public class SSHClient {
 		port = Port;
 		SSHExec.setOption(IOptionName.SSH_PORT_NUMBER, Integer.parseInt(port));
 	}
+	
 	public static String getIpAddress() throws TaskExecFailException{
 		ConnBean cb = new ConnBean(host, username, password);
 		SSHExec ssh = SSHExec.getInstance(cb);
@@ -35,6 +37,7 @@ public class SSHClient {
 		ssh.disconnect();	
 		return Result.substring(0,Result.indexOf(" ")).trim();
 	}
+	
 	public static void sqoopImport(String Host, String Port, String MySQLUser, String MySQLPwd, String DatabaseName, String TableName, String DatawarehouseDB) throws Exception{
 		String ConnectionURL = "jdbc:mysql://"+Host+":"+Port+"/"+DatabaseName;
 		// Initialize a ConnBean object, parameter list is ip, username, password
@@ -45,6 +48,7 @@ public class SSHClient {
 		ssh.exec(sampleTask);
 		ssh.disconnect();	
 	}
+	
 	//This will recieve the results in a 2-D array for the HiveQueries made in the module
 	public static String[][] getQueryResult(String Query) throws Exception{
 		ConnBean cb = new ConnBean(host, username,password);
@@ -86,6 +90,7 @@ public class SSHClient {
 	    }
 
 	}
+	
 	public static String login(LoginParams params) {
 		try{
 			SetSSHParameters(params.gethost(),params.getuser(),params.getpass(),params.getport());
@@ -108,5 +113,50 @@ public class SSHClient {
 			return e.getMessage();
 		}
 		// TODO Auto-generated method stub
+	}
+	
+	public static void execCommand(String Command) throws TaskExecFailException{
+		ConnBean cb = new ConnBean(host, username,password);
+		SSHExec ssh = SSHExec.getInstance(cb);          
+		ssh.connect();
+		CustomTask sampleTask = new ExecCommand(Command);
+		Result res = ssh.exec(sampleTask);
+		if(res.isSuccess){
+	        System.out.println("Return code: " + res.rc);
+	        System.out.println("sysout: " + res.sysout);
+		}
+	    else
+	    {
+	        System.out.println("Return code: " + res.rc);
+	        System.out.println("error message: " + res.error_msg);
+	    }
+		ssh.disconnect();	
+	}
+	
+	public static String getQueryResultDownload(String Query) throws TaskExecFailException, FileNotFoundException {
+		ConnBean cb = new ConnBean(host, username,password);
+		SSHExec ssh = SSHExec.getInstance(cb);          
+		ssh.connect();
+		//Resultant 2-D array will include column name with row data
+		//Query trimming for executing batch statement
+		CustomTask sampleTask = new ExecCommand("hive -e 'set hive.cli.print.header=true; "+Query.trim().replace('\n', ' ')+"' -S");
+		Result res = ssh.exec(sampleTask);
+		if(res.isSuccess){
+			String ModulePath = "tomcat/webapps/openmrs-standalone/WEB-INF/view/module/mysqletl/resources/"; 
+	        //Download data as csv
+	        PrintWriter out;
+	        out = new PrintWriter(ModulePath+"download.csv");
+	        out.println(res.sysout.replace('\t', ','));
+	        out.close();
+			ssh.disconnect();
+			return "/openmrs-standalone/moduleResources/mysqletl/download.csv";
+		}
+	    else
+	    {
+	        System.out.println("Return code: " + res.rc);
+	        System.out.println("error message: " + res.error_msg);
+			ssh.disconnect();	
+	        return null;
+	    }
 	}
 }
