@@ -9,6 +9,8 @@
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/jquery.min.js" />
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/jquery-ui.min.js" />
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/jstorage.js" />
+<openmrs:htmlInclude file="/moduleResources/mysqletl/lib/highcharts/jquery.highchartTable.js" />
+<openmrs:htmlInclude file="/moduleResources/mysqletl/lib/highcharts/highcharts.js" />
 <openmrs:htmlInclude file="/moduleResources/mysqletl/css/lib/control/progressbar.css" />
 
 <openmrs:htmlInclude file="/moduleResources/mysqletl/module_style.css"/>
@@ -382,5 +384,23 @@
 		<input type='button' id='savetsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.tsv");' value='<spring:message code="mysqletl.label.save.tsv"/>'/>
 	</div>
      	<a href="#" onclick="show('hive_query_editor','hive_data');"><spring:message code="mysqletl.page.nav.back"/></a>
+     	<a href="#" onclick="showCharts();"><spring:message code="mysqletl.page.nav.next.charts"/></a>
+</div>
+<div id="hive_data_chart" style="display:none;border:1px solid  #009D8E;">
+	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
+  		<font color="#ffffff" size="4pt">
+			<b><spring:message code="mysqletl.page.title.hive.query.result.charts"/></b>
+		</font>
+	</div>
+	<br>
+	<div align="center" id='graph_data'>	
+	<table class="highchart" id="highchart" data-graph-container-before="1" data-graph-type="line" style="display:none;">
+  		<thead>
+   		</thead>
+   		<tbody>
+  		</tbody>
+	</table>
+	</div>
+     	<a href="#" onclick="show('hive_data','hive_data_chart');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <%@ include file="/WEB-INF/template/footer.jsp"%>
