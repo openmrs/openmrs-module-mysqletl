@@ -143,13 +143,13 @@ public class SSHClient {
 		Result res = ssh.exec(sampleTask);
 		if(res.isSuccess){
 			String ModulePath = "tomcat/webapps/openmrs-standalone/WEB-INF/view/module/mysqletl/resources/"; 
-	        //Download data as csv
+	        //Download data as tsv
 	        PrintWriter out;
-	        out = new PrintWriter(ModulePath+"download.csv");
-	        out.println(res.sysout.replace('\t', ','));
+	        out = new PrintWriter(ModulePath+"download.tsv");
+	        out.println(res.sysout);
 	        out.close();
 			ssh.disconnect();
-			return "/openmrs-standalone/moduleResources/mysqletl/download.csv";
+			return "/openmrs-standalone/moduleResources/mysqletl/download.tsv";
 		}
 	    else
 	    {

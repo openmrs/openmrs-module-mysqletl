@@ -1,4 +1,5 @@
- function show(shown, hidden){
+var hive_data; 
+function show(shown, hidden){
 	  document.getElementById(shown).style.display='block';
 	  document.getElementById(hidden).style.display='none';
  }
@@ -111,6 +112,40 @@ function createTable(tableData,div_id) {
 
 	  table.appendChild(tableBody);
 	  populated.appendChild(table);
+}
+function createGraphTable(tableData,div_id,chart_type) {
+	  var table = document.getElementById(div_id)
+	  	, tableHead = document.createElement('thead')
+	    , tableBody = document.createElement('tbody');
+	  table.innerHTML="";
+	  var headcount = false;
+	  tableData.forEach(function(rowData) {
+		  if(headcount==false){
+			    var row = document.createElement('tr');
+
+			    rowData.forEach(function(cellData) {
+			      var cell = document.createElement('th');
+			      cell.appendChild(document.createTextNode(cellData));
+			      row.appendChild(cell);
+			    });
+
+			    tableHead.appendChild(row);
+			    headcount=true;			  
+		  }else{
+			  	var row = document.createElement('tr');
+
+			  	rowData.forEach(function(cellData) {
+			  		var cell = document.createElement('td');
+			  		cell.appendChild(document.createTextNode(cellData));
+			  		row.appendChild(cell);
+			  	});
+			  	tableBody.appendChild(row);
+		  }
+	  });
+	  
+	  table.appendChild(tableHead);
+	  table.appendChild(tableBody);
+	  $('table.highchart').highchartTable();
 }  
 var tableToExcel = (function() {
 	  var uri = 'data:application/vnd.ms-excel;base64,'
@@ -208,6 +243,7 @@ var tableToExcel = (function() {
 		    success : function(reslt) {  
 			  	show('hive_data','hive_query_editor');
 			  	createTable(reslt,'populated_data');
+			  	hive_data = reslt;
 		    },  
 		    error : function(e) {  
 		    alert('Error: ' + e);   
@@ -520,6 +556,10 @@ var tableToExcel = (function() {
 		    alert('Error: ' + e);   
 		   }  
 	 });
+ }
+ function showCharts(){ 
+	 show('hive_data_chart','hive_data');
+	 createGraphTable(hive_data,'highchart','line');
  }
  function notImplemented(){
 	alert('Coming Soon');
