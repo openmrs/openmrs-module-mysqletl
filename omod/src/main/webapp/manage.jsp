@@ -385,6 +385,13 @@
 	</div>
      	<a href="#" onclick="show('hive_query_editor','hive_data');"><spring:message code="mysqletl.page.nav.back"/></a>
      	<a href="#" onclick="showCharts();"><spring:message code="mysqletl.page.nav.next.charts"/></a>
+     	<select id='chart_type'>
+  			<option value="line"><spring:message code="mysqletl.label.charts.type.line"/></option>
+  			<option value="column"><spring:message code="mysqletl.label.charts.type.column"/></option>
+  			<option value="area"><spring:message code="mysqletl.label.charts.type.area"/></option>
+  			<option value="spline"><spring:message code="mysqletl.label.charts.type.spline"/></option>
+  			<option value="pie"><spring:message code="mysqletl.label.charts.type.pie"/></option>
+  		</select> 
 </div>
 <div id="hive_data_chart" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
