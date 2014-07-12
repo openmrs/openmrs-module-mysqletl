@@ -112,9 +112,12 @@ function createTable(tableData,div_id) {
 
 	  table.appendChild(tableBody);
 	  populated.appendChild(table);
+
 }
-function createGraphTable(tableData,div_id,chart_type) {
-	  var table = document.getElementById(div_id)
+function createGraphTable(tableData,div_id,table_id,chart_type) {
+	var populate = document.getElementById(div_id);
+	populate.innerHTML="<table class='"+table_id+"' id='"+table_id+"' data-graph-container-before='1' data-graph-type='"+chart_type+"' style='display:none;'></table>";
+	var table = document.getElementById(table_id)
 	  	, tableHead = document.createElement('thead')
 	    , tableBody = document.createElement('tbody');
 	  table.innerHTML="";
@@ -145,6 +148,7 @@ function createGraphTable(tableData,div_id,chart_type) {
 	  
 	  table.appendChild(tableHead);
 	  table.appendChild(tableBody);
+	  
 	  $('table.highchart').highchartTable();
 }  
 var tableToExcel = (function() {
@@ -559,7 +563,8 @@ var tableToExcel = (function() {
  }
  function showCharts(){ 
 	 show('hive_data_chart','hive_data');
-	 createGraphTable(hive_data,'highchart','line');
+	 chart_type = document.getElementById('chart_type').value;
+	 createGraphTable(hive_data,'graph_data','highchart',chart_type);
  }
  function notImplemented(){
 	alert('Coming Soon');
