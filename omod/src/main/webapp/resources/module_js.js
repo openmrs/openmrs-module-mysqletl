@@ -189,21 +189,6 @@ var tableToExcel = (function() {
 	    alert('Error: ' + e);   
 	   }  
 	}); 
-	/*
-  	DWRMySQLLoginService.loginMySQL(loginParams,{
-		  callback:function(db_list) { 
-				if(db_list!=null){
-				  clearHTMLTable('db_table');
-				  for(i=0; i<db_list.length;i++){
-					addDatabaseRow(db_list[i]);
-		 		  }
-				  show('db_list','mysql_log');
-				}else{
-					alert('Login Failed');
-				}
-			  }
-			});
-	*/
  }
 
  function hive_login(){  
@@ -225,15 +210,7 @@ var tableToExcel = (function() {
 		    error : function(e) {  
 		    alert('Error: ' + e);   
 		   }  
-		}); 
-/*
-	  	DWRMySQLLoginService.loginHive(loginParams,{
-			  callback:function(reslt) { 
-				  if(parseInt(reslt)==0){show('hive_query_editor','hive_query_page');}
-				  else alert('Invalid SSH Credentials');
-				  }
-				});
-*/  	
+		});  	
 	  	
  }
  function hive_query(){  
@@ -253,14 +230,6 @@ var tableToExcel = (function() {
 		    alert('Error: ' + e);   
 		   }  
 		}); 
-		/*
-	  	DWRMySQLLoginService.queryHive(query,{
-			  callback:function(reslt) { 
-				  	show('hive_data','hive_query_editor');
-				  	createTable(reslt,'populated_data');
-				  }
-				});
-		*/
  }
 
  function hive_query_download(){  
@@ -330,14 +299,7 @@ var tableToExcel = (function() {
 	 
 }
  function clickDatabase(db_name){
-	 /*
-	 var loginParams = {
-			 user: document.getElementById('user').value,
-		     pass: document.getElementById('pass').value,
-		 	 host: document.getElementById('host').value,
-		 	 port: document.getElementById('port').value 
-		 	};
-	*/
+	 
 	 $.ajax({  
 		    type : "Post",   
 		    url : "get_tables.form",   
@@ -356,18 +318,6 @@ var tableToExcel = (function() {
 		    alert('Error: ' + e);   
 		   }  
 	 });
-	 /*
-	 DWRMySQLLoginService.getTables(loginParams,db_name,{
-		 		callback:function(table_list){ 
-	     				show('table_list','db_list');							
-						if(table_list!=null){
-						  for(i=0; i<table_list.length;i++){
-								addTableRow(table_list[i],db_name);
-						  }
-						}
-					  }
-					});
-	*/	 
  }
  function selectTables(){
 		var checkedBoxes = getCheckedBoxes("table_check");
@@ -383,30 +333,10 @@ var tableToExcel = (function() {
 	 
  }
  function clickTable(table_info){
-	 /*
-	 var loginParams = {
-			 user: document.getElementById('user').value,
-		     pass: document.getElementById('pass').value,
-		 	 host: document.getElementById('host').value,
-		 	 port: document.getElementById('port').value 
-		 	};	 
-	*/
+	 
 	 var db_name = table_info.substring(0,table_info.indexOf('.'));
 	 var table_name = table_info.substring(table_info.indexOf('.')+1);
-	 /*
-	 DWRMySQLLoginService.getColumns(loginParams,db_name,table_name,{ 
-		 callback:function(column_list){ 
-	     				show('column_list','table_list');				
-						if(column_list!=null){
-							//add columns in available column table
-						  for(i=0; i<column_list.length;i++){
-								addColumnRow(column_list[i], table_info);
-								//Passing table_info results [db_name].[table_name].[column_name] so from multiple database and tables column can be selected
-						  }
-						}
-					  }
-					});
-	*/
+
 	 $.ajax({  
 		    type : "Post",   
 		    url : "get_columns.form",   
