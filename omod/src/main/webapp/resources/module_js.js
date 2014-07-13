@@ -1,7 +1,8 @@
 var hive_data; 
 function show(shown, hidden){
-	  document.getElementById(shown).style.display='block';
-	  document.getElementById(hidden).style.display='none';
+	$( "#"+hidden ).hide();
+	$( "#"+shown ).show( "slow" );
+	
  }
  function clearHTMLTable(tableID){
 		var table = document.getElementById(tableID);
