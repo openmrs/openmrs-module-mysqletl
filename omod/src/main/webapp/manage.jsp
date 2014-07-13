@@ -68,7 +68,7 @@
   		</table>
   		<input type="button" class="myButton" value="Login" name="login" onclick="mysql_login()" align="center">
   		</div>
-  		<a href="#" onclick="show('hive_query_page','mysql_log');"><spring:message code="mysqletl.page.skip.tohive"/></a>
+  		<a class="myLink" href="#" onclick="show('hive_query_page','mysql_log');"><spring:message code="mysqletl.page.skip.tohive"/></a>
 </div>
 <div id="db_list" style="display:none;border:1px solid  #009D8E;">  
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -86,7 +86,7 @@
  		</div>
  		 <br><input type="button" class="myButton" onclick="selectDatabases();" value="<spring:message code="mysqletl.page.nav.next"/>" />
 	</center>
-    <a href="#" onclick="show('mysql_log','db_list');"><spring:message code="mysqletl.page.nav.back"/></a>
+    <a class="myLink" href="#" onclick="show('mysql_log','db_list');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="table_list" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -103,7 +103,7 @@
  		</div>
  		<br><input type="button" class="myButton" onclick="selectTables();" value="<spring:message code="mysqletl.page.nav.next"/>" />
 	</center>
-    <a href="#" onclick="show('db_list','table_list');"><spring:message code="mysqletl.page.nav.back"/></a>
+    <a class="myLink" href="#" onclick="show('db_list','table_list');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="column_list" style="display:none;border:1px solid  #009D8E;">    
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -144,7 +144,7 @@
   		<input type="button" class="myButton" onclick="joinConditionPage();" value="<spring:message code="mysqletl.page.nav.next"/>" />
 		</div>
 	</center>
-    <a href="#" onclick="show('table_list','column_list');"><spring:message code="mysqletl.page.nav.back"/></a>
+    <a class="myLink" href="#" onclick="show('table_list','column_list');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>    
 <div id="join_list" style="display:none;border:1px solid  #009D8E;">    
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -210,7 +210,7 @@
   		<input type="button" class="myButton" onclick="show('dw_log','join_list');" value="<spring:message code="mysqletl.page.nav.next"/>" />
 		</div>
 	</center>
-    <a href="#" onclick="show('column_list','join_list');"><spring:message code="mysqletl.page.nav.back"/></a>
+    <a class="myLink" href="#" onclick="show('column_list','join_list');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div> 
 <div id="dw_log" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -222,6 +222,7 @@
 		<input type="radio" name="type" value="<spring:message code="mysqletl.server.hive"/>" checked="true"><spring:message code="mysqletl.label.server.hive"/>
 		<input type="radio" name="type" value="<spring:message code="mysqletl.server.mysql"/>"><spring:message code="mysqletl.label.server.mysql"/>
 	</div>
+	<div align="center">
   	<table align=center bgcolor="#f5f5f5" style="width: 316px; height: 100px">
             <tr>
                 <td style="width: 184px;">
@@ -280,7 +281,8 @@
             </tr>
         </table>
         <input type="button" class="myButton" value="<spring:message code="mysqletl.page.nav.load"/>" name="login" onclick="transform()">
-    	<a href="#" onclick="show('join_list','dw_log');"><spring:message code="mysqletl.page.nav.back"/></a>
+        </div>
+    	<a class="myLink" href="#" onclick="show('join_list','dw_log');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="process_status" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -301,7 +303,7 @@
         
         </div>
     </div>
-     	<a href="#" onclick="show('dw_log','process_status');"><spring:message code="mysqletl.page.nav.back"/></a>
+     	<a class="myLink" href="#" onclick="show('dw_log','process_status');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="hive_query_page" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -347,7 +349,7 @@
         </table>
         <input type="button" class="myButton" value="<spring:message code="mysqletl.label.login"/>" name="login" onclick="hive_login();"  align="center">
     </div>
-     	<a href="#" onclick="show('mysql_log','hive_query_page');"><spring:message code="mysqletl.page.nav.back"/></a>
+     	<a class="myLink" href="#" onclick="show('mysql_log','hive_query_page');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="hive_query_editor" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -366,7 +368,7 @@
 		<h2 align="center"><spring:message code="mysqletl.label.logs"/></h2>
 		<textarea align="center" name="querylogs" id="querylogs" cols="100" rows="5" disabled="true"></textarea>
 	</div>
-     	<a href="#" onclick="show('hive_query_page','hive_query_editor');"><spring:message code="mysqletl.page.nav.back"/></a>
+     	<a class="myLink" href="#" onclick="show('hive_query_page','hive_query_editor');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="hive_data" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -381,8 +383,8 @@
 		<input type='button' class='myButton' id='savecsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.csv");' value='<spring:message code="mysqletl.label.save.csv"/>'/>
 		<input type='button' class='myButton' id='savetsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.tsv");' value='<spring:message code="mysqletl.label.save.tsv"/>'/>
 	</div>
-     	<a href="#" onclick="show('hive_query_editor','hive_data');"><spring:message code="mysqletl.page.nav.back"/></a>
-     	<a href="#" onclick="showCharts();"><spring:message code="mysqletl.page.nav.next.charts"/></a>
+     	<a class="myLink" href="#" onclick="show('hive_query_editor','hive_data');"><spring:message code="mysqletl.page.nav.back"/></a>
+     	<a class="myLink" href="#" onclick="showCharts();"><spring:message code="mysqletl.page.nav.next.charts"/></a>
      	<select id='chart_type'>
   			<option value="line"><spring:message code="mysqletl.label.charts.type.line"/></option>
   			<option value="column"><spring:message code="mysqletl.label.charts.type.column"/></option>
@@ -406,6 +408,6 @@
   		</tbody>
 	</table>
 	</div>
-     	<a href="#" onclick="show('hive_data','hive_data_chart');"><spring:message code="mysqletl.page.nav.back"/></a>
+     	<a class="myLink" href="#" onclick="show('hive_data','hive_data_chart');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <%@ include file="/WEB-INF/template/footer.jsp"%>
