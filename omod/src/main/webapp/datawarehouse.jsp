@@ -84,7 +84,7 @@
 		<h2 align="center"><spring:message code="mysqletl.label.logs"/></h2>
 		<textarea align="center" name="querylogs" id="querylogs" cols="100" rows="5" disabled="true"></textarea>
 	</div>
-     	<a href="#" onclick="show('hive_query_page','hive_query_editor');"><spring:message code="mysqletl.page.nav.back"/></a>
+     	<a class="myLink" href="#" onclick="show('hive_query_page','hive_query_editor');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="hive_data" style="display:none;border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
@@ -99,8 +99,8 @@
 		<input type='button' class='myButton' id='savecsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.csv");' value='<spring:message code="mysqletl.label.save.csv"/>'/>
 		<input type='button' class='myButton' id='savetsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.tsv");' value='<spring:message code="mysqletl.label.save.tsv"/>'/>
 	</div>
-     	<a href="#" onclick="show('hive_query_editor','hive_data');"><spring:message code="mysqletl.page.nav.back"/></a>
-     	<a href="#" onclick="showCharts();"><spring:message code="mysqletl.page.nav.next.charts"/></a>
+     	<a class="myLink" href="#" onclick="show('hive_query_editor','hive_data');"><spring:message code="mysqletl.page.nav.back"/></a>
+     	<a class="myLink" href="#" onclick="showCharts();"><spring:message code="mysqletl.page.nav.next.charts"/></a>
      	<select id='chart_type'>
   			<option value="line"><spring:message code="mysqletl.label.charts.type.line"/></option>
   			<option value="column"><spring:message code="mysqletl.label.charts.type.column"/></option>
@@ -124,6 +124,6 @@
   		</tbody>
 	</table>
 	</div>
-     	<a href="#" onclick="show('hive_data','hive_data_chart');"><spring:message code="mysqletl.page.nav.back"/></a>
+     	<a class="myLink" href="#" onclick="show('hive_data','hive_data_chart');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <%@ include file="/WEB-INF/template/footer.jsp"%>
