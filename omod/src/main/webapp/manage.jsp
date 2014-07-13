@@ -345,8 +345,8 @@
                 </td> 
             </tr>
         </table>
+        <input type="button" class="myButton" value="<spring:message code="mysqletl.label.login"/>" name="login" onclick="hive_login();"  align="center">
     </div>
-    	<input type="button" class="myButton" value="<spring:message code="mysqletl.label.login"/>" name="login" onclick="hive_login();"  align="center">
      	<a href="#" onclick="show('mysql_log','hive_query_page');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="hive_query_editor" style="display:none;border:1px solid  #009D8E;">
