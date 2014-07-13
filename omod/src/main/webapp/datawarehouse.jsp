@@ -6,15 +6,22 @@
 <c:set var="DO_NOT_INCLUDE_JQUERY" value="true"/>
 
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/control/progressbar.min.js"/>
+
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/jquery.min.js" />
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/jquery-ui.min.js" />
+
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/jstorage.js" />
+
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/highcharts/jquery.highchartTable.js" />
 <openmrs:htmlInclude file="/moduleResources/mysqletl/lib/highcharts/highcharts.js" />
 <openmrs:htmlInclude file="/moduleResources/mysqletl/css/lib/control/progressbar.css" />
 
 <openmrs:htmlInclude file="/moduleResources/mysqletl/module_style.css"/>
 <openmrs:htmlInclude file="/moduleResources/mysqletl/module_js.js"/>
+
+<openmrs:htmlInclude file="/moduleResources/mysqletl/lib/apprise-v2.js" />
+<openmrs:htmlInclude file="/moduleResources/mysqletl/css/apprise-v2.css" />
+
 <div id="hive_query_page" style="border:1px solid  #009D8E;">
 	<div style="background: #009D8E; width:'100%';border:1px solid  #009D8E;" align="center">
   		<font color="#ffffff" size="4pt">

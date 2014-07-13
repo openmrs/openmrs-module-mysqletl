@@ -175,18 +175,18 @@ var tableToExcel = (function() {
 	    url : "login_mysql.form",   
 	    data : loginParams,  
 	    success : function(db_list) {  
-			if(db_list!=null){
+			if(db_list.length>0){
 				clearHTMLTable('db_table');
 				for(i=0; i<db_list.length;i++){
 					addDatabaseRow(db_list[i]);
 			 	}
 				show('db_list','mysql_log');
 			}else{
-				alert('Login Failed');
+				Apprise('Login Failed');
 			}
 	    },  
 	    error : function(e) {  
-	    alert('Error: ' + e);   
+	    Apprise('Error: ' + e);   
 	   }  
 	}); 
  }
@@ -205,10 +205,10 @@ var tableToExcel = (function() {
 		    data : loginParams,  
 		    success : function(reslt) {  
 				  if(parseInt(reslt)==0){show('hive_query_editor','hive_query_page');}
-				  else alert('Invalid SSH Credentials');
+				  else Apprise('Invalid SSH Credentials');
 		    },  
 		    error : function(e) {  
-		    alert('Error: ' + e);   
+		    Apprise('Error: ' + e);   
 		   }  
 		});  	
 	  	
@@ -227,7 +227,7 @@ var tableToExcel = (function() {
 			  	hive_data = reslt;
 		    },  
 		    error : function(e) {  
-		    alert('Error: ' + e);   
+		    Apprise('Error: ' + e);   
 		   }  
 		}); 
  }
@@ -244,10 +244,10 @@ var tableToExcel = (function() {
 		    	if(reslt!=null)
 		    		window.open(reslt);
 		    	else 
-		    		alert('Download Error');
+		    		Apprise('Download Error');
 		    },  
 		    error : function(e) {  
-		    	alert('Error: ' + e);   
+		    	Apprise('Error: ' + e);   
 		   }  
 		}); 
  }
@@ -289,7 +289,7 @@ var tableToExcel = (function() {
  }
  function selectDatabases(){
 		var checkedBoxes = getCheckedBoxes("db_check");
-		if(checkedBoxes==null){ alert("None Database Selected"); }
+		if(checkedBoxes==null){ Apprise("None Database Selected"); }
 		else{
 			clearHTMLTable('table_table');	
 			for(i=0;i<checkedBoxes.length;i++){
@@ -315,13 +315,13 @@ var tableToExcel = (function() {
 					}
 		    },  
 		    error : function(e) {  
-		    alert('Error: ' + e);   
+		    Apprise('Error: ' + e);   
 		   }  
 	 });
  }
  function selectTables(){
 		var checkedBoxes = getCheckedBoxes("table_check");
-		if(checkedBoxes==null){ alert("None Table Selected"); }
+		if(checkedBoxes==null){ Apprise("None Table Selected"); }
 		else{
 			clearHTMLTable('available-column-table');
  			clearHTMLTable('selected-column-table');
@@ -355,7 +355,7 @@ var tableToExcel = (function() {
 				}
 		    },  
 		    error : function(e) {  
-		    alert('Error: ' + e);   
+		    Apprise('Error: ' + e);   
 		   }  
 	 });
  }
@@ -383,7 +383,7 @@ var tableToExcel = (function() {
  function addJoinCondition(){
 		  //document.getElementById('chk').innerHTML=document.getElementById('joinSelect').value+" "+document.getElementById('tableSelect').value+" "+document.getElementById('onCondition').value+" "+document.getElementById('clauseStmt').value;
 		if(document.getElementById('onCondition').value==null||document.getElementById('onCondition').value==''){
-			alert('No On Join Condition Provided');
+			Apprise('No On Join Condition Provided');
 		}
 		else{
 		  var TABLE = document.getElementById('join-conditions');
@@ -487,7 +487,7 @@ var tableToExcel = (function() {
 	 			}
 		    },  
 		    error : function(e) {  
-		    alert('Error: ' + e);   
+		    Apprise('Error: ' + e);   
 		   }  
 	 });
  }
@@ -497,7 +497,7 @@ var tableToExcel = (function() {
 	 createGraphTable(hive_data,'graph_data','highchart',chart_type);
  }
  function notImplemented(){
-	alert('Coming Soon');
+	Apprise('Coming Soon');
  }
  $(window).load(function(){
 	 $(document).ready(function() {
