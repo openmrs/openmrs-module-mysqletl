@@ -63,15 +63,8 @@
                 	<input type="text" name="port" id="hiveport" value="22" style="width: 226px">
                 </td> 
             </tr>
-
-            <tr>
-                <td style="width: 184px; height: 3px;">
-                </td>
-                <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="<spring:message code="mysqletl.label.login"/>" name="login" onclick="hive_login();" style="width: 86px">
-                </td>
-            </tr>
         </table>
+        <input type="button" class="myButton" value="<spring:message code="mysqletl.label.login"/>" name="login" onclick="hive_login();" align="center">
     </div>
 </div>
 <div id="hive_query_editor" style="display:none;border:1px solid  #009D8E;">
@@ -83,10 +76,10 @@
 	<div align="center">
 		<textarea name="queryholder" id="queryholder" cols="100" rows="20"></textarea>
 		<div align="center">
-			<input type='button' onclick='hive_query();' value='<spring:message code="mysqletl.label.query.execute"/>'/>
-			<input type='button' onclick='saveQuery("queryholder");' value='<spring:message code="mysqletl.label.query.save"/>'/>
-			<input type='button' onclick='loadQuery("queryholder");' value='<spring:message code="mysqletl.label.query.load"/>'/>
-			<input type='button' onclick='hive_query_download();' value='<spring:message code="mysqletl.label.query.execute.download"/>'/>
+			<input type='button' class='myButton' onclick='hive_query();' value='<spring:message code="mysqletl.label.query.execute"/>'/>
+			<input type='button' class='myButton' onclick='saveQuery("queryholder");' value='<spring:message code="mysqletl.label.query.save"/>'/>
+			<input type='button' class='myButton' onclick='loadQuery("queryholder");' value='<spring:message code="mysqletl.label.query.load"/>'/>
+			<input type='button' class='myButton' onclick='hive_query_download();' value='<spring:message code="mysqletl.label.query.execute.download"/>'/>
 		</div>
 		<h2 align="center"><spring:message code="mysqletl.label.logs"/></h2>
 		<textarea align="center" name="querylogs" id="querylogs" cols="100" rows="5" disabled="true"></textarea>
@@ -102,9 +95,9 @@
 	<br>
 	<div align="center">
 		<div id='populated_data'></div>
-		<input type='button' id='savexls' onclick="tableToExcel('autoCreateTable', 'Hive Result')" value='<spring:message code="mysqletl.label.save.xls"/>'/>
-		<input type='button' id='savecsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.csv");' value='<spring:message code="mysqletl.label.save.csv"/>'/>
-		<input type='button' id='savetsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.tsv");' value='<spring:message code="mysqletl.label.save.tsv"/>'/>
+		<input type='button' class='myButton' id='savexls' onclick="tableToExcel('autoCreateTable', 'Hive Result')" value='<spring:message code="mysqletl.label.save.xls"/>'/>
+		<input type='button' class='myButton' id='savecsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.csv");' value='<spring:message code="mysqletl.label.save.csv"/>'/>
+		<input type='button' class='myButton' id='savetsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.tsv");' value='<spring:message code="mysqletl.label.save.tsv"/>'/>
 	</div>
      	<a href="#" onclick="show('hive_query_editor','hive_data');"><spring:message code="mysqletl.page.nav.back"/></a>
      	<a href="#" onclick="showCharts();"><spring:message code="mysqletl.page.nav.next.charts"/></a>

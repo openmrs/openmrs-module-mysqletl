@@ -30,6 +30,7 @@
 				<b><spring:message code="mysqletl.page.title.mysqllogin"/></b>
 			</font>
 		</div>
+		<div align="center">
   		<table align=center bgcolor="#f5f5f5" style="width: 316px; height: 100px">
             <tr>
                 <td style="width: 184px;">
@@ -64,13 +65,9 @@
                 	<input type="text" name="port" id="port" value="3306" style="width: 226px">
                 </td>
             </tr>
-            <tr>
-                <td style="width: 184px; height: 3px;"></td>
-                <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="button" value="Login" name="login" onclick="mysql_login()" style="width: 86px">
-                </td>
-            </tr>
   		</table>
+  		<input type="button" class="myButton" value="Login" name="login" onclick="mysql_login()" align="center">
+  		</div>
   		<a href="#" onclick="show('hive_query_page','mysql_log');"><spring:message code="mysqletl.page.skip.tohive"/></a>
 </div>
 <div id="db_list" style="display:none;border:1px solid  #009D8E;">  
@@ -87,7 +84,7 @@
       		</tr>
    		</table>
  		</div>
- 		 <br><input type="button" onclick="selectDatabases();" value="<spring:message code="mysqletl.page.nav.next"/>" />
+ 		 <br><input type="button" class="myButton" onclick="selectDatabases();" value="<spring:message code="mysqletl.page.nav.next"/>" />
 	</center>
     <a href="#" onclick="show('mysql_log','db_list');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
@@ -104,7 +101,7 @@
       			</tr>
    			</table>
  		</div>
- 		<br><input type="button" onclick="selectTables();" value="<spring:message code="mysqletl.page.nav.next"/>" />
+ 		<br><input type="button" class="myButton" onclick="selectTables();" value="<spring:message code="mysqletl.page.nav.next"/>" />
 	</center>
     <a href="#" onclick="show('db_list','table_list');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
@@ -144,7 +141,7 @@
             		</table>
             	</th> 
    			</table>
-  		<input type="button" onclick="joinConditionPage();" value="<spring:message code="mysqletl.page.nav.next"/>" />
+  		<input type="button" class="myButton" onclick="joinConditionPage();" value="<spring:message code="mysqletl.page.nav.next"/>" />
 		</div>
 	</center>
     <a href="#" onclick="show('table_list','column_list');"><spring:message code="mysqletl.page.nav.back"/></a>
@@ -202,15 +199,15 @@
             		</table>
             	</th>
             	<th>
-					<input type="button" name="add-condition" value="<spring:message code="mysqletl.sql.join.add"/>" id='addCondtn' onClick='addJoinCondition();'>
-					<input type="button" name="show-condition" value="<spring:message code="mysqletl.sql.join.show"/>" id='showCondtn' onClick='showJoinStatement();'>
+					<input type="button" class="myButton" name="add-condition" value="<spring:message code="mysqletl.sql.join.add"/>" id='addCondtn' onClick='addJoinCondition();'>
+					<input type="button" class="myButton" name="show-condition" value="<spring:message code="mysqletl.sql.join.show"/>" id='showCondtn' onClick='showJoinStatement();'>
             	</th> 
    			</table>
    		<div align="center">
    				<spring:message code="mysqletl.sql.join.raw.query"/><br> <input type="text" name="rawCondition" id='rawCondition' value=" " style="width=80%;">
    		</div>
    		<div id='show-statement'></div>
-  		<input type="button" onclick="show('dw_log','join_list');" value="<spring:message code="mysqletl.page.nav.next"/>" />
+  		<input type="button" class="myButton" onclick="show('dw_log','join_list');" value="<spring:message code="mysqletl.page.nav.next"/>" />
 		</div>
 	</center>
     <a href="#" onclick="show('column_list','join_list');"><spring:message code="mysqletl.page.nav.back"/></a>
@@ -278,10 +275,11 @@
                 <td style="width: 184px; height: 3px;">
                 </td>
                 <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="<spring:message code="mysqletl.page.nav.load"/>" name="login" onclick="transform()" style="width: 86px">
+                    &nbsp;
                 </td>
             </tr>
         </table>
+        <input type="button" class="myButton" value="<spring:message code="mysqletl.page.nav.load"/>" name="login" onclick="transform()">
     	<a href="#" onclick="show('join_list','dw_log');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="process_status" style="display:none;border:1px solid  #009D8E;">
@@ -346,16 +344,9 @@
                 	<input type="text" name="port" id="hiveport" value="22" style="width: 226px">
                 </td> 
             </tr>
-
-            <tr>
-                <td style="width: 184px; height: 3px;">
-                </td>
-                <td style="width: 5px; height: 3px">
-                    &nbsp;<input type="submit" value="<spring:message code="mysqletl.label.login"/>" name="login" onclick="hive_login();" style="width: 86px">
-                </td>
-            </tr>
         </table>
     </div>
+    	<input type="button" class="myButton" value="<spring:message code="mysqletl.label.login"/>" name="login" onclick="hive_login();"  align="center">
      	<a href="#" onclick="show('mysql_log','hive_query_page');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>
 <div id="hive_query_editor" style="display:none;border:1px solid  #009D8E;">
@@ -367,10 +358,10 @@
 	<div align="center">
 		<textarea name="queryholder" id="queryholder" cols="100" rows="20"></textarea>
 		<div align="center">
-			<input type='button' onclick='hive_query();' value='<spring:message code="mysqletl.label.query.execute"/>'/>
-			<input type='button' onclick='saveQuery("queryholder");' value='<spring:message code="mysqletl.label.query.save"/>'/>
-			<input type='button' onclick='loadQuery("queryholder");' value='<spring:message code="mysqletl.label.query.load"/>'/>
-			<input type='button' onclick='hive_query_download();' value='<spring:message code="mysqletl.label.query.execute.download"/>'/>
+			<input type='button' class='myButton' onclick='hive_query();' value='<spring:message code="mysqletl.label.query.execute"/>'/>
+			<input type='button' class='myButton' onclick='saveQuery("queryholder");' value='<spring:message code="mysqletl.label.query.save"/>'/>
+			<input type='button' class='myButton' onclick='loadQuery("queryholder");' value='<spring:message code="mysqletl.label.query.load"/>'/>
+			<input type='button' class='myButton' onclick='hive_query_download();' value='<spring:message code="mysqletl.label.query.execute.download"/>'/>
 		</div>
 		<h2 align="center"><spring:message code="mysqletl.label.logs"/></h2>
 		<textarea align="center" name="querylogs" id="querylogs" cols="100" rows="5" disabled="true"></textarea>
@@ -386,9 +377,9 @@
 	<br>
 	<div align="center">
 		<div id='populated_data'></div>
-		<input type='button' id='savexls' onclick="tableToExcel('autoCreateTable', 'Hive Result')" value='<spring:message code="mysqletl.label.save.xls"/>'/>
-		<input type='button' id='savecsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.csv");' value='<spring:message code="mysqletl.label.save.csv"/>'/>
-		<input type='button' id='savetsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.tsv");' value='<spring:message code="mysqletl.label.save.tsv"/>'/>
+		<input type='button' class='myButton' id='savexls' onclick="tableToExcel('autoCreateTable', 'Hive Result')" value='<spring:message code="mysqletl.label.save.xls"/>'/>
+		<input type='button' class='myButton' id='savecsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.csv");' value='<spring:message code="mysqletl.label.save.csv"/>'/>
+		<input type='button' class='myButton' id='savetsv' onclick='window.open("/openmrs-standalone/moduleResources/mysqletl/download.tsv");' value='<spring:message code="mysqletl.label.save.tsv"/>'/>
 	</div>
      	<a href="#" onclick="show('hive_query_editor','hive_data');"><spring:message code="mysqletl.page.nav.back"/></a>
      	<a href="#" onclick="showCharts();"><spring:message code="mysqletl.page.nav.next.charts"/></a>
