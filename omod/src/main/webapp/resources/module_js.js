@@ -1,9 +1,21 @@
-var hive_data; 
+var hive_data;	// hive_data should contains result of a hive query made
+
+/*
+ * Following are basic methods for creating HTML interface
+ */
+
+/*
+ * Show a div by hiding other using jQuery. For Wizard like feel
+ */
 function show(shown, hidden){
 	$( "#"+hidden ).hide();
 	$( "#"+shown ).show( "slow" );
 	
  }
+
+/*
+ * Clears a HTML table with the given table.id
+ */
  function clearHTMLTable(tableID){
 		var table = document.getElementById(tableID);
 		for(var i = table.rows.length - 1; i > 0; i--)
@@ -11,11 +23,19 @@ function show(shown, hidden){
 	    	table.deleteRow(i);
 		}
  }
+ 
+ /*
+  * Generate a Random String with Specified length and over set of characters provided
+  */
  function randomString(length, chars) {
 	  var result = '';
 	  for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
 	  return result;
  }
+ 
+ /*
+  * Remove element in HTML by providing parent id and child id where child is removed
+  */
  function removeElement(parent,child){
 	  var pardiv = document.getElementById(parent);
 	  var childdiv = document.getElementById(child);
@@ -23,20 +43,29 @@ function show(shown, hidden){
 		  pardiv.removeChild(childdiv);
 	  }catch(err){}
  }
- // Pass the checkbox name to the function 
+ 
+ /*
+ * Pass the checkbox name tag to the function, returns all checked boxes with that name 
+ */
  function getCheckedBoxes(chkboxName) {
 	  var checkboxes = document.getElementsByName(chkboxName);
 	  var checkboxesChecked = [];
 	  // loop over them all
 	  for (var i=0; i<checkboxes.length; i++) {
-	     // And stick the checked ones onto an array...
+	  
+		 // And stick the checked ones onto an array...
 	     if (checkboxes[i].checked) {
 	        checkboxesChecked.push(checkboxes[i]);
 	     }
 	  }
+	 
 	  // Return the array if it is non-empty, or null
 	  return checkboxesChecked.length > 0 ? checkboxesChecked : null;
  }
+ 
+ /*
+  * Checks that a particular array contains the given value or not
+  */
  function hasValue(element, value) {
 	    var results = true;
 
@@ -49,6 +78,10 @@ function show(shown, hidden){
 
 	    return (results);
  };
+ 
+/*
+* if array do not contains the given value add it with given option in Join condition
+*/ 
  function addCombo(reportID,reportName,selectID) {
 	    var textb = document.getElementById(selectID);
 	    var option = document.createElement("option");
@@ -85,6 +118,10 @@ function show(shown, hidden){
 
 	       }());
  };
+ 
+ /*
+  * Clear Combo Box with given combo box ID
+  */
  function clearComboBox(boxID){
 	 var select = document.getElementById(boxID);
 	 var length = select.options.length;
@@ -92,6 +129,10 @@ function show(shown, hidden){
 	   select.options[i] = null;
 	 }
  }
+ 
+ /*
+  * Create HTML table with given array and division id
+  */
 function createTable(tableData,div_id) {
 	  var populated = document.getElementById(div_id);
 	  populated.innerHTML="";
@@ -115,6 +156,10 @@ function createTable(tableData,div_id) {
 	  populated.appendChild(table);
 
 }
+
+/*
+ * Create HTML table for Graph Data for graphical representation of Hive Result with given array, chart type and division id
+ */
 function createGraphTable(tableData,div_id,table_id,chart_type) {
 	var populate = document.getElementById(div_id);
 	populate.innerHTML="<table class='"+table_id+"' id='"+table_id+"' data-graph-container-before='1' data-graph-type='"+chart_type+"' style='display:none;'></table>";
@@ -152,6 +197,10 @@ function createGraphTable(tableData,div_id,table_id,chart_type) {
 	  
 	  $('table.highchart').highchartTable();
 }  
+
+/*
+ * Converting a HTML table into Excel Sheet
+ */
 var tableToExcel = (function() {
 	  var uri = 'data:application/vnd.ms-excel;base64,'
 	    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
@@ -163,6 +212,14 @@ var tableToExcel = (function() {
 	    window.location.href = uri + base64(format(template, ctx))
 	  }
 	})()
+
+/*
+ * Following are methods for Spring MVC calls anf fetching back result
+ */
+	
+/*
+ * Spring MVC calls to login to MySQL DB and fetch back database list
+ */
  function mysql_login(){  
 	 var loginParams = {
 	 user: document.getElementById('user').value,
@@ -192,6 +249,9 @@ var tableToExcel = (function() {
 	}); 
  }
 
+/*
+ * Spring MVC calls to login to hive DB and move to query editor on successful login
+ */
  function hive_login(){  
 	 var loginParams = {
 	 user: document.getElementById('hiveuser').value,
@@ -214,6 +274,10 @@ var tableToExcel = (function() {
 		});  	
 	  	
  }
+ 
+ /*
+  * Spring MVC calls to execute hive query using ssh and fetch result list as table
+  */
  function hive_query(){  
 	 var Query = document.getElementById('queryholder').value;
 		$.ajax({  
@@ -232,7 +296,10 @@ var tableToExcel = (function() {
 		   }  
 		}); 
  }
-
+ 
+ /*
+  * Spring MVC calls to execute hive query using ssh and fetch result list as downloadable file
+  */
  function hive_query_download(){  
 	 var downloadQuery = document.getElementById('queryholder').value;
 		$.ajax({  
@@ -252,14 +319,26 @@ var tableToExcel = (function() {
 		   }  
 		}); 
  }
- function saveQuery(textAreaId){//Sava Query data to local Storage
+ 
+ /*
+  * Sava Query data to local Storage
+  */
+ function saveQuery(textAreaId){
 	 var value = document.getElementById(textAreaId).value;
 	 	 $.jStorage.set(textAreaId,value); 			 
  }
- function loadQuery(textAreaId){//Load Query data from local Storage
+ 
+ /*
+  * Load Query data from local Storage
+  */
+ function loadQuery(textAreaId){
 	 var element = document.getElementById(textAreaId);
 	 element.value =  $.jStorage.get(textAreaId); 			 
  } 
+
+ /*
+  * populating HTML table with database list
+  */
  function addDatabaseRow(info){
 	  var TABLE = document.getElementById('db_table');
 	  var BODY = TABLE.getElementsByTagName('tbody')[0];
@@ -274,6 +353,10 @@ var tableToExcel = (function() {
 	  TR.appendChild (TD);
 	  BODY.appendChild(TR);
  }
+ 
+ /*
+  * Populating HTML table with table List
+  */
  function addTableRow(info,db_info){
 	  var TABLE = document.getElementById('table_table');
 	  var BODY = TABLE.getElementsByTagName('tbody')[0];
@@ -288,6 +371,10 @@ var tableToExcel = (function() {
 	  TR.appendChild (TD);
 	  BODY.appendChild(TR);
  }
+ 
+ /*
+  * Populate HTML table with mysql table list with the databases where that databases is chosen
+  */
  function selectDatabases(){
 		var checkedBoxes = getCheckedBoxes("db_check");
 		if(checkedBoxes==null){ Apprise("None Database Selected"); }
@@ -299,6 +386,10 @@ var tableToExcel = (function() {
 		}
 	 
 }
+ 
+ /*
+  * Populate HTML table with mysql table list with the database where that database is chosen
+  */
  function clickDatabase(db_name){
 	 
 	 $.ajax({  
@@ -320,6 +411,10 @@ var tableToExcel = (function() {
 		   }  
 	 });
  }
+ 
+ /*
+  * Populate HTML table with mysql column list with the tables name where that tables is chosen
+  */
  function selectTables(){
 		var checkedBoxes = getCheckedBoxes("table_check");
 		if(checkedBoxes==null){ Apprise("None Table Selected"); }
@@ -333,6 +428,10 @@ var tableToExcel = (function() {
 		}
 	 
  }
+ 
+ /*
+  * Populate HTML table with mysql column list with the table name where that table is chosen
+  */
  function clickTable(table_info){
 	 
 	 var db_name = table_info.substring(0,table_info.indexOf('.'));
@@ -360,6 +459,10 @@ var tableToExcel = (function() {
 		   }  
 	 });
  }
+ 
+ /*
+  * Populate HTML table with mysql column list
+  */
  function addColumnRow(info,table_info){
 	  var db_name = table_info.substring(0,table_info.indexOf('.'));
 	  var table_name = table_info.substring(table_info.indexOf('.')+1);
@@ -381,6 +484,10 @@ var tableToExcel = (function() {
 	  BODY.appendChild(TR);
 	  addCombo(table_info,table_info,"tableSelect");
  }
+ 
+ /*
+  * Creating SQL query statement for the join condition
+  */
  function addJoinCondition(){
 		  //document.getElementById('chk').innerHTML=document.getElementById('joinSelect').value+" "+document.getElementById('tableSelect').value+" "+document.getElementById('onCondition').value+" "+document.getElementById('clauseStmt').value;
 		if(document.getElementById('onCondition').value==null||document.getElementById('onCondition').value==''){
@@ -398,6 +505,10 @@ var tableToExcel = (function() {
 		  BODY.appendChild(TR);
 		}
 }
+ 
+ /*
+  * Show the js generated Join Statement
+  */
  function showJoinStatement() {
 	  var joinStatements = document.getElementsByName("join-condition-statement");
 	  var completeJoinStatement = "  ";
@@ -410,10 +521,18 @@ var tableToExcel = (function() {
 	  // 
 	  return completeJoinStatement;
 }
+ 
+ /*
+  * Join Condition page jump from column list
+  */
  function joinConditionPage(){
 	 show('join_list','column_list');
 
  }
+ 
+ /*
+  * Spring MVC calls for Complete transformation of selected mysql data and loading to datawarehouse
+  */
  function transform(){
 	 show('process_status','dw_log');
 
@@ -437,26 +556,7 @@ var tableToExcel = (function() {
 	 }
 	 //Adding Raw Condition statement and Join Condition Table Statement
 	 var join_cndtn = document.getElementById('rawCondition').value+" "+showJoinStatement();
-/*
-	 DWRMySQLLoginService.sqoopTransform(loginParams,serverType,db_name,table_name,column_list,join_cndtn,{ 
-		 callback:function(result){ 
-			 //if transformation takes place without any interruption, success message will return
-			 			document.getElementById('my-progressbar-text1').innerHTML = result;
-			 			if(result=='Success'){
-			 				removeElement('showProgressBar','nextToQuery');
-			 				var nextButton = document.createElement("input");
-			 				nextButton.setAttribute("type","button");
-			 				nextButton.id='nextToQuery';
-			 				nextButton.value = "Execute Query on Hive ?";
-			 				nextButton.onclick = function(){
-			 					show('hive_query_page','process_status');
-			 				};
-			 				var getDiv = document.getElementById('showProgressBar');
-			 				getDiv.appendChild(nextButton);
-			 			}
-					  }
-					});
-*/
+
 	 $.ajax({  
 		    type : "Post",   
 		    url : "sqoop_transform.form",   
@@ -472,7 +572,8 @@ var tableToExcel = (function() {
 		    		joincndtn: join_cndtn
 		    	},  
 		    success : function(result) {  
-				 //if transformation takes place without any interruption, success message will return
+				 
+		    	//if transformation takes place without any interruption, success message will return
 	 			document.getElementById('my-progressbar-text1').innerHTML = result;
 	 			if(result=='Success'){
 	 				removeElement('showProgressBar','nextToQuery');
@@ -492,14 +593,26 @@ var tableToExcel = (function() {
 		   }  
 	 });
  }
+ 
+ /*
+  * Show charts and graph data of hiove query resultd
+  */
  function showCharts(){ 
 	 show('hive_data_chart','hive_data');
 	 chart_type = document.getElementById('chart_type').value;
 	 createGraphTable(hive_data,'graph_data','highchart',chart_type);
  }
+ 
+ /*
+  * For non implemented methods
+  */
  function notImplemented(){
 	Apprise('Coming Soon');
  }
+ 
+ /*
+  * jQuery drag and drop for join condition
+  */
  $(window).load(function(){
 	 $(document).ready(function() {
 
@@ -525,7 +638,11 @@ var tableToExcel = (function() {
 	     });
 	     
 	 });
-	 });
+});
+ 
+ /*
+  * jQuery drag and drop for columns selection
+  */ 
  $(window).load(function(){
 	 $(document).ready(function() {
 
@@ -551,10 +668,14 @@ var tableToExcel = (function() {
 	     });
 	     
 	 });
-	 });
+});
  
- var progressBar;
 
+ var progressBar;	//Progress bar data
+
+ /*
+  * Progress bar initiated
+  */
  window.onload = function(){
 	 try{
 

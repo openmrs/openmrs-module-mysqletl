@@ -13,15 +13,26 @@ import java.util.List;
 import org.openmrs.api.APIException;
 import org.openmrs.module.mysqletl.dwr.LoginParams;
 
+/*
+ * MySQLClient contains functions for access MySQL DB using JDBC
+ */
 public class MySQLClient {
 	private static String host, username, password, port;
 	
+	/*
+	 * MySQLParameters sets mysql jdbc connections parameters
+	 */
 	public static void MySQLParameters(String Host, String Port, String Username, String Password){
 		host = Host;
 		port = Port;
 		username = Username;
 		password = Password;
 	}
+	
+	
+	/*
+	 * MySQLParameters sets mysql jdbc connections parameters using LoginParams class
+	 */
 	public static void MySQLParameters(LoginParams params){
 		host = params.gethost();
 		port = params.getport();
@@ -29,6 +40,10 @@ public class MySQLClient {
 		password = params.getpass();
 	}
 	
+	
+	/*
+	 * Converting MySQLParameters to LoginParams Object
+	 */
 	public static LoginParams toLoginParams(){
 		LoginParams params = new LoginParams(); 
 		params.setuser(username);
@@ -38,23 +53,41 @@ public class MySQLClient {
 		return params;
 	}
 	
+	/*
+	 * Setter and getter for user
+	 */
 	public static void setuser(String User) { username = User; }
 	public static String getuser() { return username; }
-	
+
+	/*
+	 * Setter and getter for password
+	 */
 	public static void setpass(String Pass) { password = Pass; }
 	public static String getpass() { return password; }
 	
+	/*
+	 * Setter and getter for host
+	 */
 	public static void sethost(String Host) { host = Host; }
 	public static String gethost() { return host; }
 	
+	/*
+	 * Setter and getter for port
+	 */
 	public static void setport(String Port) { port = Port; }
 	public static String getport() { return port; }
 
+	/*
+	 * Grant Privileges to all Host, with MySQL db username and password
+	 */
 	public static String grantPrivileges(String Host) throws APIException  {
 		String Query = "grant all privileges on *.* to "+username+"@'%' identified by '"+password+"'";
 		return Query;
 	}
 	
+	/*
+	 * Execute User Defined Raw MySQL Queries
+	 */
 	public static void executeMySQLQuery(String Query) throws APIException  {
 		try{ 
 			Class.forName("com.mysql.jdbc.Driver");
@@ -67,6 +100,10 @@ public class MySQLClient {
 		    return;
 	    }
 	}	
+	
+	/*
+	 * MySQL Login return backs all database list
+	 */
 	public static List<String> login(LoginParams params) throws APIException  {
 		List<String> arrayList = new ArrayList<String>();
 		try{ 
@@ -84,6 +121,10 @@ public class MySQLClient {
 		    return null;
 	    }
 	}
+	
+	/*
+	 * MySQL login with specified database returns all tables name of that database
+	 */
 	public static List<String> getTables(LoginParams params,String db_name) throws APIException, ClassNotFoundException, SQLException  {
 	    List<String> arrayList = new ArrayList<String>();
 		try{ 
@@ -101,6 +142,10 @@ public class MySQLClient {
 		    return null;
 	    }
 	}
+	
+	/*
+	 * MySQL login with specified database, tables returns all columns name of that database, tables
+	 */
 	public static List<String> getColumns(LoginParams params,String db_name,String table_name) throws APIException, ClassNotFoundException, SQLException  {
 	    List<String> arrayList = new ArrayList<String>();
 		try{ 

@@ -1,5 +1,9 @@
 package org.openmrs.module.mysqletl.dwr;
 
+/*
+ *	Java bean object for a respective JSON Object having same definition. 
+ */
+
 public class LoginParams {
 	private String user;
 	private String pass;
