@@ -46,6 +46,7 @@ public class AdminList extends AdministrationSectionExt {
 		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 		map.put("/module/mysqletl/manage.form", "mysqletl.manage");
 		map.put("/module/mysqletl/datawarehouse.form", "mysqletl.datawarehouse");
+		map.put("/module/mysqletl/scheduler.form", "mysqletl.scheduler");
 		return map;
 	}
 	

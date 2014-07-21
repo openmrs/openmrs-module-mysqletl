@@ -17,6 +17,12 @@
 			<spring:message code="mysqletl.datawarehouse" />
 		</a>
 	</li>
+	<li
+		<c:if test='<%= request.getRequestURI().contains("/scheduler") %>'>class="active"</c:if>>
+		<a href="${pageContext.request.contextPath}/module/mysqletl/scheduler.form">
+			<spring:message code="mysqletl.scheduler" />
+		</a>
+	</li>
 	<!-- Add further links here -->
 </ul>
 <h2>
