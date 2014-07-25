@@ -594,6 +594,56 @@ var tableToExcel = (function() {
 	 });
  }
  
+
+ /*
+  * Spring MVC calls for Saving Scheduler Configuration
+  */
+ function saveSchedulerConfig(){
+	 
+	 var servers = document.getElementsByName('type');
+	 var serverType;
+	 for(var i = 0; i < servers.length; i++){
+	     if(servers[i].checked){
+	    	 serverType = servers[i].value;
+	     }
+	 }
+	 var db_name = document.getElementById('dw_db').value;
+	 var table_name = document.getElementById('dw_table').value;
+	 
+	 var table = document.getElementById('selected-column-table');
+	 var column_list = [];
+	 //get column details from selected columns, Start from index 1, 0 reserved for Text
+	 for (var i = 1, row; row = table.rows[i]; i++) {
+	    //iterate through rows
+	    //rows would be accessed using the "row" variable assigned in the for loop
+		 column_list.push(row.cells[0].innerHTML+'.'+row.cells[1].innerHTML+'.'+row.cells[2].innerHTML);
+	 }
+	 //Adding Raw Condition statement and Join Condition Table Statement
+	 var join_cndtn = document.getElementById('rawCondition').value+" "+showJoinStatement();
+
+	 $.ajax({  
+		    type : "Post",   
+		    url : "save_config.form",   
+		    data : {
+				 	user: document.getElementById('dwuser').value,
+				 	pass: document.getElementById('dwpass').value,
+				 	host: document.getElementById('dwhost').value,
+				 	port: document.getElementById('dwport').value,
+		    		servertype: serverType,
+		    		dbname: db_name,
+		    		tablename: table_name,
+		    		columnlist: column_list,
+		    		joincndtn: join_cndtn
+		    	},  
+		    success : function(result) {  
+				 Apprise(result);
+		    },  
+		    error : function(e) {  
+		    Apprise('Error: ' + e);   
+		   }  
+	 });
+ }
+ 
  /*
   * Show charts and graph data of hiove query resultd
   */
