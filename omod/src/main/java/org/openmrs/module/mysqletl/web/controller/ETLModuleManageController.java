@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import net.neoremind.sshxcute.exception.TaskExecFailException;
 
 import org.apache.commons.logging.Log;
@@ -31,6 +33,7 @@ import org.openmrs.module.mysqletl.dwr.LoginParams;
 import org.openmrs.module.mysqletl.dwr.ServerType;
 import org.openmrs.module.mysqletl.tools.MySQLClient;
 import org.openmrs.module.mysqletl.tools.SSHClient;
+import org.openmrs.module.mysqletl.tools.SchedulerCredentials;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -149,6 +152,7 @@ public class  ETLModuleManageController {
 	
 	@RequestMapping(value = "/module/mysqletl/save_config", method = RequestMethod.POST)
 	public @ResponseBody String saveSchedulerConfig(@RequestParam(value="user",required=false)String UserName,@RequestParam(value="pass",required=false)String Password,@RequestParam(value="host",required=false)String Host,@RequestParam(value="port",required=false)String Port,@RequestParam(value="servertype",required=false)String serverType,@RequestParam(value="dbname",required=false)String db_name,@RequestParam(value="tablename",required=false)String table_name,@RequestParam(value="columnlist[]",required=false)List<String> column_list, @RequestParam(value="joincndtn",required=false)String join_cndtn,ModelMap model) throws Exception  {
+		SchedulerCredentials.SchedulerParameters(UserName, Password, Host, Port, serverType, db_name, table_name, column_list, join_cndtn);
 		return SAVED_INFO;
 	}
 }
