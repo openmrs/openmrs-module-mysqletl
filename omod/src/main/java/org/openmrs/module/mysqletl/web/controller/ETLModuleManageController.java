@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class  ETLModuleManageController {
 	
+	private static final String SAVED_INFO = "Configuration Saved!!";
 	protected final Log log = LogFactory.getLog(getClass());
 	
 	@RequestMapping(value = "/module/mysqletl/manage", method = RequestMethod.GET)
@@ -144,5 +145,10 @@ public class  ETLModuleManageController {
 	@RequestMapping(value = "/module/mysqletl/query_download", method = RequestMethod.POST)
 	public @ResponseBody String queryHiveDownload(@RequestParam(value="dquery",required=false)String Query,ModelMap model) throws Exception  {
 		return SSHClient.getQueryResultDownload(Query);
+	}
+	
+	@RequestMapping(value = "/module/mysqletl/save_config", method = RequestMethod.POST)
+	public @ResponseBody String saveSchedulerConfig(@RequestParam(value="user",required=false)String UserName,@RequestParam(value="pass",required=false)String Password,@RequestParam(value="host",required=false)String Host,@RequestParam(value="port",required=false)String Port,@RequestParam(value="servertype",required=false)String serverType,@RequestParam(value="dbname",required=false)String db_name,@RequestParam(value="tablename",required=false)String table_name,@RequestParam(value="columnlist[]",required=false)List<String> column_list, @RequestParam(value="joincndtn",required=false)String join_cndtn,ModelMap model) throws Exception  {
+		return SAVED_INFO;
 	}
 }
