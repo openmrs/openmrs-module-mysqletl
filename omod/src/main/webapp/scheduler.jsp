@@ -277,7 +277,7 @@
                 </td>
             </tr>
         </table>
-        <input type="button" class="myButton" value="<spring:message code="mysqletl.page.nav.load"/>" name="login" onclick="notImplemented()">
+        <input type="button" class="myButton" value="<spring:message code="mysqletl.save.config"/>" name="save_config" onclick="notImplemented()">
         </div>
     	<a class="myLink" href="#" onclick="show('join_list','dw_log');"><spring:message code="mysqletl.page.nav.back"/></a>
 </div>

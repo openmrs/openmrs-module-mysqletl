@@ -14,16 +14,27 @@
 package org.openmrs.module.mysqletl;
 
 
+import java.util.Date;
+import java.util.UUID;
+
+import javax.swing.JOptionPane;
+
 import org.apache.commons.logging.Log; 
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.ModuleActivator;
+import org.openmrs.module.mysqletl.scheduler.tasks.ETLTask;
+import org.openmrs.scheduler.SchedulerException;
+import org.openmrs.scheduler.Task;
+import org.openmrs.scheduler.TaskDefinition;
+import org.openmrs.util.OpenmrsConstants;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
  */
 public class ETLModuleActivator implements ModuleActivator {
 	
-	protected Log log = LogFactory.getLog(getClass());
+	protected static Log log = LogFactory.getLog(ETLModuleActivator.class);
 		
 	/**
 	 * @see ModuleActivator#willRefreshContext()
@@ -51,6 +62,30 @@ public class ETLModuleActivator implements ModuleActivator {
 	 */
 	public void started() {
 		log.info("ETL Module started");
+		
+		//Configuring ETL Task in the scheduler at Module Startup
+		if(Context.isSessionOpen()){			
+			TaskDefinition def = Context.getSchedulerService().getTaskByName(ETLTask.NAME);
+			if (def == null) {
+				def = new TaskDefinition();
+				def.setName(ETLTask.NAME);
+				def.setDescription(ETLTask.DESCRIPTION);
+				def.setTaskClass(ETLTask.class.getName());
+				def.setStartOnStartup(false);
+				def.setStarted(false);
+				def.setRepeatInterval(1999999999l);
+			}
+			try {
+				if (def.getUuid() == null) {
+					// manual workaround for a bug in 1.6.x
+					def.setUuid(UUID.randomUUID().toString());
+				}
+				Context.getSchedulerService().scheduleTask(def);
+			}
+			catch (SchedulerException ex) {
+				log.error("Error scheduling ETL initialization task at startup", ex);
+			}
+		}
 	}
 	
 	/**
@@ -65,6 +100,13 @@ public class ETLModuleActivator implements ModuleActivator {
 	 */
 	public void stopped() {
 		log.info("ETL Module stopped");
+		//Removing ETL Task in the scheduler at Module Stopping
+		if(Context.isSessionOpen()){			
+			TaskDefinition def = Context.getSchedulerService().getTaskByName(ETLTask.NAME);
+			if (def != null) {
+				Context.getSchedulerService().deleteTask(def.getId());
+			}
+		}
 	}
-		
+	
 }
