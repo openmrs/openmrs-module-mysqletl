@@ -13,7 +13,13 @@ package org.openmrs.module.mysqletl.scheduler.tasks;
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.UUID;
 
 import javax.swing.JOptionPane;
@@ -31,6 +37,7 @@ import org.openmrs.scheduler.tasks.AbstractTask;
 public class ETLTask extends AbstractTask{
 	public static final String NAME = "ETL Task";
 	public static final String DESCRIPTION = "Schedule tasks for performing ETL for ETL Module.";
+	private static final String SERVER_HIVE = "HIVE";
 	// Logger
 	private static Log log = LogFactory.getLog(ETLTask.class);
 
@@ -57,8 +64,51 @@ public class ETLTask extends AbstractTask{
 	}
 
 	private void performScheduledETL() {
-		// TODO Auto-generated method stub
-		JOptionPane.showMessageDialog(null, "Implement Soon");
+		try{
+
+			//Setting Connection to MySQL
+			Class.forName("com.mysql.jdbc.Driver");
+			String connectionURL = "jdbc:mysql://"+ETLCredentials.gethost()+":"+ETLCredentials.getport()+"/";
+			Connection con = DriverManager.getConnection (connectionURL ,ETLCredentials.getuser(), ETLCredentials.getpass());
+			//get table list
+			List<String> tableListWithDuplicates = new ArrayList<String>();
+			for(String column : ETLCredentials.getcolumnlist()){
+				tableListWithDuplicates.add(column.substring(0,column.indexOf('.', column.indexOf('.')+1)));
+			}
+			List<String> tableList = new ArrayList<String>(new HashSet<String>(tableListWithDuplicates));
+			Statement stmt = null;
+			stmt = con.createStatement();
+			//Create Fresh Temporary database
+			String dropFreshQuery = "drop database if exists "+ETLCredentials.getdbname();
+			stmt.execute(dropFreshQuery);
+			String create_query = "create database if not exists "+ETLCredentials.getdbname();
+			stmt.execute(create_query);
+			String join_cndtn = ETLCredentials.getjoincondition();
+			if(join_cndtn.indexOf('\n')<0){
+				join_cndtn = join_cndtn.replace('\n', ' ');
+			}
+			//Create extracted data in form of table
+			String query = "CREATE TABLE "+ETLCredentials.getdbname()+"."+ETLCredentials.gettablename()
+							+" AS SELECT "+ETLCredentials.getcolumnlist().toString().substring(1, ETLCredentials.getcolumnlist().toString().length()-1)
+							+" FROM "+tableList.toString().substring(1, tableList.toString().length()-1)
+							+" "+join_cndtn;
+			stmt.execute(query);
+			//if MYSQL Selected it will not drop the temporary table
+			if(ETLCredentials.getservertype().equalsIgnoreCase(SERVER_HIVE)){
+				//Get Own IP Address which where we are client to machine running Hive and SSH
+				String grantHost = ETLCredentials.getIpAddress();
+				//grant Privileges to client IP to connect to MYSQL DB on remote machine
+				stmt.execute(ETLCredentials.grantPrivileges(grantHost));
+				//Sqoop Import Data
+				ETLCredentials.sqoopImport(grantHost,ETLCredentials.getport(),ETLCredentials.getuser(),"\""+ETLCredentials.getpass()+"\"",ETLCredentials.getdbname(),ETLCredentials.gettablename(),ETLCredentials.getdbname());
+				//Drop Temporary created database
+				String dropQuery = "drop database "+ETLCredentials.getdbname();
+				stmt.execute(dropQuery);
+			}
+		}
+		catch(Exception e){
+			log.error(e);
+		}		
 	}
 
 	@Override

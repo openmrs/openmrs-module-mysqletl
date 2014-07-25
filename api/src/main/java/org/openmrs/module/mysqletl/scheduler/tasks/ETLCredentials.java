@@ -1,12 +1,18 @@
-package org.openmrs.module.mysqletl.tools;
+package org.openmrs.module.mysqletl.scheduler.tasks;
 
 import java.util.List;
 
-import org.openmrs.module.mysqletl.scheduler.tasks.ETLCredentials;
+import org.openmrs.api.APIException;
+
+import net.neoremind.sshxcute.core.ConnBean;
+import net.neoremind.sshxcute.core.SSHExec;
+import net.neoremind.sshxcute.exception.TaskExecFailException;
+import net.neoremind.sshxcute.task.CustomTask;
+import net.neoremind.sshxcute.task.impl.ExecCommand;
 /*
  * Contains Scheduler Credential data
  */
-public class SchedulerCredentials {
+public class ETLCredentials {
 	
 	private static String host, username, password, port;
 	
@@ -22,11 +28,11 @@ public class SchedulerCredentials {
 	/*
 	 * SchedulerParameters sets schedulers required parameters
 	 */
-	public static void SchedulerParameters(String SSHUserName, String SSHPassword, String SSHHost, String SSHPort, String ServerType, String DatabaseName, String TableName, List<String> ColumnList, String JoinCndtn){
-		host = MySQLClient.gethost();
-		port = MySQLClient.getport();
-		username = MySQLClient.getuser();
-		password = MySQLClient.getpass();
+	public static void ETLParameters(String UserName, String Password, String Host, String Port,String SSHUserName, String SSHPassword, String SSHHost, String SSHPort, String ServerType, String DatabaseName, String TableName, List<String> ColumnList, String JoinCndtn){
+		host = Host;
+		port = Port;
+		username = UserName;
+		password = Password;
 		
 		sshHost = SSHHost;
 		sshPort = SSHPort;
@@ -38,7 +44,6 @@ public class SchedulerCredentials {
 		table_name = TableName;
 		column_list = ColumnList;
 		join_cndtn = JoinCndtn;
-		ETLCredentials.ETLParameters(username, password, host, port, SSHUserName, SSHPassword, SSHHost, SSHPort, ServerType, DatabaseName, TableName, ColumnList, JoinCndtn);
 	}
 		
 	/*
@@ -120,7 +125,7 @@ public class SchedulerCredentials {
 	public static void setcolumnlist(List<String> ColumnList) { column_list = ColumnList; }
 	public static List<String> getcolumnlist() { return column_list; }
 	
-	public static String toSchedulerInfo(){
+	public static String toETLInfo(){
 		return 	host + ": MySQLClient.gethost()\n"+
 		port + ": MySQLClient.getport()\n"+
 		username+ ": MySQLClient.getuser()\n"+
@@ -137,4 +142,51 @@ public class SchedulerCredentials {
 		column_list.toArray().toString()+ ": ColumnList\n"+
 		join_cndtn+ ": JoinCndtn\n";
 	}
+
+	/*
+	*Get IP address of SSH Client. Used in sqoop to perform extraction from server.
+	*/ 
+	public static String getIpAddress() throws TaskExecFailException{
+		
+		// Initialize a ConnBean object, parameter list is ip, username, password
+		ConnBean cb = new ConnBean(sshHost, sshUserName, sshPassword);
+		SSHExec ssh = SSHExec.getInstance(cb);
+		ssh.connect();
+		
+		//echo $SSH_CLIENT get IP of the Client
+		CustomTask sampleTask = new ExecCommand("echo $SSH_CLIENT");
+		
+		//Save Result from ssh command execution
+		String Result = ssh.exec(sampleTask).sysout;
+		ssh.disconnect();	
+		
+		//Extract IP address only from result
+		return Result.substring(0,Result.indexOf(" ")).trim();
+	}
+
+	/*
+	 * Sqoop Import using SSH requires MySQL & HIVE parameters
+	 */
+	public static void sqoopImport(String Host, String Port, String MySQLUser, String MySQLPwd, String DatabaseName, String TableName, String DatawarehouseDB) throws Exception{
+		String ConnectionURL = "jdbc:mysql://"+Host+":"+Port+"/"+DatabaseName;
+		
+		// Initialize a ConnBean object, parameter list is ip, username, password
+		ConnBean cb = new ConnBean(sshHost,sshUserName,sshPassword);
+		SSHExec ssh = SSHExec.getInstance(cb);          
+		ssh.connect();
+		
+		//Execute Sqoop
+		CustomTask sampleTask = new ExecCommand("sqoop import --connect "+ConnectionURL+" --username="+MySQLUser+" --password="+MySQLPwd+" --table "+TableName+" --hive-import -m 1 -- --schema "+DatawarehouseDB);
+		ssh.exec(sampleTask);
+		ssh.disconnect();	
+	}
+
+	/*
+	 * Grant Privileges to all Host, with MySQL db username and password
+	 */
+	public static String grantPrivileges(String Host) throws APIException  {
+		String Query = "grant all privileges on *.* to "+username+"@'%' identified by '"+password+"'";
+		return Query;
+	}
+	
 }
