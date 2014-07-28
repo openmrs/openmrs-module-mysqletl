@@ -66,7 +66,25 @@ public class  ETLModuleManageController {
 		MySQLClient.MySQLParameters(params);
 		return MySQLClient.login(params);
 	}
-		
+	
+	@RequestMapping(value = "/module/mysqletl/mysql_load", method = RequestMethod.POST)
+	public  @ResponseBody List<String> mySQLAutoLoad(ModelMap model) 
+	{	
+		LoginParams params = new LoginParams(); 
+		params.setuser(Context.getRuntimeProperties().getProperty("connection.username"));
+		params.setpass(Context.getRuntimeProperties().getProperty("connection.password"));
+		int begin = ("jdbc:mysql:mxj://").length();
+		String url = Context.getRuntimeProperties().getProperty("connection.url");
+		String IP, PORT;
+		IP = url.substring(begin);
+		PORT = IP.substring(IP.indexOf(':')+1,IP.indexOf('/'));
+		IP = IP.substring(0,IP.indexOf(':'));
+		params.sethost(IP);
+		params.setport(PORT);
+		MySQLClient.MySQLParameters(params);
+		return MySQLClient.login(params);
+	}
+	
 	@RequestMapping(value = "/module/mysqletl/get_tables", method = RequestMethod.POST)
 	public  @ResponseBody List<String> getTables(@RequestParam(value="dbname",required=false)String DatabaseName,ModelMap model) throws APIException, ClassNotFoundException, SQLException 
 	{	

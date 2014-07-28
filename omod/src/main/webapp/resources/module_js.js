@@ -250,6 +250,32 @@ var tableToExcel = (function() {
  }
 
 /*
+ * Spring MVC calls to get MySQL Credential from runtime properties file
+ */
+ function autoLoad(){ 
+	$.ajax({  
+	    type : "Post",   
+	    url : "mysql_load.form",   
+	    data : {},  
+	    success : function(db_list) {  
+			if(db_list.length>0){
+				clearHTMLTable('db_table');
+				for(i=0; i<db_list.length;i++){
+					addDatabaseRow(db_list[i]);
+			 	}
+				show('db_list','mysql_log');
+			}else{
+				Apprise('Login Failed');
+			}
+	    },  
+	    error : function(e) {  
+	    Apprise('Error: ' + e);   
+	   }  
+	}); 
+ }
+
+
+/*
  * Spring MVC calls to login to hive DB and move to query editor on successful login
  */
  function hive_login(){  
