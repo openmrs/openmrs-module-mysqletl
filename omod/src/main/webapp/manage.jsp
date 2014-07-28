@@ -68,6 +68,7 @@
   		</table>
   		<input type="button" class="myButton" value="Login" name="login" onclick="mysql_login()" align="center">
   		</div>
+  		<a class="myLink" href="#" onclick="autoLoad();"><spring:message code="mysqletl.credentials.mysql.load"/></a>
   		<a class="myLink" href="#" onclick="show('hive_query_page','mysql_log');"><spring:message code="mysqletl.page.skip.tohive"/></a>
 </div>
 <div id="db_list" style="display:none;border:1px solid  #009D8E;">  
