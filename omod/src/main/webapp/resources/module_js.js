@@ -543,9 +543,21 @@ var tableToExcel = (function() {
 	     // And stick the checked ones onto an array...
 		  completeJoinStatement+=joinStatements[i].id+" ";
 	  }
-	  document.getElementById('show-statement').innerHTML=completeJoinStatement;
-	  // 
-	  return completeJoinStatement;
+	  Apprise(completeJoinStatement+" "+document.getElementById('rawCondition').value);
+}
+ 
+ /*
+  * get the js generated Join Statement
+  */
+ function getJoinStatement() {
+	  var joinStatements = document.getElementsByName("join-condition-statement");
+	  var completeJoinStatement = "  ";
+	  // loop over them all
+	  for (var i=0; i<joinStatements.length; i++) {
+	     // And stick the checked ones onto an array...
+		  completeJoinStatement+=joinStatements[i].id+" ";
+	  }
+	  return completeJoinStatement+" "+document.getElementById('rawCondition').value;
 }
  
  /*
@@ -581,7 +593,7 @@ var tableToExcel = (function() {
 		 column_list.push(row.cells[0].innerHTML+'.'+row.cells[1].innerHTML+'.'+row.cells[2].innerHTML);
 	 }
 	 //Adding Raw Condition statement and Join Condition Table Statement
-	 var join_cndtn = document.getElementById('rawCondition').value+" "+showJoinStatement();
+	 var join_cndtn = getJoinStatement();
 
 	 $.ajax({  
 		    type : "Post",   
