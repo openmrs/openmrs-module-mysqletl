@@ -205,7 +205,7 @@
             	</th> 
    			</table>
    		<div align="center">
-   				<spring:message code="mysqletl.sql.join.raw.query"/><br> <input type="text" name="rawCondition" id='rawCondition' value=" " style="width=80%;">
+   				<spring:message code="mysqletl.sql.join.raw.query"/><br><textarea name="rawCondition" id='rawCondition' value=" " cols="100" rows="2"></textarea>
    		</div>
    		<div id='show-statement'></div>
   		<input type="button" class="myButton" onclick="show('dw_log','join_list');" value="<spring:message code="mysqletl.page.nav.next"/>" />
