@@ -128,11 +128,11 @@
 		<repository>
 			<id>openmrs-repo</id>
 			<name>OpenMRS Nexus Repository</name>
-			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
+			<url>https://mavenrepo.openmrs.org/public</url>
 		</repository>
 		  <repository>
     		<id>spring-milestones</id>
-    			<url>http://repo.springsource.org/libs-milestone/</url>
+    			<url>https://repo.springsource.org/libs-milestone</url>
   		</repository>
   		<repository>
     		<id>cloudera-repo-releases</id>
@@ -144,7 +144,7 @@
 		<pluginRepository>
 			<id>openmrs-repo</id>
 			<name>OpenMRS Nexus Repository</name>
-			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
+			<url>https://mavenrepo.openmrs.org/public</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
